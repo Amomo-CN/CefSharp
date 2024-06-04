@@ -13,7 +13,7 @@ namespace CefSharp.Example.Filters
     //NOTE: You need to make sure that your queries are in chronological order since the stream doesn't rewind
     public class FindReplaceMultiResponseFilter : IResponseFilter
     {
-        private static readonly Encoding encoding = Encoding.UTF8;
+        private static readonly Encoding Encoding = Encoding.UTF8;
 
         /// <summary>
         ///     The portion of the find string that is currently matching.
@@ -147,7 +147,7 @@ namespace CefSharp.Example.Filters
             // Write the maximum portion that fits in the output buffer.
             if (maxWrite > 0)
             {
-                var bytes = encoding.GetBytes(str);
+                var bytes = Encoding.GetBytes(str);
                 dataOut.Write(bytes, 0, (int)maxWrite);
                 dataOutWritten += maxWrite;
             }
@@ -156,7 +156,7 @@ namespace CefSharp.Example.Filters
             {
                 // Need to write more bytes than will fit in the output buffer. Store the
                 // remainder in the overflow buffer.
-                overflow.AddRange(encoding.GetBytes(str.Substring((int)maxWrite, (int)(stringSize - maxWrite))));
+                overflow.AddRange(Encoding.GetBytes(str.Substring((int)maxWrite, (int)(stringSize - maxWrite))));
             }
         }
 

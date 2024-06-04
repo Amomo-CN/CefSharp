@@ -11,7 +11,7 @@ namespace CefSharp.Example.Filters
 {
     public class AppendResponseFilter : IResponseFilter
     {
-        private static Encoding encoding = Encoding.UTF8;
+        private static Encoding Encoding = Encoding.UTF8;
 
         /// <summary>
         /// Overflow from the output buffer.
@@ -21,7 +21,7 @@ namespace CefSharp.Example.Filters
         public AppendResponseFilter(string stringToAppend)
         {
             //Add the encoded string into the overflow.
-            overflow.AddRange(encoding.GetBytes(stringToAppend));
+            overflow.AddRange(Encoding.GetBytes(stringToAppend));
         }
 
         bool IResponseFilter.InitFilter()

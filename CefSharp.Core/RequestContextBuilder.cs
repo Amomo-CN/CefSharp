@@ -14,13 +14,13 @@ namespace CefSharp
     /// </summary>
     public class RequestContextBuilder
     {
-        private RequestContextSettings _settings;
-        private IRequestContext _otherContext;
-        private RequestContextHandler _handler;
+        private RequestContextSettings settings;
+        private IRequestContext otherContext;
+        private RequestContextHandler handler;
 
         void ThrowExceptionIfContextAlreadySet()
         {
-            if (_otherContext != null)
+            if (otherContext != null)
             {
                 throw new Exception("A call to WithSharedSettings has already been made, it is no possible to provide custom settings.");
             }
@@ -28,7 +28,7 @@ namespace CefSharp
 
         void ThrowExceptionIfCustomSettingSpecified()
         {
-            if (_settings != null)
+            if (settings != null)
             {
                 throw new Exception("A call to WithCachePath/PersistUserPreferences has already been made, it's not possible to share settings with another RequestContext.");
             }
@@ -39,19 +39,19 @@ namespace CefSharp
         /// <returns>Returns a new RequestContext instance.</returns>
         public IRequestContext Create()
         {
-            if (_otherContext != null)
+            if (otherContext != null)
             {
-                return new CefSharp.Core.RequestContext(_otherContext, _handler);
+                return new CefSharp.Core.RequestContext(otherContext, handler);
             }
 
-            if (_settings != null)
+            if (settings != null)
             {
-                return new CefSharp.Core.RequestContext(_settings.settings, _handler);
+                return new CefSharp.Core.RequestContext(settings.settings, handler);
             }
 
-            if (_handler != null)
+            if (handler != null)
             {
-                return new CefSharp.Core.RequestContext(_handler);
+                return new CefSharp.Core.RequestContext(handler);
             }
 
             return new CefSharp.Core.RequestContext();
@@ -64,12 +64,12 @@ namespace CefSharp
         /// <returns>Returns RequestContextBuilder instance</returns>
         public RequestContextBuilder OnInitialize(Action<IRequestContext> action)
         {
-            if (_handler == null)
+            if (handler == null)
             {
-                _handler = new RequestContextHandler();
+                handler = new RequestContextHandler();
             }
 
-            _handler.OnInitialize(action);
+            handler.OnInitialize(action);
 
             return this;
         }
@@ -92,12 +92,12 @@ namespace CefSharp
         {
             ThrowExceptionIfContextAlreadySet();
 
-            if (_settings == null)
+            if (settings == null)
             {
-                _settings = new RequestContextSettings();
+                settings = new RequestContextSettings();
             }
 
-            _settings.CachePath = cachePath;
+            settings.CachePath = cachePath;
 
             return this;
         }
@@ -112,12 +112,12 @@ namespace CefSharp
         {
             ThrowExceptionIfContextAlreadySet();
 
-            if (_settings == null)
+            if (settings == null)
             {
-                _settings = new RequestContextSettings();
+                settings = new RequestContextSettings();
             }
 
-            _settings.PersistUserPreferences = true;
+            settings.PersistUserPreferences = true;
 
             return this;
         }
@@ -134,12 +134,12 @@ namespace CefSharp
         /// <returns>Returns RequestContextBuilder instance</returns>
         public RequestContextBuilder WithPreference(string name, object value)
         {
-            if (_handler == null)
+            if (handler == null)
             {
-                _handler = new RequestContextHandler();
+                handler = new RequestContextHandler();
             }
 
-            _handler.SetPreferenceOnContextInitialized(name, value);
+            handler.SetPreferenceOnContextInitialized(name, value);
 
             return this;
         }
@@ -155,12 +155,12 @@ namespace CefSharp
         /// <returns>Returns RequestContextBuilder instance</returns>
         public RequestContextBuilder WithProxyServer(string host)
         {
-            if (_handler == null)
+            if (handler == null)
             {
-                _handler = new RequestContextHandler();
+                handler = new RequestContextHandler();
             }
 
-            _handler.SetProxyOnContextInitialized(host, null);
+            handler.SetProxyOnContextInitialized(host, null);
 
             return this;
         }
@@ -177,12 +177,12 @@ namespace CefSharp
         /// <returns>Returns RequestContextBuilder instance</returns>
         public RequestContextBuilder WithProxyServer(string host, int? port)
         {
-            if (_handler == null)
+            if (handler == null)
             {
-                _handler = new RequestContextHandler();
+                handler = new RequestContextHandler();
             }
 
-            _handler.SetProxyOnContextInitialized(host, port);
+            handler.SetProxyOnContextInitialized(host, port);
 
             return this;
         }
@@ -200,12 +200,12 @@ namespace CefSharp
         /// <returns>Returns RequestContextBuilder instance</returns>
         public RequestContextBuilder WithProxyServer(string scheme, string host, int? port)
         {
-            if (_handler == null)
+            if (handler == null)
             {
-                _handler = new RequestContextHandler();
+                handler = new RequestContextHandler();
             }
 
-            _handler.SetProxyOnContextInitialized(scheme, host, port);
+            handler.SetProxyOnContextInitialized(scheme, host, port);
 
             return this;
         }
@@ -224,7 +224,7 @@ namespace CefSharp
 
             ThrowExceptionIfCustomSettingSpecified();
 
-            _otherContext = other;
+            otherContext = other;
 
             return this;
         }

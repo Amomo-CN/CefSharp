@@ -14,7 +14,7 @@ namespace CefSharp
     /// </summary>
     public static class CefRuntime
     {
-        private static ResolveEventHandler currentDomainAssemblyResolveHandler;
+        private static ResolveEventHandler CurrentDomainAssemblyResolveHandler;
 
         /// <summary>
         /// When using AnyCPU the architecture specific version of CefSharp.Core.Runtime.dll
@@ -32,7 +32,7 @@ namespace CefSharp
         /// (</param>
         public static void SubscribeAnyCpuAssemblyResolver(string basePath = null)
         {
-            if(currentDomainAssemblyResolveHandler != null)
+            if(CurrentDomainAssemblyResolveHandler != null)
             {
                 throw new Exception("UseAnyCpuAssemblyResolver has already been called, call ");
             }
@@ -42,7 +42,7 @@ namespace CefSharp
                 basePath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
             }
 
-            currentDomainAssemblyResolveHandler = (sender, args) =>
+            CurrentDomainAssemblyResolveHandler = (sender, args) =>
             {
                 if (args.Name.StartsWith("CefSharp.Core.Runtime"))
                 {
@@ -59,7 +59,7 @@ namespace CefSharp
                 return null;
             };
 
-            AppDomain.CurrentDomain.AssemblyResolve += currentDomainAssemblyResolveHandler;
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomainAssemblyResolveHandler;
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace CefSharp
         /// </summary>
         public static void UnsubscribeAnyCpuAssemblyResolver()
         {
-            AppDomain.CurrentDomain.AssemblyResolve -= currentDomainAssemblyResolveHandler;
+            AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomainAssemblyResolveHandler;
 
-            currentDomainAssemblyResolveHandler = null;
+            CurrentDomainAssemblyResolveHandler = null;
         }
 
         /// <summary>

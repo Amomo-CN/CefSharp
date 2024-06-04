@@ -22,13 +22,13 @@ namespace CefSharp.Internals.Tasks
     {
         /// <summary>Whether the current thread is processing work items.</summary>
         [ThreadStatic]
-        private static bool _currentThreadIsProcessingItems;
+        private static bool CurrentThreadIsProcessingItems;
         /// <summary>The list of tasks to be executed.</summary>
-        private readonly LinkedList<Task> _tasks = new LinkedList<Task>(); // protected by lock(_tasks)
+        private readonly LinkedList<Task> tasks = new LinkedList<Task>(); // protected by lock(tasks)
         /// <summary>The maximum concurrency level allowed by this scheduler.</summary>
-        private readonly int _maxDegreeOfParallelism;
+        private readonly int maxDegreeOfParallelism;
         /// <summary>Whether the scheduler is currently processing work items.</summary>
-        private int _delegatesQueuedOrRunning = 0; // protected by lock(_tasks)
+        private int delegatesQueuedOrRunning = 0; // protected by lock(tasks)
 
         /// <summary>
         /// Initializes an instance of the LimitedConcurrencyLevelTaskScheduler class with the
@@ -42,7 +42,7 @@ namespace CefSharp.Internals.Tasks
                 throw new ArgumentOutOfRangeException("maxDegreeOfParallelism");
             }
 
-            _maxDegreeOfParallelism = maxDegreeOfParallelism;
+            this.maxDegreeOfParallelism = maxDegreeOfParallelism;
         }
 
         /// <summary>Queues a task to the scheduler.</summary>
@@ -51,10 +51,10 @@ namespace CefSharp.Internals.Tasks
         {
             // Add the task to the list of tasks to be processed.  If there aren't enough
             // delegates currently queued or running to process tasks, schedule another.
-            lock (_tasks)
+            lock (tasks)
             {
-                _tasks.AddLast(task);
-                if (_delegatesQueuedOrRunning < _maxDegreeOfParallelism)
+                tasks.AddLast(task);
+                if (_delegatesQueuedOrRunning < maxDegreeOfParallelism)
                 {
                     ++_delegatesQueuedOrRunning;
                     NotifyThreadPoolOfPendingWork();
@@ -71,26 +71,26 @@ namespace CefSharp.Internals.Tasks
             {
                 // Note that the current thread is now processing work items.
                 // This is necessary to enable inlining of tasks into this thread.
-                _currentThreadIsProcessingItems = true;
+                CurrentThreadIsProcessingItems = true;
                 try
                 {
                     // Process all available items in the queue.
                     while (true)
                     {
                         Task item;
-                        lock (_tasks)
+                        lock (tasks)
                         {
                             // When there are no more items to be processed,
                             // note that we're done processing, and get out.
-                            if (_tasks.Count == 0)
+                            if (tasks.Count == 0)
                             {
                                 --_delegatesQueuedOrRunning;
                                 break;
                             }
 
                             // Get the next item from the queue
-                            item = _tasks.First.Value;
-                            _tasks.RemoveFirst();
+                            item = tasks.First.Value;
+                            tasks.RemoveFirst();
                         }
 
                         // Execute the task we pulled out of the queue
@@ -98,7 +98,7 @@ namespace CefSharp.Internals.Tasks
                     }
                 }
                 // We're done processing items on the current thread
-                finally { _currentThreadIsProcessingItems = false; }
+                finally { CurrentThreadIsProcessingItems = false; }
             }, null);
         }
 
@@ -109,7 +109,7 @@ namespace CefSharp.Internals.Tasks
         protected sealed override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
         {
             // If this thread isn't already processing a task, we don't support inlining
-            if (!_currentThreadIsProcessingItems)
+            if (!CurrentThreadIsProcessingItems)
             {
                 return false;
             }
@@ -129,14 +129,14 @@ namespace CefSharp.Internals.Tasks
         /// <returns>Whether the task could be found and removed.</returns>
         protected sealed override bool TryDequeue(Task task)
         {
-            lock (_tasks)
+            lock (tasks)
             {
-                return _tasks.Remove(task);
+                return tasks.Remove(task);
             }
         }
 
         /// <summary>Gets the maximum concurrency level supported by this scheduler.</summary>
-        public sealed override int MaximumConcurrencyLevel { get { return _maxDegreeOfParallelism; } }
+        public sealed override int MaximumConcurrencyLevel { get { return maxDegreeOfParallelism; } }
 
         /// <summary>Gets an enumerable of the tasks currently scheduled on this scheduler.</summary>
         /// <returns>An enumerable of the tasks currently scheduled.</returns>
@@ -145,10 +145,10 @@ namespace CefSharp.Internals.Tasks
             bool lockTaken = false;
             try
             {
-                Monitor.TryEnter(_tasks, ref lockTaken);
+                Monitor.TryEnter(tasks, ref lockTaken);
                 if (lockTaken)
                 {
-                    return _tasks.ToArray();
+                    return tasks.ToArray();
                 }
                 else
                 {
@@ -159,7 +159,7 @@ namespace CefSharp.Internals.Tasks
             {
                 if (lockTaken)
                 {
-                    Monitor.Exit(_tasks);
+                    Monitor.Exit(tasks);
                 }
             }
         }

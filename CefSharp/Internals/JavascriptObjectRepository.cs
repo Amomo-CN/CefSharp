@@ -47,7 +47,7 @@ namespace CefSharp.Internals
         /// </summary>
         public const string LegacyObjects = "Legacy";
 
-        private static long lastId;
+        private static long LastId;
 
         /// <inheritdoc/>
         public event EventHandler<JavascriptBindingEventArgs> ResolveObject;
@@ -181,7 +181,7 @@ namespace CefSharp.Internals
 
         private JavascriptObject CreateJavascriptObject(bool rootObject)
         {
-            var id = Interlocked.Increment(ref lastId);
+            var id = Interlocked.Increment(ref LastId);
 
             var result = new JavascriptObject
             {
