@@ -9,8 +9,8 @@ namespace CefSharp.Wpf.Example
     /// </summary>
     public partial class SpawnBrowsersWindow : Window
     {
-        bool _isRunning;
-        bool _requestCancel;
+        bool isRunning;
+        bool requestCancel;
         private const int MAX_SPEED = 1000;
 
         public SpawnBrowsersWindow()
@@ -42,7 +42,7 @@ namespace CefSharp.Wpf.Example
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (_isRunning)
+            if (isRunning)
             {
                 StartStopTest(false);
             }
@@ -54,7 +54,7 @@ namespace CefSharp.Wpf.Example
                 {
                     itemList.SelectedIndex = i;
                     await Task.Delay((int)(MAX_SPEED * speedSlider.Value));
-                    if (_requestCancel)
+                    if (requestCancel)
                     {
                         break;
                     }
@@ -66,10 +66,10 @@ namespace CefSharp.Wpf.Example
 
         private void StartStopTest(bool isStart)
         {
-            _requestCancel = !isStart;
-            _isRunning = isStart;
+            requestCancel = !isStart;
+            isRunning = isStart;
             btnTest.Content = isStart ? "Cancel" : "Test";
-            itemList.IsEnabled = !_isRunning;
+            itemList.IsEnabled = !isRunning;
         }
 
         private void speedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

@@ -54,9 +54,9 @@ namespace CefSharp.Internals.Tasks
             lock (tasks)
             {
                 tasks.AddLast(task);
-                if (_delegatesQueuedOrRunning < maxDegreeOfParallelism)
+                if (delegatesQueuedOrRunning < maxDegreeOfParallelism)
                 {
-                    ++_delegatesQueuedOrRunning;
+                    ++delegatesQueuedOrRunning;
                     NotifyThreadPoolOfPendingWork();
                 }
             }
@@ -84,7 +84,7 @@ namespace CefSharp.Internals.Tasks
                             // note that we're done processing, and get out.
                             if (tasks.Count == 0)
                             {
-                                --_delegatesQueuedOrRunning;
+                                --delegatesQueuedOrRunning;
                                 break;
                             }
 
