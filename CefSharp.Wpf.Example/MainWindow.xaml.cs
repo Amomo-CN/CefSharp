@@ -196,7 +196,7 @@ namespace CefSharp.Wpf.Example
                         requestContext.ClearHttpAuthCredentials(); // 立即清除身份验证信息。
                         requestContext.ClearHttpAuthCredentialsAsync().ContinueWith(x => // 异步清除，等待完成并打印结果。
                         {
-                            Console.WriteLine("RequestContext.ClearHttpAuthCredentials returned " + x.Result);
+                            Console.WriteLine("请求上下文。返回了ClearHttpAuthCredentials" + x.Result);
                         });
                     }
                 }
@@ -350,12 +350,12 @@ namespace CefSharp.Wpf.Example
                     if (success)
                     {
                         // 显示消息框通知用户PDF已保存
-                        MessageBox.Show("Pdf was saved to " + dialog.FileName);
+                        MessageBox.Show("PDF已保存到 " + dialog.FileName);
                     }
                     else
                     {
                         // 否则，显示错误消息提示无法保存PDF
-                        MessageBox.Show("Unable to save Pdf, check you have write permissions to " + dialog.FileName);
+                        MessageBox.Show("无法保存PDF，请检查您是否拥有对的写入权限 " + dialog.FileName);
                     }
                 }
             }
@@ -371,7 +371,7 @@ namespace CefSharp.Wpf.Example
             if (string.IsNullOrEmpty(url))
             {
                 // 抛出异常，提示提供有效的URL参数
-                throw new Exception("Please provide a valid command parameter for binding");
+                throw new Exception("请为绑定提供有效的命令参数");
             }
 
             // 创建新标签页并加载URL
