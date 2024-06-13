@@ -1,6 +1,6 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Runtime.InteropServices;
@@ -14,12 +14,12 @@ using Rect = CefSharp.Structs.Rect;
 namespace CefSharp.Wpf.Rendering
 {
     /// <summary>
-    /// AllocHGlobalWritableBitmapRenderHandler - creates/updates an WritableBitmap
-    /// Uses <see cref="Marshal.AllocHGlobal(int)"/> to allocate memory for
-    /// double buffering when the size matches or creates a new WritableBitmap
-    /// when required.
-    /// </summary>
-    /// <seealso cref="IRenderHandler" />
+    ///AllocHGlobalWritableBitmapRenderHandler -创建/更新 WritableBitmap
+    ///使用 <see cref="Marshal.AllocHGlobal(int)"/> 分配内存
+    ///当大小匹配或创建新的 WritableBitmap 时进行双缓冲
+    ///在需要的时候。
+    ///</摘要>
+    ///<另见 cref="IRenderHandler" />
     public class AllocHGlobalWritableBitmapRenderHandler : IRenderHandler
     {
         private readonly double dpiX;
@@ -30,18 +30,18 @@ namespace CefSharp.Wpf.Rendering
         private readonly object lockObject = new object();
 
         /// <summary>
-        /// The value for disposal, if it's 1 (one) then this instance is either disposed
-        /// or in the process of getting disposed
+        /// 处置的值，如果它是 1（一），则该实例要么被处置
+        ///或正在处理中
         /// </summary>
         private int disposeSignaled;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AllocHGlobalWritableBitmapRenderHandler"/> class.
-        /// </summary>
-        /// <param name="dpiX">The dpi x.</param>
-        /// <param name="dpiY">The dpi y.</param>
-        /// <param name="invalidateDirtyRect">if true then only the direct rectangle will be updated, otherwise the whole bitmap will be redrawn</param>
-        /// <param name="dispatcherPriority">priority at which the bitmap will be updated on the UI thread</param>
+        /// 初始化 <see cref="AllocHGlobalWritableBitmapRenderHandler"/> 类的新实例。
+        ///</摘要>
+        ///<param name="dpiX">dpi x.</param>
+        ///<param name="dpiY">dpi y。</param>
+        ///<param name="invalidateDirtyRect">如果为 true 则仅更新直接矩形，否则将重绘整个位图</param>
+        ///<param name="dispatcherPriority">UI 线程上更新位图的优先级</param>
         public AllocHGlobalWritableBitmapRenderHandler(double dpiX, double dpiY, bool invalidateDirtyRect = true, DispatcherPriority dispatcherPriority = DispatcherPriority.Render)
         {
             this.dpiX = dpiX;
@@ -53,9 +53,9 @@ namespace CefSharp.Wpf.Rendering
         }
 
         /// <summary>
-        /// Gets a value indicating whether this instance is disposed.
-        /// </summary>
-        /// <value><see langword="true"/> if this instance is disposed; otherwise, <see langword="true"/>.</value>
+        /// 获取一个值，该值指示此实例是否已释放。
+        ///</摘要>
+        ///<value><see langword="true"/> 如果此实例已释放；否则，<参见 langword="true"/>.</value>
         public bool IsDisposed
         {
             get
@@ -65,7 +65,7 @@ namespace CefSharp.Wpf.Rendering
         }
 
         /// <summary>
-        /// Releases all resources used by the <see cref="AbstractRenderHandler"/> object
+        /// 释放 <see cref="AbstractRenderHandler"/> 使用的所有资源 object
         /// </summary>
         public void Dispose()
         {
@@ -74,9 +74,9 @@ namespace CefSharp.Wpf.Rendering
         }
 
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources for the <see cref="AbstractRenderHandler"/>
+        /// 释放 <see cref="AbstractRenderHandler"/> 的非托管资源和（可选）托管资源
         /// </summary>
-        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
+        /// <param name="dispose"><see langword="true" /> 释放托管和非托管资源； <see langword="false" /> 仅释放非托管资源。</param>
         protected virtual void Dispose(bool disposing)
         {
             if (Interlocked.CompareExchange(ref disposeSignaled, 1, 0) != 0)
@@ -99,7 +99,7 @@ namespace CefSharp.Wpf.Rendering
         /// </<inheritdoc/>
         void IRenderHandler.OnAcceleratedPaint(bool isPopup, Rect dirtyRect, AcceleratedPaintInfo acceleratedPaintInfo)
         {
-            //NOT USED
+            //不曾用过
         }
 
         void IRenderHandler.OnPaint(bool isPopup, Rect dirtyRect, IntPtr buffer, int width, int height, Image image)
@@ -117,9 +117,9 @@ namespace CefSharp.Wpf.Rendering
             }
         }
 
-        //TODO: No nested classes and better name for this class
-        /// <summary>
-        /// Details of the bitmap to be rendered
+        //TODO：没有嵌套类，并且该类有更好的名称
+        ///<摘要>
+        ///要渲染的位图的详细信息
         /// </summary>
         private class PaintElement
         {
@@ -180,8 +180,8 @@ namespace CefSharp.Wpf.Rendering
                 {
                     lock (lockObject)
                     {
-                        //If OnPaint was called a couple of times before our BeginInvoke call
-                        //we can end up here with nothing to do.
+                        //如果 OnPaint 在 BeginInvoke 调用之前被调用了几次
+                        //我们可以无事可做地结束在这里。
                         if (IsDirty && image != null)
                         {
                             var bitmap = image.Source as WriteableBitmap;
@@ -199,12 +199,12 @@ namespace CefSharp.Wpf.Rendering
 
                             if (bitmap != null)
                             {
-                                //By default we'll only update the dirty rect, for those that run into a MILERR_WIN32ERROR Exception (#2035)
-                                //it's desirably to either upgrade to a newer .Net version (only client runtime needs to be installed, not compiled
-                                //against a newer version. Or invalidate the whole bitmap
+                                //默认情况下，我们只会更新那些遇到 MILERR_WIN32ERROR 异常的脏矩形 (#2035)
+                                //最好升级到更新的.Net版本（只需要安装客户端运行时，不需要编译
+                                //针对较新的版本。或者使整个位图无效
                                 if (invalidateDirtyRect)
                                 {
-                                    // Update the dirty region
+                                    // 更新脏区
                                     var sourceRect = new Int32Rect(dirtyRect.X, dirtyRect.Y, dirtyRect.Width, dirtyRect.Height);
 
                                     bitmap.Lock();
@@ -213,7 +213,7 @@ namespace CefSharp.Wpf.Rendering
                                 }
                                 else
                                 {
-                                    // Update whole bitmap
+                                    // 更新整个位图
                                     var sourceRect = new Int32Rect(0, 0, width, height);
 
                                     bitmap.Lock();

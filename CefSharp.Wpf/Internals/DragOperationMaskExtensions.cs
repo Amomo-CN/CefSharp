@@ -1,6 +1,6 @@
-// Copyright © 2019 The CefSharp Authors. All rights reserved.
+//版权所有 © 2019 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System.Windows;
 using CefSharp.Enums;
@@ -10,10 +10,10 @@ namespace CefSharp.Wpf.Internals
     internal static class DragOperationMaskExtensions
     {
         /// <summary>
-        /// Converts .NET drag drop effects to CEF Drag Operations
-        /// </summary>
-        /// <param name="dragDropEffects">The drag drop effects.</param>
-        /// <returns>DragOperationsMask.</returns>
+        ///将 .NET 拖放效果转换为 CEF 拖动操作
+        ///</摘要>
+        ///<param name="dragDropEffects">拖放效果。</param>
+        ///<returns>DragOperationsMask.</returns>
         public static DragOperationsMask GetDragOperationsMask(this DragDropEffects dragDropEffects)
         {
             var operations = DragOperationsMask.None;
@@ -39,10 +39,10 @@ namespace CefSharp.Wpf.Internals
         }
 
         /// <summary>
-        /// Gets the drag effects.
-        /// </summary>
-        /// <param name="mask">The mask.</param>
-        /// <returns>DragDropEffects.</returns>
+        /// 获取拖动效果。
+        ///</摘要>
+        ///<param name="mask">掩码。</param>
+        ///<returns>DragDropEffects.</returns>
         public static DragDropEffects GetDragEffects(this DragOperationsMask mask)
         {
             if ((mask & DragOperationsMask.Every) == DragOperationsMask.Every)

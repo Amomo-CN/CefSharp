@@ -1,6 +1,6 @@
-// Copyright © 2015 The CefSharp Authors. All rights reserved.
+//版权所有 © 2015 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Diagnostics;
@@ -27,12 +27,12 @@ namespace CefSharp.Example.JavascriptBinding
                 }
                 catch (Exception innerException)
                 {
-                    throw new InvalidOperationException("Nested Exception Invalid", innerException);
+                    throw new InvalidOperationException("嵌套异常无效", innerException);
                 }
             }
             catch (Exception e)
             {
-                throw new OperationCanceledException("Nested Exception Canceled", e);
+                throw new OperationCanceledException("嵌套异常已取消", e);
             }
         }
 
@@ -52,15 +52,15 @@ namespace CefSharp.Example.JavascriptBinding
 
                 using (errorCallback)
                 {
-                    JavascriptResponse result = await errorCallback.ExecuteAsync("This callback from C# was delayed " + taskDelay + "ms");
+                    JavascriptResponse result = await errorCallback.ExecuteAsync("来自 C# 的回调被延迟 " + taskDelay + "ms");
                     string resultMessage;
                     if (result.Success)
                     {
-                        resultMessage = "Fatal: No Exception thrown in error callback";
+                        resultMessage = "致命：错误回调中没有抛出异常";
                     }
                     else
                     {
-                        resultMessage = "Exception Thrown: " + result.Message;
+                        resultMessage = "抛出异常: " + result.Message;
                     }
                     await errorCallbackResult.ExecuteAsync(resultMessage);
                 }

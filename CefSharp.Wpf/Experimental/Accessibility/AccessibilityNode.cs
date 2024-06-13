@@ -1,6 +1,6 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System.Collections.Generic;
 using System.Linq;
@@ -26,17 +26,17 @@ namespace CefSharp.Wpf.Experimental.Accessibility
         private int offsetContainerId = -1;
         private HashSet<int> childIds;
 
-        // Mapping implemented according to the following link
+        // 根据以下链接实现的映射
         // https://docs.microsoft.com/en-us/windows/desktop/winauto/uiauto-ariaspecification
-        // 'Custom' control type is used for unsupported control types
+        // “自定义”控件类型用于不受支持的控件类型
         private static readonly Dictionary<string, AutomationControlType> ControlTypeMapping = new Dictionary<string, AutomationControlType>
         {
             {"alert", AutomationControlType.Text},
             {"application", AutomationControlType.Pane},
             {"button", AutomationControlType.Button},
-            {"buttonDropDown", AutomationControlType.ComboBox}, // No mapping for this one in the reference
+            {"buttonDropDown", AutomationControlType.ComboBox}, // 参考文献中没有此映射
             {"client", AutomationControlType.Calendar},
-            {"popUpButton", AutomationControlType.Button}, // No mapping for this one in the reference
+            {"popUpButton", AutomationControlType.Button}, //参考文献中没有此映射
             {"checkBox", AutomationControlType.CheckBox},
             {"comboBox", AutomationControlType.ComboBox},
             {"dialog", AutomationControlType.Pane},
@@ -60,7 +60,7 @@ namespace CefSharp.Wpf.Experimental.Accessibility
             {"tab", AutomationControlType.TabItem},
             {"tabList", AutomationControlType.Tab},
             {"textField", AutomationControlType.Edit},
-            {"titleBar", AutomationControlType.Pane}, // No mapping for this one in the reference
+            {"titleBar", AutomationControlType.Pane}, // 参考文献中没有此映射
             {"toolbar", AutomationControlType.ToolBar},
             {"tree", AutomationControlType.Tree},
             {"treeItem", AutomationControlType.TreeItem},

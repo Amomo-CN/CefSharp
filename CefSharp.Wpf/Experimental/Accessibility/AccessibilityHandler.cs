@@ -1,6 +1,6 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Windows;
@@ -8,11 +8,11 @@ using System.Windows;
 namespace CefSharp.Wpf.Experimental.Accessibility
 {
     /// <summary>
-    /// Provides a limited read-only Accessibility Handler implementation.
-    /// To enable accessibility support use the --force-renderer-accessibility to enable
-    /// for all browsers or call <see cref="IBrowserHost.SetAccessibilityState(CefState)"/>
-    /// on a per browser basis to enable. By default accessibility is disabled by default.
-    /// Having accessibility enabled can impact performance until accessibility is disabled.
+    ///提供有限的只读辅助功能处理程序实现。
+    ///要启用辅助功能支持，请使用 --force-renderer-accessibility 来启用
+    ///对于所有浏览器或调用 <see cref="IBrowserHost.SetAccessibilityState(CefState)"/>
+    ///在每个浏览器的基础上启用。默认情况下，辅助功能是禁用的。
+    ///启用可访问性会影响性能，直到禁用可访问性。
     /// </summary>
     public class AccessibilityHandler : IAccessibilityHandler
     {
@@ -33,9 +33,9 @@ namespace CefSharp.Wpf.Experimental.Accessibility
         }
 
         /// <summary>
-        /// Called after renderer process sends accessibility location changes to the browser process.
-        /// </summary>
-        /// <param name="value">Updated location info.</param>
+        ///在渲染器进程将可访问性位置更改发送到浏览器进程后调用。
+        ///</摘要>
+        ///<param name="value">更新的位置信息。</param>
         protected virtual void OnAccessibilityLocationChange(IValue value)
         {
 
@@ -47,9 +47,9 @@ namespace CefSharp.Wpf.Experimental.Accessibility
         }
 
         /// <summary>
-        /// Called after renderer process sends accessibility tree changes to the browser process.
-        /// </summary>
-        /// <param name="value">Updated tree info.</param>
+        ///在渲染器进程将可访问性树更改发送到浏览器进程后调用。
+        ///</摘要>
+        ///<param name="value">更新树信息。</param>
         protected virtual void OnAccessibilityTreeChange(IValue value)
         {
             if (value.Type != Enums.ValueType.Dictionary)

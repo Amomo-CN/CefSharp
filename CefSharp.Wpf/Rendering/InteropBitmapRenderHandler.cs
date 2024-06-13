@@ -1,6 +1,6 @@
-// Copyright © 2018 The CefSharp Authors. All rights reserved.
+//版权所有 © 2018 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.IO.MemoryMappedFiles;
@@ -13,17 +13,17 @@ using Rect = CefSharp.Structs.Rect;
 namespace CefSharp.Wpf.Rendering
 {
     /// <summary>
-    /// InteropBitmapRenderHandler - creates/updates an InteropBitmap
-    /// Uses a MemoryMappedFile for double buffering when the size matches
-    /// or creates a new InteropBitmap when required
+    /// InteropBitmapRenderHandler -创建/更新 InteropBitmap
+    ///当大小匹配时使用 MemoryMappedFile 进行双缓冲
+    ///或在需要时创建一个新的 InteropBitmap
     /// </summary>
     /// <seealso cref="CefSharp.Wpf.IRenderHandler" />
     public class InteropBitmapRenderHandler : AbstractRenderHandler
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="InteropBitmapRenderHandler"/> class.
-        /// </summary>
-        /// <param name="dispatcherPriority">priority at which the bitmap will be updated on the UI thread</param>
+        ///初始化 <see cref="InteropBitmapRenderHandler"/> 类的新实例。
+        ///</摘要>
+        ///<param name="dispatcherPriority">UI 线程上更新位图的优先级</param>
         public InteropBitmapRenderHandler(DispatcherPriority dispatcherPriority = DispatcherPriority.Render)
         {
             this.dispatcherPriority = dispatcherPriority;
@@ -54,10 +54,10 @@ namespace CefSharp.Wpf.Rendering
 
                 NativeMethodWrapper.MemoryCopy(viewAccessor.SafeMemoryMappedViewHandle.DangerousGetHandle(), buffer, numberOfBytes);
 
-                //Take a reference to the backBufferHandle, once we're on the UI thread we need to check if it's still valid
+                //引用 backBufferHandle，一旦我们进入 UI 线程，我们需要检查它是否仍然有效
                 var backBufferHandle = mappedFile.SafeMemoryMappedFileHandle;
 
-                //Invoke on the WPF UI Thread
+                //在 WPF UI 线程上调用
                 image.Dispatcher.BeginInvoke((Action)(() =>
                 {
                     lock (lockObject)
@@ -69,10 +69,10 @@ namespace CefSharp.Wpf.Rendering
 
                         var size = isPopup ? popupSize : viewSize;
 
-                        //If OnPaint is called multiple times before
-                        //our BeginInvoke call we check the size matches our most recent
-                        //update, the buffer has already been overriden (frame is dropped effectively)
-                        //so we ignore this call
+                        //如果之前多次调用OnPaint
+                        //我们的 BeginInvoke 调用，我们检查大小是否与最近的大小相匹配
+                        //更新，缓冲区已经被覆盖（帧被有效丢弃）
+                        //所以我们忽略这个调用
                         //https://github.com/cefsharp/CefSharp/issues/3114
                         if (size.Width != width || size.Height != height)
                         {
@@ -84,7 +84,7 @@ namespace CefSharp.Wpf.Rendering
                             if (image.Source != null)
                             {
                                 image.Source = null;
-                                //TODO: Is this still required in newer versions of .Net?
+                                //TODO: 在较新版本的 .Net 中还需要这样做吗？
                                 GC.Collect(1);
                             }
 

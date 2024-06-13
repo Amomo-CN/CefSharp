@@ -1,6 +1,6 @@
-// Copyright © 2019 The CefSharp Authors. All rights reserved.
+//版权所有 © 2019 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Runtime.InteropServices;
@@ -13,9 +13,9 @@ using Rect = CefSharp.Structs.Rect;
 namespace CefSharp.Wpf.Rendering.Experimental
 {
     /// <summary>
-    /// RenderHandler implemenetation that updates the image/bitmap in the
+    /// 更新图像/位图的 RenderHandler 实现
     /// <see cref="CompositionTarget.Rendering"/> event.
-    /// Initially based on https://github.com/cefsharp/CefSharp/issues/2888#issuecomment-528864931
+    /// 最初基于 https://github.com/cefsharp/CefSharp/issues/2888#issuecomment-528864931
     /// </summary>
     public class CompositionTargetRenderHandler : IRenderHandler
     {

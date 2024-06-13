@@ -1,6 +1,6 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System.Collections.Generic;
 using System.Linq;
@@ -85,10 +85,10 @@ namespace CefSharp.Wpf.Experimental.Accessibility
             {
                 bool rootNodeChanged = false;
 
-                // If a node is to be cleared
+                // 如果要清除一个节点
                 if (updateDictionary.ContainsKey("node_id_to_clear"))
                 {
-                    // Reset root node if that is to be cleared
+                    // 如果要清除根节点，请重置根节点
                     int nodeIdToClear = updateDictionary["node_id_to_clear"].GetInt();
                     if (nodeIdToClear == RootNodeId)
                     {
@@ -182,7 +182,7 @@ namespace CefSharp.Wpf.Experimental.Accessibility
                 int nodeId = nodeDictionary["id"].GetInt();
                 var accessibilityNode = GetNode(nodeId);
 
-                // Create if it is a new one
+                // 如果是新的则创建
                 if (accessibilityNode != null)
                 {
                     accessibilityNode.Update(nodeDictionary);

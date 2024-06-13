@@ -1,7 +1,6 @@
-// Copyright © 2015 The CefSharp Authors. All rights reserved.
+//版权所有 © 2015 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
-
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 namespace CefSharp.Example.Handlers
 {
     public class JsDialogHandler : IJsDialogHandler
@@ -13,13 +12,13 @@ namespace CefSharp.Example.Handlers
 
         bool IJsDialogHandler.OnBeforeUnloadDialog(IWebBrowser chromiumWebBrowser, IBrowser browser, string message, bool isReload, IJsDialogCallback callback)
         {
-            //Custom implementation would look something like
-            // - Create/Show dialog on UI Thread
-            // - execute callback once user has responded
-            // - callback.Continue(true);
-            // - return true
+            //自定义实现看起来像
+            //-在 UI 线程上创建/显示对话框
+            //-一旦用户响应就执行回调
+            //-回调.Continue(true);
+            //-返回 true
 
-            //NOTE: Returning false will trigger the default behaviour, no need to execute the callback if you return false.
+            //注意：返回 false 会触发默认行为，如果返回 false 则无需执行回调。
             return false;
         }
 

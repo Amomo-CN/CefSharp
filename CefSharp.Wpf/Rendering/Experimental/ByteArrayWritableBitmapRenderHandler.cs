@@ -1,6 +1,6 @@
-// Copyright © 2018 The CefSharp Authors. All rights reserved.
+//版权所有 © 2018 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Runtime.InteropServices;
@@ -14,10 +14,10 @@ using Rect = CefSharp.Structs.Rect;
 namespace CefSharp.Wpf.Rendering.Experimental
 {
     /// <summary>
-    /// ByteArrayWritableBitmapRenderHandler - creates/updates an WritableBitmap
-    /// For each OnPaint call a new byte[] is created and then updated. No locking is
-    /// performed and memory is allocated for every OnPaint call, so will be very expensive memory
-    /// wise.
+    /// ByteArrayWritableBitmapRenderHandler -创建/更新 WritableBitmap
+    ///对于每个 OnPaint 调用，都会创建一个新的 byte[]，然后进行更新。没有锁定是
+    ///执行并为每个 OnPaint 调用分配内存，因此内存将非常昂贵
+    ///明智的。
     /// </summary>
     /// <seealso cref="CefSharp.Wpf.IRenderHandler" />
     public class ByteArrayWritableBitmapRenderHandler : IRenderHandler
@@ -28,12 +28,12 @@ namespace CefSharp.Wpf.Rendering.Experimental
         private readonly DispatcherPriority dispatcherPriority;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WritableBitmapRenderHandler"/> class.
-        /// </summary>
-        /// <param name="dpiX">The dpi x.</param>
-        /// <param name="dpiY">The dpi y.</param>
-        /// <param name="invalidateDirtyRect">if true then only the direct rectangle will be updated, otherwise the whole bitmap will be redrawn</param>
-        /// <param name="dispatcherPriority">priority at which the bitmap will be updated on the UI thread</param>
+        /// 初始化 <see cref="WritableBitmapRenderHandler"/> 类的新实例。
+        ///</摘要>
+        ///<param name="dpiX">dpi x.</param>
+        ///<param name="dpiY">dpi y。</param>
+        ///<param name="invalidateDirtyRect">如果为 true 则仅更新直接矩形，否则将重绘整个位图</param>
+        ///<param name="dispatcherPriority">UI 线程上更新位图的优先级</param>
         public ByteArrayWritableBitmapRenderHandler(double dpiX, double dpiY, bool invalidateDirtyRect = true, DispatcherPriority dispatcherPriority = DispatcherPriority.Render)
         {
             this.dpiX = dpiX;
@@ -45,7 +45,7 @@ namespace CefSharp.Wpf.Rendering.Experimental
         /// </<inheritdoc/>
         void IRenderHandler.OnAcceleratedPaint(bool isPopup, Rect dirtyRect, AcceleratedPaintInfo acceleratedPaintInfo)
         {
-            //NOT USED
+            //不曾用过
         }
 
         void IRenderHandler.OnPaint(bool isPopup, Rect dirtyRect, IntPtr buffer, int width, int height, Image image)
@@ -60,7 +60,7 @@ namespace CefSharp.Wpf.Rendering.Experimental
             var stride = width * AbstractRenderHandler.BytesPerPixel;
             var tempBuffer = new byte[numberOfBytes];
 
-            //Copy unmanaged memory to our buffer
+            //将非托管内存复制到我们的缓冲区
             Marshal.Copy(buffer, tempBuffer, 0, numberOfBytes);
 
             image.Dispatcher.BeginInvoke((Action)(() =>
@@ -78,15 +78,15 @@ namespace CefSharp.Wpf.Rendering.Experimental
                     image.Source = bitmap = new WriteableBitmap(width, height, dpiX, dpiY, AbstractRenderHandler.PixelFormat, null);
                 }
 
-                //Get a ptr to our temp buffer
+                //获取临时缓冲区的指针
                 var tempBufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(tempBuffer, 0);
 
-                //By default we'll only update the dirty rect, for those that run into a MILERR_WIN32ERROR Exception (#2035)
-                //it's desirably to either upgrade to a newer .Net version (only client runtime needs to be installed, not compiled
-                //against a newer version. Or invalidate the whole bitmap
+                //默认情况下，我们只会更新那些遇到 MILERR_WIN32ERROR 异常的脏矩形 (#2035)
+                //最好升级到更新的.Net版本（只需要安装客户端运行时，不需要编译
+                //针对较新的版本。或者使整个位图无效
                 if (invalidateDirtyRect)
                 {
-                    // Update the dirty region
+                    // 更新脏区
                     var sourceRect = new Int32Rect(dirtyRect.X, dirtyRect.Y, dirtyRect.Width, dirtyRect.Height);
 
                     bitmap.Lock();
@@ -95,7 +95,7 @@ namespace CefSharp.Wpf.Rendering.Experimental
                 }
                 else
                 {
-                    // Update whole bitmap
+                    // 更新整个位图
                     var sourceRect = new Int32Rect(0, 0, width, height);
 
                     bitmap.Lock();

@@ -1,9 +1,9 @@
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
-// ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
-// THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
-// PARTICULAR PURPOSE.
+//本代码和信息按“原样”提供，不提供任何保证
+//任何类型，无论是明示的还是暗示的，包括但不限于
+//对适销性和/或适用性的默示保证
+//特殊用途。
 //
-// Copyright (c) Microsoft Corporation. All rights reserved
+//版权所有 (c) Microsoft Corporation。版权所有
 
 using System;
 using System.Runtime.CompilerServices;
@@ -12,11 +12,11 @@ using System.Runtime.InteropServices;
 namespace Microsoft.Windows.Input.TouchKeyboard.Rcw
 {
     /// <summary>
-    /// Contains internal RCWs for invoking the InputPane (tiptsf touch keyboard)
+    /// 包含用于调用 InputPane（tiptsf 触摸键盘）的内部 RCW
     /// </summary>
     /// <remarks>
-    /// Adapted from https://github.com/Microsoft/WPF-Samples/blob/master/Input%20and%20Commands/TouchKeyboard/TouchKeyboardNotifier/InputPaneRcw.cs
-    /// Licensed under an MIT license see https://github.com/Microsoft/WPF-Samples/blob/master/LICENSE
+    /// 改编自https://github.com/Microsoft/WPF-Samples/blob/master/Input%20and%20Commands/TouchKeyboard/TouchKeyboardNotifier/InputPaneRcw.cs
+    ///根据 MIT 许可证获得许可，请参阅 https://github.com/Microsoft/WPF-Samples/blob/master/LICENSE
     /// </remarks>
     internal static class InputPaneRcw
     {

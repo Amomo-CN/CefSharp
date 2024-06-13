@@ -1,7 +1,6 @@
-// Copyright © 2019 The CefSharp Authors. All rights reserved.
+//版权所有 © 2019 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
-
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 using System;
 using System.IO;
 using System.Text;
@@ -12,11 +11,11 @@ using CefSharp.ResponseFilter;
 namespace CefSharp.Example.Handlers
 {
     /// <summary>
-    /// ExampleResourceRequestHandler demonstrates some of the features you can perform
-    /// using a <see cref="ResourceRequestHandler"/>
-    /// </summary>
-    /// <remarks>
-    /// A <see cref="ResourceRequestHandler"/> represents a single resource request
+    /// ExampleResourceRequestHandler 演示了您可以执行的一些功能
+    ///使用 <see cref="ResourceRequestHandler"/>
+    ///</摘要>
+    ///<备注>
+    ///<see cref="ResourceRequestHandler"/> 表示单个资源请求
     /// </remarks>
     public class ExampleResourceRequestHandler : ResourceRequestHandler
     {
@@ -27,35 +26,34 @@ namespace CefSharp.Example.Handlers
             Uri url;
             if (Uri.TryCreate(request.Url, UriKind.Absolute, out url) == false)
             {
-                //If we're unable to parse the Uri then cancel the request
-                // avoid throwing any exceptions here as we're being called by unmanaged code
+                //如果我们无法解析 Uri，则取消请求
+                //避免在此处抛出任何异常，因为我们被非托管代码调用
                 return CefReturnValue.Cancel;
             }
 
-            //Example of how to set Referer
-            // Same should work when setting any header
+            //Referer 设置方法示例
+            //设置任何标头时应该同样有效
 
-            // For this example only set Referer when using our custom scheme
+            //对于此示例，仅在使用我们的自定义方案时设置 Referer
             if (url.Scheme == CefSharpSchemeHandlerFactory.SchemeName)
             {
-                //Referrer is now set using it's own method (was previously set in headers before)
+                //现在使用它自己的方法设置引荐来源网址（之前在标题中设置）
                 request.SetReferrer("http://google.com", ReferrerPolicy.Default);
             }
 
-            //Example of setting User-Agent in every request.
+            //在每个请求中设置 User-Agent 的示例。
             //var headers = request.Headers;
 
-            //var userAgent = headers["User-Agent"];
+            //var userAgent = headers["用户代理"];
             //headers["User-Agent"] = userAgent + " CefSharp";
 
-            //request.Headers = headers;
+            //请求头=标题;
 
-            //NOTE: If you do not wish to implement this method returning false is the default behaviour
-            // We also suggest you explicitly Dispose of the callback as it wraps an unmanaged resource.
+            //注意：如果您不想实现此方法，则返回 false 是默认行为
+            //我们还建议您显式处理回调，因为它包装了非托管资源。
             //callback.Dispose();
-            //return false;
-
-            //NOTE: When executing the callback in an async fashion need to check to see if it's disposed
+            //返回假；
+            //注意：以异步方式执行回调时需要检查它是否已处理
             if (!callback.IsDisposed)
             {
                 using (callback)
@@ -81,15 +79,15 @@ namespace CefSharp.Example.Handlers
                         }
                     }
 
-                    //Note to Redirect simply set the request Url
+                    //注意Redirect只需设置请求Url
                     //if (request.Url.StartsWith("https://www.google.com", StringComparison.OrdinalIgnoreCase))
                     //{
                     //    request.Url = "https://github.com/";
                     //}
 
-                    //Callback in async fashion
+                    //异步方式回调
                     //callback.Continue(true);
-                    //return CefReturnValue.ContinueAsync;
+                    //返回CefReturnValue.ContinueAsync;
                 }
             }
 
@@ -98,7 +96,7 @@ namespace CefSharp.Example.Handlers
 
         protected override void OnResourceRedirect(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, IResponse response, ref string newUrl)
         {
-            //Example of how to redirect - need to check `newUrl` in the second pass
+            //如何重定向的示例 -需要在第二遍中检查 `newUrl`
             //if (request.Url.StartsWith("https://www.google.com", StringComparison.OrdinalIgnoreCase) && !newUrl.Contains("github"))
             //{
             //    newUrl = "https://github.com";
@@ -112,8 +110,8 @@ namespace CefSharp.Example.Handlers
 
         protected override bool OnResourceResponse(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, IResponse response)
         {
-            //NOTE: You cannot modify the response, only the request
-            // You can now access the headers
+            //注意：您不能修改响应，只能修改请求
+            //您现在可以访问标头
             //var headers = response.Headers;
 
             return false;
@@ -126,15 +124,15 @@ namespace CefSharp.Example.Handlers
             {
                 if (request.Url.Equals(CefExample.ResponseFilterTestUrl, StringComparison.OrdinalIgnoreCase))
                 {
-                    return new FindReplaceResponseFilter("REPLACE_THIS_STRING", "This is the replaced string!");
+                    return new FindReplaceResponseFilter("REPLACE_THIS_STRING", "这是替换后的字符串!");
                 }
 
                 if (request.Url.Equals("custom://cefsharp/assets/js/jquery.js", StringComparison.OrdinalIgnoreCase))
                 {
-                    return new AppendResponseFilter(System.Environment.NewLine + "//CefSharp Appended this comment.");
+                    return new AppendResponseFilter(System.Environment.NewLine + "//CefSharp 附加了此评论.");
                 }
 
-                //Only called for our customScheme
+                //只需要我们的定制方案
                 memoryStream = new MemoryStream();
                 return new StreamResponseFilter(memoryStream);
             }
@@ -148,10 +146,10 @@ namespace CefSharp.Example.Handlers
             var url = new Uri(request.Url);
             if (url.Scheme == CefSharpSchemeHandlerFactory.SchemeName && memoryStream != null)
             {
-                //TODO: Do something with the data here
+                //TODO: 对这里的数据做一些事情
                 var data = memoryStream.ToArray();
                 var dataLength = data.Length;
-                //NOTE: You may need to use a different encoding depending on the request
+                //NOTE: 您可能需要根据请求使用不同的编码
                 var dataAsUtf8String = Encoding.UTF8.GetString(data);
             }
         }

@@ -1,6 +1,6 @@
-// Copyright © 2018 The CefSharp Authors. All rights reserved.
+//版权所有 © 2018 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Runtime.InteropServices;
@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 namespace CefSharp.Wpf.Internals
 {
     /// <summary>
-    /// MonitorInfo is a wrapper class around MonitorFromWindow and GetMonitorInfo
+    /// MonitorInfo 是 MonitorFromWindow 和 GetMonitorInfo 的包装类
     /// https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-monitorfromwindow
     /// https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-getmonitorinfoa
     /// </summary>
@@ -25,10 +25,10 @@ namespace CefSharp.Wpf.Internals
         private static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
 
         /// <summary>
-        /// Gets monitor information for the provided window handle
-        /// </summary>
-        /// <param name="windowHandle">window handle</param>
-        /// <param name="monitorInfo">monitor info</param>
+        /// 获取所提供的窗口句柄的监视器信息
+        ///</摘要>
+        ///<param name="windowHandle">窗口句柄</param>
+        ///<param name="monitorInfo">监控信息</param>
         internal static void GetMonitorInfoForWindowHandle(IntPtr windowHandle, ref MonitorInfoEx monitorInfo)
         {
             var hMonitor = MonitorFromWindow(windowHandle, MONITOR_DEFAULTTONEAREST);

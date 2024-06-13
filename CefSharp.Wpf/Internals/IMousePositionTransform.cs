@@ -3,7 +3,7 @@ using CefSharp.Structs;
 namespace CefSharp.Wpf.Internals
 {
     /// <summary>
-    /// Implement this interface to control transform the mouse position
+    /// 实现该接口来控制鼠标位置的变换
     /// </summary>
     public interface IMousePositionTransform
     {

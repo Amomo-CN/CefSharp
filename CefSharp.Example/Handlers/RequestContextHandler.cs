@@ -8,26 +8,26 @@ namespace CefSharp.Example.Handlers
     {
         protected override IResourceRequestHandler GetResourceRequestHandler(IBrowser browser, IFrame frame, IRequest request, bool isNavigation, bool isDownload, string requestInitiator, ref bool disableDefaultHandling)
         {
-            // Return null for the default behaviour
+            // 对于默认行为返回 null
             //return null;
 
-            // To handle resource requests at the RequestContext level
-            // Implement CefSharp.IResourceRequestHandler or inherit from CefSharp.Handler.ResourceRequestHandler
+            //在 RequestContext 级别处理资源请求
+            //实现CefSharp.IResourceRequestHandler或者继承CefSharp.Handler.ResourceRequestHandler
             return new ExampleResourceRequestHandler();
         }
 
         protected override void OnRequestContextInitialized(IRequestContext requestContext)
         {
-            // You can set preferences here on your newly initialized request context.
-            // Note, there is called on the CEF UI Thread, so you can directly call SetPreference
+            // 您可以在此处为新初始化的请求上下文设置首选项。
+            //注意，这里是在CEF UI Thread上调用的，所以可以直接调用SetPreference
 
-            // Use this to check that settings preferences are working in your code
-            // You should see the minimum font size is now 24pt
+            //使用它来检查设置首选项是否在您的代码中起作用
+            //您应该看到最小字体大小现在为 24pt
             //string errorMessage;
             //var success = requestContext.SetPreference("webkit.webprefs.minimum_font_size", 24, out errorMessage);
 
-            // This is the preferred place to set the proxy as it's called before the first request is made,
-            // ensuring all requests go through the specified proxy
+            // 这是设置代理的首选位置，因为它在发出第一个请求之前被调用，
+            //确保所有请求都通过指定的代理
             //string errorMessage;
             //bool success = requestContext.SetProxy("http://localhost:8080", out errorMessage); 
         }

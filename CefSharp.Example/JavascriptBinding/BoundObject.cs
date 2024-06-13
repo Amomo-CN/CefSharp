@@ -1,6 +1,6 @@
-// Copyright © 2010 The CefSharp Authors. All rights reserved.
+//版权所有 © 2010 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Linq;
@@ -125,8 +125,8 @@ namespace CefSharp.Example.JavascriptBinding
                 {
                     if (javascriptCallback.CanExecute)
                     {
-                        //NOTE: Classes are not supported, simple structs are
-                        var response = new CallbackResponseStruct("This callback from C# was delayed " + taskDelay + "ms");
+                        //NOTE: 不支持类，仅支持简单结构
+                        var response = new CallbackResponseStruct("来自 C# 的回调被延迟 " + taskDelay + "ms");
                         await javascriptCallback.ExecuteAsync(response);
                     }
                 }
@@ -137,14 +137,14 @@ namespace CefSharp.Example.JavascriptBinding
         {
             if (simpleClass == null)
             {
-                return "TestCallbackFromObject dictionary param is null";
+                return "TestCallbackFromObject 字典参数为 null";
             }
 
             IJavascriptCallback javascriptCallback = simpleClass.Callback;
 
             if (javascriptCallback == null)
             {
-                return "callback property not found or property is not a function";
+                return "未找到回调属性或属性不是函数";
             }
 
             const int taskDelay = 1500;
@@ -159,13 +159,13 @@ namespace CefSharp.Example.JavascriptBinding
                     {
                         if (javascriptCallback.CanExecute)
                         {
-                            await javascriptCallback.ExecuteAsync("message from C# " + simpleClass.TestString + " - " + simpleClass.SubClasses[0].PropertyOne);
+                            await javascriptCallback.ExecuteAsync("来自 C# 的消息 " + simpleClass.TestString + " - " + simpleClass.SubClasses[0].PropertyOne);
                         }
                     }
                 }
             });
 
-            return "waiting for callback execution...";
+            return "等待回调执行...";
         }
 
         public int EchoMyProperty()
@@ -183,7 +183,7 @@ namespace CefSharp.Example.JavascriptBinding
             return result;
         }
 
-        public string EchoParamOrDefault(string param = "This is the default value")
+        public string EchoParamOrDefault(string param = "这是默认值")
         {
             return param;
         }
@@ -337,7 +337,7 @@ namespace CefSharp.Example.JavascriptBinding
             return arg0;
         }
 
-        // TODO: This will currently not work, as it causes a collision w/ the EchoString() method. We need to find a way around that I guess.
+        // TODO: 目前这不起作用，因为它会导致与 EchoString() 方法发生冲突。我想我们需要找到一种解决方法。
         //public String echoString(String arg)
         //{
         //    return "Lowercase echo: " + arg;
@@ -377,10 +377,10 @@ namespace CefSharp.Example.JavascriptBinding
         }
 
         /// <summary>
-        /// Demonstrates the use of params as an argument in a bound object
-        /// </summary>
-        /// <param name="name">Dummy Argument</param>
-        /// <param name="args">Params Argument</param>
+        /// 演示如何使用 params 作为绑定对象中的参数
+        ///</摘要>
+        ///<param name="name">虚拟参数</param>
+        ///<param name="args">参数参数</param>
         public string MethodWithParams(string name, params object[] args)
         {
             return "Name:" + name + ";Args:" + string.Join(", ", args.ToArray());
@@ -393,12 +393,12 @@ namespace CefSharp.Example.JavascriptBinding
 
         public string MethodWithoutAnything()
         {
-            return "Method without anything called and returned successfully.";
+            return "没有任何调用并成功返回的方法.";
         }
 
         public string MethodWithThreeParamsOneOptionalOneArray(string name, string optionalParam = null, params object[] args)
         {
-            return "MethodWithThreeParamsOneOptionalOneArray:" + (name ?? "No Name Specified") + " - " + (optionalParam ?? "No Optional Param Specified") + ";Args:" + string.Join(", ", args.ToArray());
+            return "MethodWithThreeParamsOneOptionalOneArray:" + (name ?? "未指定名称") + " - " + (optionalParam ?? "未指定可选参数") + ";Args:" + string.Join(", ", args.ToArray());
         }
     }
 }

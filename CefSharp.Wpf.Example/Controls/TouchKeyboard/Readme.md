@@ -1,10 +1,9 @@
-Code in this folder is adapted from https://github.com/Microsoft/WPF-Samples/tree/master/Input%20and%20Commands/TouchKeyboard/TouchKeyboardNotifier
+此文件夹中的代码改编自https://github.com/Microsoft/WPF-Samples/tree/master/Input%20and%20Commands/TouchKeyboard/TouchKeyboardNotifier
 
-Licensed under an MIT license, see https://github.com/Microsoft/WPF-Samples/blob/master/LICENSE
+根据 MIT 许可证获得许可，请参阅 https://github.com/Microsoft/WPF-Samples/blob/master/LICENSE
 
-The files aren't included in the .csproj file intentially as they require the Windows 10 SDK
-
-It is reccomended that you obtain and use the https://github.com/Microsoft/WPF-Samples/tree/master/Input%20and%20Commands/TouchKeyboard/TouchKeyboardNotifier
-solution provided by Microsoft. It has more advanced features including TouchKeyboardAwareDecorator, which can be used
-to resize your window when the touch keyboard is visible. Please read https://github.com/Microsoft/WPF-Samples/blob/master/Input%20and%20Commands/TouchKeyboard/TouchKeyboardNotifier/Readme.md
+这些文件并未特意包含在 .csproj 文件中，因为它们需要 Windows 10 SDK
+建议您获取并使用 https://github.com/Microsoft/WPF-Samples/tree/master/Input%20and%20Commands/TouchKeyboard/TouchKeyboardNotifier
+微软提供的解决方案。它具有更高级的功能，包括 TouchKeyboardAwareDecorator，可以使用
+当触摸键盘可见时调整窗口大小。请阅读 https://github.com/Microsoft/WPF-Samples/blob/master/Input%20and%20Commands/TouchKeyboard/TouchKeyboardNotifier/Readme.md
 

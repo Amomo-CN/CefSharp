@@ -393,7 +393,7 @@ namespace CefSharp.DevTools.Accessibility
         }
 
         /// <summary>
-        /// 该房产的价值。
+        /// The value of this property.
         /// </summary>
         [DataMember(Name = ("value"), IsRequired = (true))]
         public CefSharp.DevTools.Accessibility.AXValue Value
@@ -24172,14 +24172,14 @@ namespace CefSharp.DevTools.Page
     }
 
     /// <summary>
-    /// Fired when download makes progress. Last call has |done| == true.
-    /// Deprecated. Use Browser.downloadProgress instead.
+    /// 下载取得进展时触发。最后一次通话已|完成| == 正确。
+    ///已弃用。请改用 Browser.downloadProgress。
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute]
     public class DownloadProgressEventArgs : CefSharp.DevTools.DevToolsDomainEventArgsBase
     {
         /// <summary>
-        /// Global unique identifier of the download.
+        /// 下载的全局唯一标识符。
         /// </summary>
         [DataMember(Name = ("guid"), IsRequired = (true))]
         public string Guid

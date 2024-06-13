@@ -1,14 +1,14 @@
-// Copyright © 2022 The CefSharp Authors. All rights reserved.
+//版权所有 © 2022 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using CefSharp.Handler;
 
 namespace CefSharp.Example.Handlers
 {
     /// <summary>
-    /// A simple <see cref="PermissionHandler"/> implementation that programatically allows
-    /// all requests without user interaction.
+    /// 一个简单的 <see cref="PermissionHandler"/> 实现，以编程方式允许
+    ///无需用户交互的所有请求。
     /// </summary>
     public class ExamplePermissionHandler : PermissionHandler
     {
@@ -31,7 +31,7 @@ namespace CefSharp.Example.Handlers
         {
             using (callback)
             {
-                //Allow the requested permissions
+                //允许请求的权限
                 callback.Continue(requestedPermissions);
                 return true;
             }

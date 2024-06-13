@@ -1,6 +1,6 @@
-// Copyright © 2018 The CefSharp Authors. All rights reserved.
+//版权所有 © 2018 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Collections.Generic;
@@ -18,9 +18,9 @@ using Rect = CefSharp.Structs.Rect;
 namespace CefSharp.Wpf.Experimental
 {
     /// <summary>
-    /// A WPF Keyboard handler implementation that supports IME
-    /// </summary>
-    /// <seealso cref="T:CefSharp.Wpf.Internals.WpfKeyboardHandler"/>
+    /// 支持 IME 的 WPF 键盘处理程序实现
+    ///</摘要>
+    ///<seealso cref="T:CefSharp.Wpf.Internals.WpfKeyboardHandler"/>
     public class WpfImeKeyboardHandler : WpfKeyboardHandler
     {
         private int languageCodeId;
@@ -34,18 +34,18 @@ namespace CefSharp.Wpf.Experimental
         private bool isActive;
 
         /// <summary>
-        /// Constructor.
+        /// 构造函数。
         /// </summary>
-        /// <param name="owner">The owner.</param>
+        /// <param name="owner">所有者。</param>
         public WpfImeKeyboardHandler(ChromiumWebBrowser owner) : base(owner)
         {
-        }        
-        
+        }
+
         /// <summary>
-        /// Change composition range.
-        /// </summary>
-        /// <param name="selectionRange">The selection range.</param>
-        /// <param name="characterBounds">The character bounds.</param>
+        /// 改变成分范围。
+        ///</摘要>
+        ///<param name="selectionRange">选择范围。</param>
+        ///<param name="characterBounds">字符边界。</param>
         public void ChangeCompositionRange(Range selectionRange, Rect[] characterBounds)
         {
             if (!isActive)
@@ -56,23 +56,23 @@ namespace CefSharp.Wpf.Experimental
             var screenInfo = ((IRenderWebBrowser)owner).GetScreenInfo();
             var scaleFactor = screenInfo.HasValue ? screenInfo.Value.DeviceScaleFactor : 1.0f;
 
-            //This is called on the CEF UI thread, we need to invoke back onte main UI thread to
-            //access the UI controls
+            //这是在 CEF UI 线程上调用的，我们需要调用回主 UI 线程来
+            //访问UI控件
             owner.UiThreadRunAsync(() =>
             {
-                //TODO: Getting the root window for every composition range change seems expensive,
-                //we should cache the position and update it on window move.                
+                //TODO：为每个构图范围更改获取根窗口似乎很昂贵，
+                //我们应该缓存位置并在窗口移动时更新它。
                 var parentWindow = (FrameworkElement)Window.GetWindow(owner);
-                
-                //In Winform embedded wpf borwser mode, Window.GetWindow(owner) is null, so use a custom function to get the outermost visual element.
-                if(parentWindow == null)
+
+                //在Winform嵌入的wpf borwser模式下，Window.GetWindow(owner)为null，因此使用自定义函数来获取最外层的可视元素。
+                if (parentWindow == null)
                 {
                     parentWindow = GetOutermostElement(owner);
                 }
-                
+
                 if (parentWindow != null)
                 {
-                    //TODO: What are we calculating here exactly???
+                    //TODO: 我们到底在计算什么？？？
                     var point = owner.TransformToAncestor(parentWindow).Transform(new Point(0, 0));
 
                     var rects = new List<Rect>();
@@ -93,9 +93,9 @@ namespace CefSharp.Wpf.Experimental
         }
 
         /// <summary>
-        /// Setup the Ime Keyboard Handler specific hooks and events
-        /// </summary>
-        /// <param name="source">HwndSource.</param>
+        /// 设置 Ime 键盘处理程序特定的挂钩和事件
+        ///</摘要>
+        ///<param name="source">HwndSource.</param>
         public override void Setup(HwndSource source)
         {
             if (isSetup)
@@ -116,8 +116,8 @@ namespace CefSharp.Wpf.Experimental
 
             owner.AddHandler(UIElement.MouseDownEvent, mouseDownEventHandler, true);
 
-            // If the owner had focus before adding the handler then we have to run the "got focus" code here
-            // or it won't set up IME properly in all cases
+            // 如果所有者在添加处理程序之前获得焦点，那么我们必须在此处运行“获得焦点”代码
+            //否则在所有情况下都无法正确设置 IME
             if (owner.IsFocused)
             {
                 SetActive();
@@ -125,12 +125,12 @@ namespace CefSharp.Wpf.Experimental
         }
 
         /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// 执行与释放、释放或重置非托管资源相关的应用程序定义的任务。
         /// </summary>
         public override void Dispose()
         {
-            // Note Setup can be run after disposing, to "reset" this instance
-            // due to the code in ChromiumWebBrowser.PresentationSourceChangedHandler
+            // 注意 可以在处置后运行安装程序，以“重置”此实例
+            //由于 ChromiumWebBrowser.PresentationSourceChangedHandler 中的代码
             if (!isSetup)
             {
                 return;
@@ -167,8 +167,8 @@ namespace CefSharp.Wpf.Experimental
 
         private void SetActive()
         {
-            // Set to false first if not already, because the value change (and raising of changes)
-            // between false and true is necessary for IME to work in all circumstances
+            // 如果尚未设置为 false，则首先设置为 false，因为值会发生变化（以及引发变化）
+            //介于 false 和 true 之间对于 IME 在所有情况下都能正常工作是必要的
             if (InputMethod.GetIsInputMethodEnabled(owner))
             {
                 InputMethod.SetIsInputMethodEnabled(owner, false);
@@ -178,7 +178,7 @@ namespace CefSharp.Wpf.Experimental
                 InputMethod.SetIsInputMethodSuspended(owner, false);
             }
 
-            // These calls are needed in order for IME to function correctly.
+            // 为了使 IME 正常运行，需要这些调用。
             InputMethod.SetIsInputMethodEnabled(owner, true);
             InputMethod.SetIsInputMethodSuspended(owner, true);
 
@@ -189,7 +189,7 @@ namespace CefSharp.Wpf.Experimental
         {
             isActive = false;
 
-            // These calls are needed in order for IME to function correctly.
+            // 为了使 IME 正常运行，需要这些调用。
             InputMethod.SetIsInputMethodEnabled(owner, false);
             InputMethod.SetIsInputMethodSuspended(owner, false);
         }
@@ -205,7 +205,7 @@ namespace CefSharp.Wpf.Experimental
 
             var browserHost = owner.GetBrowserHost();
 
-            if(browserHost == null)
+            if (browserHost == null)
             {
                 return IntPtr.Zero;
             }
@@ -213,31 +213,31 @@ namespace CefSharp.Wpf.Experimental
             switch ((WM)msg)
             {
                 case WM.IME_SETCONTEXT:
-                {
-                    OnImeSetContext(hwnd, (uint)msg, wParam, lParam);
-                    handled = true;
-                    break;
-                }
+                    {
+                        OnImeSetContext(hwnd, (uint)msg, wParam, lParam);
+                        handled = true;
+                        break;
+                    }
                 case WM.IME_STARTCOMPOSITION:
-                {
-                    OnIMEStartComposition(hwnd);
-                    hasImeComposition = true;
-                    handled = true;
-                    break;
-                }
+                    {
+                        OnIMEStartComposition(hwnd);
+                        hasImeComposition = true;
+                        handled = true;
+                        break;
+                    }
                 case WM.IME_COMPOSITION:
-                {
-                    OnImeComposition(browserHost, hwnd, lParam.ToInt32());
-                    handled = true;
-                    break;
-                }
+                    {
+                        OnImeComposition(browserHost, hwnd, lParam.ToInt32());
+                        handled = true;
+                        break;
+                    }
                 case WM.IME_ENDCOMPOSITION:
-                {
-                    OnImeEndComposition(browserHost, hwnd);
-                    hasImeComposition = false;
-                    handled = true;
-                    break;
-                }
+                    {
+                        OnImeEndComposition(browserHost, hwnd);
+                        hasImeComposition = false;
+                        handled = true;
+                        break;
+                    }
             }
 
             return handled ? IntPtr.Zero : new IntPtr(1);
@@ -247,9 +247,9 @@ namespace CefSharp.Wpf.Experimental
         {
             if (hasImeComposition)
             {
-                // Set focus to 0, which destroys IME suggestions window.
+                // 将焦点设置为 0，这会破坏 IME 建议窗口。
                 ImeNative.SetFocus(IntPtr.Zero);
-                // Restore focus.
+                // 恢复焦点。
                 ImeNative.SetFocus(source.Handle);
             }
         }
@@ -271,7 +271,7 @@ namespace CefSharp.Wpf.Experimental
 
                 if (ImeHandler.GetComposition(hwnd, (uint)lParam, underlines, ref compositionStart, out text))
                 {
-                    if(languageCodeId == ImeNative.LANG_KOREAN)
+                    if (languageCodeId == ImeNative.LANG_KOREAN)
                     {
                         browserHost.ImeSetComposition(text, underlines.ToArray(),
                         new Range(int.MaxValue, int.MaxValue), new Range(compositionStart + underlines.Count, compositionStart + underlines.Count));
@@ -281,7 +281,7 @@ namespace CefSharp.Wpf.Experimental
                         browserHost.ImeSetComposition(text, underlines.ToArray(),
                         new Range(int.MaxValue, int.MaxValue), new Range(compositionStart, compositionStart));
                     }
-                    
+
                     UpdateCaretPosition(compositionStart - 1);
                 }
                 else
@@ -292,10 +292,10 @@ namespace CefSharp.Wpf.Experimental
         }
 
         /// <summary>
-        /// Cancel composition.
-        /// </summary>
-        /// <param name="browserHost">browser host</param>
-        /// <param name="hwnd">The hwnd.</param>
+        ///取消合成。
+        ///</摘要>
+        ///<param name="browserHost">浏览器主机</param>
+        ///<param name="hwnd">hwnd。</param>
         private void CancelComposition(IBrowserHost browserHost, IntPtr hwnd)
         {
             browserHost.ImeCancelComposition();
@@ -304,8 +304,8 @@ namespace CefSharp.Wpf.Experimental
 
         private void OnImeEndComposition(IBrowserHost browserHost, IntPtr hwnd)
         {
-            // Korean IMEs somehow ignore function calls to ::ImeFinishComposingText()
-            // The same letter is commited in ::OnImeComposition()
+            // 韩语 IME 以某种方式忽略对 ::ImeFinishCompositingText() 的函数调用
+            //在 ::OnImeComposition() 中提交相同的字母
             if (languageCodeId != ImeNative.LANG_KOREAN)
             {
                 browserHost.ImeFinishComposingText(false);
@@ -315,11 +315,11 @@ namespace CefSharp.Wpf.Experimental
 
         private void OnImeSetContext(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
-            // We handle the IME Composition Window ourselves (but let the IME Candidates
-            // Window be handled by IME through DefWindowProc()), so clear the
-            // ISC_SHOWUICOMPOSITIONWINDOW flag:
+            // 我们自己处理 IME 组合窗口（但让 IME 候选者
+            //窗口由 IME 通过 DefWindowProc()) 处理，因此清除
+            //ISC_SHOWUICOMPOSITIONWINDOW 标志：
             ImeNative.DefWindowProc(hwnd, msg, wParam, (IntPtr)(lParam.ToInt64() & ~ImeNative.ISC_SHOWUICOMPOSITIONWINDOW));
-            // TODO: should we call ImmNotifyIME?
+            //TODO：我们应该调用 ImmNotifyIME 吗？
 
             CreateImeWindow(hwnd);
             MoveImeWindow(hwnd);
@@ -333,13 +333,13 @@ namespace CefSharp.Wpf.Experimental
 
         private void CreateImeWindow(IntPtr hwnd)
         {
-            // Chinese/Japanese IMEs somehow ignore function calls to
-            // ::ImmSetCandidateWindow(), and use the position of the current system
-            // caret instead -::GetCaretPos().
-            // Therefore, we create a temporary system caret for Chinese IMEs and use
-            // it during this input context.
-            // Since some third-party Japanese IME also uses ::GetCaretPos() to determine
-            // their window position, we also create a caret for Japanese IMEs.
+            // 中文/日文输入法以某种方式忽略函数调用
+            //::ImmSetCandidateWindow()，并使用当前系统的位置
+            //插入符改为 -::GetCaretPos()。
+            //因此，我们为中文输入法创建一个临时系统插入符号并使用
+            //在此输入上下文期间。
+            //由于有些第三方日文输入法也使用::GetCaretPos()来判断
+            //他们的窗口位置，我们还为日语 IME 创建插入符号。
             languageCodeId = PrimaryLangId(InputLanguageManager.Current.CurrentInputLanguage.KeyboardLayoutId);
 
             if (languageCodeId == ImeNative.LANG_JAPANESE || languageCodeId == ImeNative.LANG_CHINESE)
@@ -374,16 +374,16 @@ namespace CefSharp.Wpf.Experimental
             var y = rc.Y + rc.Height;
 
             const int kCaretMargin = 1;
-            // As written in a comment in ImeInput::CreateImeWindow(),
-            // Chinese IMEs ignore function calls to ::ImmSetCandidateWindow()
-            // when a user disables TSF (Text Service Framework) and CUAS (Cicero
-            // Unaware Application Support).
-            // On the other hand, when a user enables TSF and CUAS, Chinese IMEs
-            // ignore the position of the current system caret and uses the
-            // parameters given to ::ImmSetCandidateWindow() with its 'dwStyle'
-            // parameter CFS_CANDIDATEPOS.
-            // Therefore, we do not only call ::ImmSetCandidateWindow() but also
-            // set the positions of the temporary system caret if it exists.
+            // 正如 ImeInput::CreateImeWindow() 中的注释中所写，
+            //中文输入法忽略对 ::ImmSetCandidateWindow() 的函数调用
+            //当用户禁用 TSF（文本服务框架）和 CUAS（Cicero
+            //不知道应用程序支持）。
+            //另一方面，当用户启用 TSF 和 CUAS 时，中文输入法
+            //忽略当前系统插入符的位置并使用
+            //赋予 ::ImmSetCandidateWindow() 的参数及其“dwStyle”
+            //参数 CFS_CANDIDATEPOS。
+            //因此，我们不仅调用::ImmSetCandidateWindow()，而且还调用
+            //设置临时系统插入符的位置（如果存在）。
             var candidatePosition = new ImeNative.CANDIDATEFORM
             {
                 dwIndex = 0,
@@ -400,7 +400,7 @@ namespace CefSharp.Wpf.Experimental
 
             if (languageCodeId == ImeNative.LANG_CHINESE)
             {
-                // Chinese IMEs need set composition window 
+                // 中文输入法需要设置组合窗口
                 var compositionPotision = new ImeNative.COMPOSITIONFORM
                 {
                     dwStyle = (int)ImeNative.CFS_POINT,
@@ -412,16 +412,16 @@ namespace CefSharp.Wpf.Experimental
 
             if (languageCodeId == ImeNative.LANG_KOREAN)
             {
-                // Chinese IMEs and Japanese IMEs require the upper-left corner of
-                // the caret to move the position of their candidate windows.
-                // On the other hand, Korean IMEs require the lower-left corner of the
-                // caret to move their candidate windows.
+                // 中文输入法和日文输入法需要左上角
+                //插入符号移动候选窗口的位置。
+                //另一方面，韩语输入法需要左下角
+                //插入符移动候选窗口。
                 y += kCaretMargin;
             }
-            // Japanese IMEs and Korean IMEs also use the rectangle given to
-            // ::ImmSetCandidateWindow() with its 'dwStyle' parameter CFS_EXCLUDE
-            // to move their candidate windows when a user disables TSF and CUAS.
-            // Therefore, we also set this parameter here.
+            // 日语 IME 和韩语 IME 也使用给定的矩形
+            //::ImmSetCandidateWindow() 及其 'dwStyle' 参数 CFS_EXCLUDE
+            //当用户禁用 TSF 和 CUAS 时移动候选窗口。
+            //因此，我们在这里也设置这个参数。
             var excludeRectangle = new ImeNative.CANDIDATEFORM
             {
                 dwIndex = 0,
@@ -443,17 +443,17 @@ namespace CefSharp.Wpf.Experimental
             }
         }
 
-        //TODO: Should we remove this, it's only a single method
+        //TODO: 我们是否应该删除它，它只是一个方法
         private void UpdateCaretPosition(int index)
         {
             MoveImeWindow(source.Handle);
         }
 
         /// <summary>
-        /// Get the outermost element of the browser 
-        /// </summary>
-        /// <param name="control">The browser</param>
-        /// <returns>The outermost element </returns>
+        /// 获取浏览器最外层元素 
+        ///</摘要>
+        ///<param name="control">浏览器</param>
+        ///<returns>最外层元素</returns>
         private FrameworkElement GetOutermostElement(FrameworkElement control)
         {
             DependencyObject parent = VisualTreeHelper.GetParent(control);

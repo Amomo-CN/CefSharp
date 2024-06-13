@@ -1,6 +1,6 @@
-// Copyright © 2015 The CefSharp Authors. All rights reserved.
+//版权所有 © 2015 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Collections;
@@ -17,14 +17,14 @@ namespace CefSharp.Example.JavascriptBinding
 {
     public class AsyncBoundObject
     {
-        //We expect an exception here, so tell VS to ignore
+        //我们预计这里会出现异常，因此告诉 VS 忽略
         [DebuggerHidden]
         public void Error()
         {
-            throw new Exception("This is an exception coming from C#");
+            throw new Exception("这是来自 C 的异常#");
         }
 
-        //We expect an exception here, so tell VS to ignore
+        //我们预计这里会出现异常，因此告诉 VS 忽略
         [DebuggerHidden]
         public int Div(int divident, int divisor)
         {
@@ -51,7 +51,7 @@ namespace CefSharp.Example.JavascriptBinding
 
         private void Run()
         {
-            Debug.WriteLine("AsyncBoundObject Run execution.");
+            Debug.WriteLine("AsyncBoundObject Run 执行.");
         }
 
         public string Hello(string name)
@@ -63,7 +63,7 @@ namespace CefSharp.Example.JavascriptBinding
         {
             Thread.Sleep(1000);
 
-            return "Waited for 1000ms before returning";
+            return "等待1000ms才返回";
         }
 
         public JsSerializableStruct ReturnObject(string name)
@@ -200,9 +200,9 @@ namespace CefSharp.Example.JavascriptBinding
             return Tuple.Create(true, "TestString:" + simpleClass.TestString + ";SubClasses[0].PropertyOne:" + simpleClass.SubClasses[0].PropertyOne);
         }
 
-        //The Following Test methods can only be used when
+        //以下测试方法只能在以下情况下使用：
         //CefSharpSettings.ConcurrentTaskExecution = true;
-        //There is a seperate set of QUnit tests for these
+        //对于这些有一组单独的单元测试
 
         public Task<string> ReturnTaskStringAsync()
         {
@@ -213,7 +213,7 @@ namespace CefSharp.Example.JavascriptBinding
         {
             await Task.Delay(1000);
 
-            Debug.WriteLine("Delayed 1 second.");
+            Debug.WriteLine("延迟1秒.");
         }
 
         public async Task<string> JavascriptCallbackEvalPromise(string msg, IJavascriptCallback callback)
@@ -228,7 +228,7 @@ namespace CefSharp.Example.JavascriptBinding
         {
             await Task.Delay(milliseconds);
 
-            Debug.WriteLine("Delayed in ms:" + milliseconds);
+            Debug.WriteLine("延迟毫秒:" + milliseconds);
         }
 
         public async Task<string> AsyncWaitTwoSeconds(string str)
@@ -248,13 +248,13 @@ namespace CefSharp.Example.JavascriptBinding
             return lines;
         }
 
-        //We expect an exception here, so tell VS to ignore
+        //我们预计这里会出现异常，因此告诉 VS 忽略
         [DebuggerHidden]
         public async Task<string> AsyncThrowException()
         {
             await Task.Delay(2000);
 
-            throw new Exception("Expected Exception");
+            throw new Exception("预期异常");
         }
 
         public uint UIntAddModel(UIntAddModel model)
@@ -274,7 +274,7 @@ namespace CefSharp.Example.JavascriptBinding
                 if (invokeCallback)
                 {
                     var response = await callback.ExecuteAsync(msg).ConfigureAwait(false);
-                    //Echo the response
+                    //回显响应
                     return (string)response.Result;
                 }
 

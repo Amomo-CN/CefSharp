@@ -1,6 +1,6 @@
-// Copyright © 2018 The CefSharp Authors. All rights reserved.
+//版权所有 © 2018 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.IO.MemoryMappedFiles;
@@ -13,10 +13,10 @@ using Rect = CefSharp.Structs.Rect;
 namespace CefSharp.Wpf.Rendering
 {
     /// <summary>
-    /// WritableBitmapRenderHandler - creates/updates an WritableBitmap
-    /// Uses a MemoryMappedFile for double buffering when the size matches
-    /// or creates a new WritableBitmap when required
-    /// </summary>
+    ///WritableBitmapRenderHandler -创建/更新 WritableBitmap
+    ///当大小匹配时使用 MemoryMappedFile 进行双缓冲
+    ///或在需要时创建一个新的 WritableBitmap
+    ///</摘要>
     /// <seealso cref="CefSharp.Wpf.IRenderHandler" />
     public class WritableBitmapRenderHandler : AbstractRenderHandler
     {
@@ -25,12 +25,12 @@ namespace CefSharp.Wpf.Rendering
         private readonly bool invalidateDirtyRect;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WritableBitmapRenderHandler"/> class.
-        /// </summary>
-        /// <param name="dpiX">The dpi x.</param>
-        /// <param name="dpiY">The dpi y.</param>
-        /// <param name="invalidateDirtyRect">if true then only the direct rectangle will be updated, otherwise the whole bitmap will be redrawn</param>
-        /// <param name="dispatcherPriority">priority at which the bitmap will be updated on the UI thread</param>
+        /// 初始化 <see cref="WritableBitmapRenderHandler"/> 类的新实例。
+        ///</摘要>
+        ///<param name="dpiX">dpi x.</param>
+        ///<param name="dpiY">dpi y。</param>
+        ///<param name="invalidateDirtyRect">如果为 true 则仅更新直接矩形，否则将重绘整个位图</param>
+        ///<param name="dispatcherPriority">UI 线程上更新位图的优先级</param>
         public WritableBitmapRenderHandler(double dpiX, double dpiY, bool invalidateDirtyRect = true, DispatcherPriority dispatcherPriority = DispatcherPriority.Render)
         {
             this.dpiX = dpiX;
@@ -40,11 +40,11 @@ namespace CefSharp.Wpf.Rendering
         }
 
         /// <summary>
-        /// When true if the Dirty Rect (rectangle that's to be updated)
-        /// is smaller than the full width/height then only copy the Dirty Rect
-        /// from the CEF native buffer to our own managed buffer.
-        /// Set to true to improve performance when only a small portion of the screen is updated.
-        /// Defaults to false currently.
+        ///当为 true 时，如果脏矩形（要更新的矩形）
+        ///小于全宽/高则仅复制脏矩形
+        ///从 CEF 本机缓冲区到我们自己的托管缓冲区。
+        ///设置为 true 以在仅更新屏幕的一小部分时提高性能。
+        ///当前默认为 false。
         /// </summary>
         public bool CopyOnlyDirtyRect { get; set; }
 
@@ -62,9 +62,9 @@ namespace CefSharp.Wpf.Rendering
 
                 if (createNewBitmap)
                 {
-                    //If the MemoryMappedFile is smaller than we need then create a larger one
-                    //If it's larger then we need then rather than going through the costly expense of
-                    //allocating a new one we'll just use the old one and only access the number of bytes we require.
+                    //如果 MemoryMappedFile 小于我们需要的大小，则创建一个更大的文件
+                    //如果它更大，那么我们需要然后，而不是经历昂贵的费用
+                    //分配一个新的，我们将只使用旧的，并且只访问我们需要的字节数。
                     if (viewAccessor == null || viewAccessor.Capacity < numberOfBytes)
                     {
                         ReleaseMemoryMappedView(ref mappedFile, ref viewAccessor);
@@ -80,15 +80,15 @@ namespace CefSharp.Wpf.Rendering
 
                 if (CopyOnlyDirtyRect)
                 {
-                    // For full buffer update we just perform a simple copy
-                    // otherwise only a portion will be updated.
+                    // 对于完整的缓冲区更新，我们只需执行简单的复制
+                    //否则只会更新一部分。
                     if (width == dirtyRect.Width && height == dirtyRect.Height)
                     {
                         NativeMethodWrapper.MemoryCopy(viewAccessor.SafeMemoryMappedViewHandle.DangerousGetHandle(), buffer, numberOfBytes);
                     }
                     else
                     {
-                        //TODO: We can probably perform some minor optimisations here.
+                        //TODO: 我们或许可以在这里进行一些小的优化。
                         //var numberOfBytesToCopy = dirtyRect.Width * BytesPerPixel;
                         //var safeMemoryMappedViewHandle = viewAccessor.SafeMemoryMappedViewHandle.DangerousGetHandle();
 
@@ -109,8 +109,8 @@ namespace CefSharp.Wpf.Rendering
                     NativeMethodWrapper.MemoryCopy(viewAccessor.SafeMemoryMappedViewHandle.DangerousGetHandle(), buffer, numberOfBytes);
                 }
 
-                //Take a reference to the sourceBuffer that's used to update our WritableBitmap,
-                //once we're on the UI thread we need to check if it's still valid
+                //引用用于更新 WriteableBitmap 的 sourceBuffer，
+                //一旦我们进入 UI 线程，我们需要检查它是否仍然有效
                 var sourceBuffer = viewAccessor.SafeMemoryMappedViewHandle;
 
                 image.Dispatcher.BeginInvoke((Action)(() =>
@@ -124,10 +124,10 @@ namespace CefSharp.Wpf.Rendering
 
                         var size = isPopup ? popupSize : viewSize;
 
-                        //If OnPaint is called multiple times before
-                        //our BeginInvoke call we check the size matches our most recent
-                        //update, the buffer has already been overriden (frame is dropped effectively)
-                        //so we ignore this call
+                        //如果之前多次调用OnPaint
+                        //我们的 BeginInvoke 调用，我们检查大小是否与最近的大小相匹配
+                        //更新，缓冲区已经被覆盖（帧被有效丢弃）
+                        //所以我们忽略这个调用
                         //https://github.com/cefsharp/CefSharp/issues/3114
                         if (size.Width != width || size.Height != height)
                         {
@@ -150,10 +150,10 @@ namespace CefSharp.Wpf.Rendering
 
                         var bitmap = (WriteableBitmap)image.Source;
 
-                        //When agressively resizing the ChromiumWebBrowser sometimes
-                        //we can end up with our buffer size not matching our bitmap size
-                        //Just ignore these frames as the rendering should eventually catch up
-                        //(CEF can generate multiple frames before WPF has performed a render cycle)
+                        //有时大幅调整 ChromiumWebBrowser 的大小时
+                        //我们最终可能会得到缓冲区大小与位图大小不匹配的结果
+                        //忽略这些帧，因为渲染最终应该会赶上
+                        //（CEF可以在WPF执行渲染周期之前生成多个帧）
                         //https://github.com/cefsharp/CefSharp/issues/3474
                         if (width > bitmap.PixelWidth || height > bitmap.PixelHeight)
                         {
@@ -162,18 +162,18 @@ namespace CefSharp.Wpf.Rendering
 
                         var sourceBufferPtr = sourceBuffer.DangerousGetHandle();
 
-                        // Issue https://github.com/cefsharp/CefSharp/issues/4426
+                        // 问题 https://github.com/cefsharp/CefSharp/issues/4426
                         if (sourceBufferPtr == IntPtr.Zero)
                         {
                             return;
                         }
 
-                        //By default we'll only update the dirty rect, for those that run into a MILERR_WIN32ERROR Exception (#2035)
-                        //it's desirably to either upgrade to a newer .Net version (only client runtime needs to be installed, not compiled
-                        //against a newer version. Or invalidate the whole bitmap
+                        //默认情况下，我们只会更新那些遇到 MILERR_WIN32ERROR 异常的脏矩形 (#2035)
+                        //最好升级到更新的.Net版本（只需要安装客户端运行时，不需要编译
+                        //针对较新的版本。或者使整个位图无效
                         if (invalidateDirtyRect)
                         {
-                            // Update the dirty region
+                            // 更新脏区
                             var sourceRect = new Int32Rect(dirtyRect.X, dirtyRect.Y, dirtyRect.Width, dirtyRect.Height);
 
                             bitmap.Lock();
@@ -182,7 +182,7 @@ namespace CefSharp.Wpf.Rendering
                         }
                         else
                         {
-                            // Update whole bitmap
+                            // 更新整个位图
                             var sourceRect = new Int32Rect(0, 0, width, height);
 
                             bitmap.Lock();

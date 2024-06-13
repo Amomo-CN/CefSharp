@@ -1,11 +1,11 @@
-// Copyright © 2018 The CefSharp Authors. All rights reserved.
+//版权所有 © 2018 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 namespace CefSharp.Wpf.Internals
 {
     /// <summary>
-    /// Enumeration for virtual keys taken from http://www.pinvoke.net/default.aspx/Enums/VirtualKeys.html
+    ///虚拟键的枚举取自 http://www.pinvoke.net/default.aspx/Enums/VirtualKeys.html
     /// </summary>
     public enum VirtualKeys : ushort
     {

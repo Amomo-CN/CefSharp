@@ -1,6 +1,6 @@
-// Copyright © 2018 The CefSharp Authors. All rights reserved.
+//版权所有 © 2018 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -10,7 +10,7 @@ namespace CefSharp.Wpf.Internals
     public class WpfKeyboardHandler : IWpfKeyboardHandler
     {
         /// <summary>
-        /// The owner browser instance
+        /// 所有者浏览器实例
         /// </summary>
         protected readonly ChromiumWebBrowser owner;
 
@@ -21,12 +21,12 @@ namespace CefSharp.Wpf.Internals
 
         public virtual void Setup(HwndSource source)
         {
-            // nothing to do here
+            // 在这儿无事可做
         }
 
         public virtual void Dispose()
         {
-            // nothing to do here
+            // 在这儿无事可做
         }
 
         public virtual void HandleKeyPress(KeyEventArgs e)
@@ -42,24 +42,24 @@ namespace CefSharp.Wpf.Internals
                 {
                     case Key.LeftAlt:
                     case Key.RightAlt:
-                    {
-                        virtualKey = (int)VirtualKeys.Menu;
-                        break;
-                    }
+                        {
+                            virtualKey = (int)VirtualKeys.Menu;
+                            break;
+                        }
 
                     case Key.LeftCtrl:
                     case Key.RightCtrl:
-                    {
-                        virtualKey = (int)VirtualKeys.Control;
-                        break;
-                    }
+                        {
+                            virtualKey = (int)VirtualKeys.Control;
+                            break;
+                        }
 
                     case Key.LeftShift:
                     case Key.RightShift:
-                    {
-                        virtualKey = (int)VirtualKeys.Shift;
-                        break;
-                    }
+                        {
+                            virtualKey = (int)VirtualKeys.Shift;
+                            break;
+                        }
 
                     default:
                         virtualKey = KeyInterop.VirtualKeyFromKey(key);
@@ -78,10 +78,10 @@ namespace CefSharp.Wpf.Internals
                 browser.GetHost().SendKeyEvent(message, virtualKey, 0);
             }
 
-            // Hooking the Tab key like this makes the tab focusing in essence work like
-            // KeyboardNavigation.TabNavigation="Cycle"; you will never be able to Tab out of the web browser control.
-            // We also add the condition to allow ctrl+a to work when the web browser control is put inside listbox.
-            // Prevent keyboard navigation using arrows and home and end keys
+            // 像这样挂钩 Tab 键使得 Tab 键的聚焦本质上就像
+            //KeyboardNavigation.TabNavigation="循环";您将永远无法通过 Tab 键脱离网络浏览器的控制。
+            //我们还添加了条件，以便当 Web 浏览器控件放入列表框时允许 ctrl+a 起作用。
+            //防止使用箭头以及 home 和 end 键进行键盘导航
             if (key == Key.Tab || key == Key.Home || key == Key.End || key == Key.Up
                                || key == Key.Down || key == Key.Left || key == Key.Right
                                || (key == Key.A && Keyboard.Modifiers == ModifierKeys.Control))

@@ -1,6 +1,6 @@
-// Copyright © 2015 The CefSharp Authors. All rights reserved.
+//版权所有 © 2015 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.IO;
@@ -11,16 +11,16 @@ using System.Windows.Input;
 namespace CefSharp.Wpf.Internals
 {
     /// <summary>
-    /// Internal WpfExtension methods - unlikely you'd need to use these,
-    /// they're left public on the off chance you do.
+    ///内部 WpfExtension 方法 -您不太可能需要使用这些方法，
+    ///如果您这样做的话，它们将被公开。
     /// </summary>
     public static class WpfExtensions
     {
         /// <summary>
-        /// Gets the modifiers.
-        /// </summary>
-        /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
-        /// <returns>CefEventFlags.</returns>
+        /// 获取修饰符。
+        ///</摘要>
+        ///<param name="e">包含事件数据的 <see cref="MouseEventArgs"/> 实例.</param>
+        /// <returns>Cef事件标志.</returns>
         public static CefEventFlags GetModifiers(this MouseEventArgs e)
         {
             CefEventFlags modifiers = 0;
@@ -44,10 +44,10 @@ namespace CefSharp.Wpf.Internals
         }
 
         /// <summary>
-        /// Gets the modifiers.
-        /// </summary>
-        /// <param name="e">The <see cref="DragEventArgs"/> instance containing the event data.</param>
-        /// <returns>CefEventFlags.</returns>
+        /// 获取修饰符。
+        ///</摘要>
+        ///<param name="e">包含事件数据的 <see cref="DragEventArgs"/> 实例。</param>
+        ///<返回>CefEventFlags.</returns>
         public static CefEventFlags GetModifiers(this DragEventArgs e)
         {
             return GetModifierKeys();
@@ -55,9 +55,9 @@ namespace CefSharp.Wpf.Internals
 
 
         /// <summary>
-        /// Gets keyboard modifiers.
-        /// </summary>
-        /// <returns>CefEventFlags.</returns>
+        ///获取键盘修饰符。
+        ///</摘要>
+        ///<返回>CefEventFlags.</returns>
         public static CefEventFlags GetModifierKeys(CefEventFlags modifiers = 0)
         {
             if (Keyboard.IsKeyDown(Key.LeftCtrl))
@@ -94,15 +94,15 @@ namespace CefSharp.Wpf.Internals
         }
 
         /// <summary>
-        /// Gets the modifiers.
-        /// </summary>
-        /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
-        /// <returns>CefEventFlags.</returns>
+        /// 获取修饰符。
+        ///</摘要>
+        ///<param name="e">包含事件数据的 <see cref="KeyEventArgs"/> 实例。</param>
+        ///<返回>CefEventFlags.</returns>
         public static CefEventFlags GetModifiers(this KeyEventArgs e)
         {
             CefEventFlags modifiers = 0;
 
-            //Only read modifiers once for performance reasons
+            //出于性能原因，仅读取修饰符一次
             //https://referencesource.microsoft.com/#PresentationCore/Core/CSharp/System/Windows/Input/KeyboardDevice.cs,227
             var keyboardDeviceModifiers = e.KeyboardDevice.Modifiers;
 
@@ -125,20 +125,20 @@ namespace CefSharp.Wpf.Internals
         }
 
         /// <summary>
-        /// Gets the drag data wrapper.
-        /// </summary>
-        /// <param name="e">The <see cref="DragEventArgs"/> instance containing the event data.</param>
-        /// <returns>CefDragDataWrapper.</returns>
+        ///获取拖动数据包装器。
+        ///</摘要>
+        ///<param name="e">包含事件数据的 <see cref="DragEventArgs"/> 实例。</param>
+        ///<returns>CefDragDataWrapper.</returns>
         public static IDragData GetDragData(this DragEventArgs e)
         {
-            // Convert Drag Data
+            // 转换拖动数据
             var dragData = DragData.Create();
 
-            // Files            
+            // 文件
             dragData.IsFile = e.Data.GetDataPresent(DataFormats.FileDrop);
             if (dragData.IsFile)
             {
-                // As per documentation, we only need to specify FileNames, not FileName, when dragging into the browser (http://magpcss.org/ceforum/apidocs3/projects/(default)/CefDragData.html)
+                // 根据文档，当拖动到浏览器中时，我们只需要指定 FileNames，而不是 FileName (http://magpcss.org/ceforum/apidocs3/projects/(default)/CefDragData.html)
                 foreach (var filePath in (string[])e.Data.GetData(DataFormats.FileDrop))
                 {
                     var displayName = Path.GetFileName(filePath);
@@ -172,19 +172,19 @@ namespace CefSharp.Wpf.Internals
         }
 
         /// <summary>
-        /// Gets the link.
-        /// </summary>
-        /// <param name="data">The data.</param>
-        /// <returns>System.String.</returns>
+        /// 获取链接。
+        ///</摘要>
+        ///<param name="data">数据。</param>
+        ///<returns>System.String.</returns>
         private static string GetLink(IDataObject data)
         {
             const string asciiUrlDataFormatName = "UniformResourceLocator";
             const string unicodeUrlDataFormatName = "UniformResourceLocatorW";
 
-            // Try Unicode
+            // 尝试 Unicode
             if (data.GetDataPresent(unicodeUrlDataFormatName))
             {
-                // Try to read a Unicode URL from the data
+                // 尝试从数据中读取 Unicode URL
                 var unicodeUrl = ReadUrlFromDragDropData(data, unicodeUrlDataFormatName, Encoding.Unicode);
                 if (unicodeUrl != null)
                 {
@@ -192,28 +192,28 @@ namespace CefSharp.Wpf.Internals
                 }
             }
 
-            // Try ASCII
+            // 尝试 ASCII
             if (data.GetDataPresent(asciiUrlDataFormatName))
             {
-                // Try to read an ASCII URL from the data
+                // 尝试从数据中读取 ASCII URL
                 return ReadUrlFromDragDropData(data, asciiUrlDataFormatName, Encoding.ASCII);
             }
 
-            // Not a valid link
+            // 无效链接
             return null;
         }
 
         /// <summary>
-        /// Reads a URL using a particular text encoding from drag-and-drop data.
-        /// </summary>
-        /// <param name="data">The drag-and-drop data.</param>
-        /// <param name="urlDataFormatName">The data format name of the URL type.</param>
-        /// <param name="urlEncoding">The text encoding of the URL type.</param>
-        /// <returns>A URL, or <see langword="null" /> if <paramref name="data" /> does not contain a URL
-        /// of the correct type.</returns>
+        ///使用特定文本编码从拖放数据中读取 URL。
+        ///</摘要>
+        ///<param name="data">拖放数据。</param>
+        ///<param name="urlDataFormatName">URL类型的数据格式名称</param>
+        ///<param name="urlEncoding">URL类型的文本编码</param>
+        ///<returns>一个 URL，或者 <see langword="null" /> 如果 <paramref name="data" /> 不包含 URL
+        ///正确的类型.</returns>
         private static string ReadUrlFromDragDropData(IDataObject data, string urlDataFormatName, Encoding urlEncoding)
         {
-            // Read the URL from the data
+            // 从数据中读取URL
             string url;
             using (var urlStream = (Stream)data.GetData(urlDataFormatName))
             {
@@ -223,7 +223,7 @@ namespace CefSharp.Wpf.Internals
                 }
             }
 
-            // URLs in drag/drop data are often padded with null characters so remove these
+            // 拖放数据中的 URL 通常会用空字符填充，因此请删除这些字符
             return url.TrimEnd('\0');
         }
     }

@@ -6,11 +6,11 @@ using System.Windows.Media;
 namespace CefSharp.Wpf.Experimental.Accessibility
 {
     /// <summary>
-    /// Default TabControl's AutomationPeer doesn’t know anything about the controls within it, since they’re loaded dynamically.
-    /// The purpose of this class is to fix this behavior.
-    /// </summary>
-    /// <remarks>
-    /// Taken from https://www.colinsalmcorner.com/post/genericautomationpeer--helping-the-coded-ui-framework-find-your-custom-controls
+    /// 默认 TabControl 的 AutomationPeer 对其中的控件一无所知，因为它们是动态加载的。
+    ///此类的目的是修复此行为。
+    ///</摘要>
+    ///<备注>
+    ///取自 https://www.colinsalmcorner.com/post/genericautomationpeer--helping-the-coded-ui-framework-find-your-custom-controls
     /// </remarks>
     public class TabControlAutomationPeer : UIElementAutomationPeer
     {

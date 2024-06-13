@@ -1,6 +1,6 @@
-// Copyright © 2019 The CefSharp Authors. All rights reserved.
+//版权所有 © 2019 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Windows;
@@ -12,11 +12,11 @@ using Rect = CefSharp.Structs.Rect;
 namespace CefSharp.Wpf.Rendering
 {
     /// <summary>
-    /// DirectWritableBitmapRenderHandler - directly copyies the buffer
-    /// into writeableBitmap.BackBuffer. No additional copies or locking are used.
-    /// Can only be used when CEF UI thread and WPF UI thread are the same (MultiThreadedMessageLoop = false)
-    /// </summary>
-    /// <seealso cref="CefSharp.Wpf.IRenderHandler" />
+    /// DirectWritableBitmapRenderHandler -直接复制缓冲区
+    ///进入 writeableBitmap.BackBuffer。不使用额外的副本或锁定。
+    ///仅当 CEF UI 线程和 WPF UI 线程相同时才能使用 (MultiThreadedMessageLoop = false)
+    ///</摘要>
+    ///<seealso cref="CefSharp.Wpf.IRenderHandler" />
     public class DirectWritableBitmapRenderHandler : IRenderHandler
     {
         private readonly double dpiX;
@@ -24,17 +24,17 @@ namespace CefSharp.Wpf.Rendering
         private readonly bool invalidateDirtyRect;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WritableBitmapRenderHandler"/> class.
-        /// </summary>
-        /// <param name="dpiX">The dpi x.</param>
-        /// <param name="dpiY">The dpi y.</param>
-        /// <param name="invalidateDirtyRect">if true then only the direct rectangle will be updated, otherwise the whole bitmap will be redrawn</param>
-        /// <param name="dispatcherPriority">priority at which the bitmap will be updated on the UI thread</param>
+        /// 初始化 <see cref="WritableBitmapRenderHandler"/> 类的新实例。
+        ///</摘要>
+        ///<param name="dpiX">dpi x.</param>
+        ///<param name="dpiY">dpi y。</param>
+        ///<param name="invalidateDirtyRect">如果为 true 则仅更新直接矩形，否则将重绘整个位图</param>
+        ///<param name="dispatcherPriority">UI 线程上更新位图的优先级</param>
         public DirectWritableBitmapRenderHandler(double dpiX, double dpiY, bool invalidateDirtyRect = true, DispatcherPriority dispatcherPriority = DispatcherPriority.Render)
         {
             if (!Cef.CurrentlyOnThread(CefThreadIds.TID_UI))
             {
-                throw new NotSupportedException("Can only be used when CEF is integrated into your WPF Message Loop (MultiThreadedMessageLoop = false).");
+                throw new NotSupportedException("仅当 CEF 集成到 WPF 消息循环中时才能使用 (MultiThreadedMessageLoop = false)。");
             }
 
             this.dpiX = dpiX;

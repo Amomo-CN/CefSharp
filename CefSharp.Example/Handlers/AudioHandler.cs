@@ -1,6 +1,6 @@
-// Copyright © 2019 The CefSharp Authors. All rights reserved.
+//版权所有 © 2019 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using CefSharp.Enums;
 using CefSharp.Structs;
@@ -18,13 +18,13 @@ namespace CefSharp.Example.Handlers
 
         public AudioHandler(string path) : base()
         {
-            // The output file with raw audio data (PCM, 32-bit, float) will be saved in this path
+            // 包含原始音频数据（PCM、32 位、浮点）的输出文件将保存在此路径中
             this.rawAudioFile = new FileStream(path, FileMode.Create, FileAccess.Write);
         }
 
         protected override bool GetAudioParameters(IWebBrowser chromiumWebBrowser, IBrowser browser, ref AudioParameters parameters)
         {
-            // return true to activate audio stream capture
+            // 返回 true 以激活音频流捕获
             return true;
         }
 
@@ -38,11 +38,11 @@ namespace CefSharp.Example.Handlers
         protected override void OnAudioStreamPacket(IWebBrowser chromiumWebBrowser, IBrowser browser, IntPtr data, int noOfFrames, long pts)
         {
             /*
-             * NOTE: data is an array representing the raw PCM data as a floating point type, i.e. 4-byte value(s)
-             * Based on noOfFrames and the channels value passed to IAudioHandler.OnAudioStreamStarted
-             * you can calculate the size of the data array in bytes.
-             * 
-             * Audio data (PCM, 32-bit, float) will be save to rawAudioFile stream.
+             * 注意：data 是一个数组，表示原始 PCM 数据为浮点类型，即 4 字节值
+             *基于 noOfFrames 和传递给 IAudioHandler.OnAudioStreamStarted 的通道值
+             *您可以计算数据数组的大小（以字节为单位）。
+             *
+             *音频数据（PCM、32 位、浮点）将保存到 rawAudioFile 流中。
              */
 
             unsafe

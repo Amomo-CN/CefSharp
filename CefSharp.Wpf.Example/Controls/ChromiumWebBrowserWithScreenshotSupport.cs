@@ -1,6 +1,6 @@
-// Copyright © 2017 The CefSharp Authors. All rights reserved.
+//版权所有 © 2017 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Collections.Generic;
@@ -21,7 +21,7 @@ using Size = System.Windows.Size;
 namespace CefSharp.Wpf.Example.Controls
 {
     /// <summary>
-    /// Example with Screenshot support - adapted from https://github.com/cefsharp/CefSharp/pull/462/
+    /// 支持屏幕截图的示例 -改编自 https://github.com/cefsharp/CefSharp/pull/462/
     /// </summary>
     public class ChromiumWebBrowserWithScreenshotSupport : ChromiumWebBrowser
     {
@@ -49,24 +49,24 @@ namespace CefSharp.Wpf.Example.Controls
         {
             if (screenshotTaskCompletionSource != null && screenshotTaskCompletionSource.Task.Status == TaskStatus.Running)
             {
-                throw new Exception("Screenshot already in progress, you must wait for the previous screenshot to complete");
+                throw new Exception("屏幕截图已在进行中，您必须等待上一个屏幕截图完成");
             }
 
             if (IsBrowserInitialized == false)
             {
-                throw new Exception("Browser has not yet finished initializing or is being disposed");
+                throw new Exception("浏览器尚未完成初始化或正在处置");
             }
 
             if (IsLoading)
             {
-                throw new Exception("Unable to take screenshot while browser is loading");
+                throw new Exception("浏览器加载时无法截图");
             }
 
             var browserHost = this.GetBrowserHost();
 
             if (browserHost == null)
             {
-                throw new Exception("IBrowserHost is null");
+                throw new Exception("浏览器主机为空");
             }
 
             screenshotTaskCompletionSource = new TaskCompletionSource<InteropBitmap>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -92,8 +92,8 @@ namespace CefSharp.Wpf.Example.Controls
             this.screenshotSize = screenshotSize;
             this.isTakingScreenshot = true;
             this.ignoreFrames = ignoreFrames.GetValueOrDefault() < 0 ? 0 : ignoreFrames.GetValueOrDefault();
-            //Resize the browser using the desired screenshot dimensions
-            //The resulting bitmap will never be rendered to the screen
+            //使用所需的屏幕截图尺寸调整浏览器大小
+            //生成的位图永远不会渲染到屏幕上
             browserHost.WasResized();
 
             return screenshotTaskCompletionSource.Task;
@@ -113,41 +113,41 @@ namespace CefSharp.Wpf.Example.Controls
         {
             if (isTakingScreenshot)
             {
-                //We ignore the first n number of frames
+                //我们忽略前n帧
                 if (ignoreFrames > 0)
                 {
                     ignoreFrames--;
                     return;
                 }
 
-                //Wait until we have a frame that matches the updated size we requested
+                //等到我们有一个与我们请求的更新尺寸相匹配的框架
                 if (screenshotSize.HasValue && screenshotSize.Value.Width == width && screenshotSize.Value.Height == height)
                 {
                     var stride = width * BytesPerPixel;
                     var numberOfBytes = stride * height;
 
-                    //Create out own memory mapped view for the screenshot and copy the buffer into it.
-                    //If we were going to create a lot of screenshots then it would be better to allocate a large buffer
-                    //and reuse it.
+                    //为屏幕截图创建自己的内存映射视图并将缓冲区复制到其中。
+                    //如果我们要创建很多屏幕截图，那么最好分配一个大的缓冲区
+                    //并重用它。
                     var mappedFile = MemoryMappedFile.CreateNew(null, numberOfBytes, MemoryMappedFileAccess.ReadWrite);
                     var viewAccessor = mappedFile.CreateViewAccessor();
 
                     CopyMemory(viewAccessor.SafeMemoryMappedViewHandle.DangerousGetHandle(), buffer, (uint)numberOfBytes);
 
-                    //Bitmaps need to be created on the UI thread
+                    //位图需要在 UI 线程上创建
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
                         var backBuffer = mappedFile.SafeMemoryMappedFileHandle.DangerousGetHandle();
-                        //NOTE: Interopbitmap is not capable of supporting DPI scaling
+                        //NOTE:Interopbitmap 不支持 DPI 缩放
                         var bitmap = (InteropBitmap)Imaging.CreateBitmapSourceFromMemorySection(backBuffer,
                             width, height, PixelFormat, stride, 0);
                         screenshotTaskCompletionSource.TrySetResult(bitmap);
 
                         isTakingScreenshot = false;
                         var browserHost = GetBrowser().GetHost();
-                        //Return the framerate to the previous value
+                        //将帧速率返回到之前的值
                         browserHost.WindowlessFrameRate = oldFrameRate;
-                        //Let the browser know the size changes so normal rendering can continue
+                        //让浏览器知道尺寸变化，以便正常渲染可以继续
                         browserHost.WasResized();
 
                         viewAccessor?.Dispose();
@@ -206,14 +206,14 @@ namespace CefSharp.Wpf.Example.Controls
                          }
                          else
                          {
-                             MessageBox.Show("Unable to capture screenshot");
+                             MessageBox.Show("无法捕获屏幕截图");
                          }
-                     }, uiThreadTaskScheduler); //Make sure continuation runs on UI thread
+                     }, uiThreadTaskScheduler); //确保 Continuation 在 UI 线程上运行
 
                 }
                 else
                 {
-                    MessageBox.Show("Unable to obtain size of screenshot");
+                    MessageBox.Show("无法获取截图大小");
                 }
             }, uiThreadTaskScheduler);
         }

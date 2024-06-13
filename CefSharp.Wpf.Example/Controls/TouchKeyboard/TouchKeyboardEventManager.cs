@@ -1,9 +1,9 @@
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
-// ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
-// THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
-// PARTICULAR PURPOSE.
+//本代码和信息按“原样”提供，不提供任何保证
+//任何类型，无论是明示的还是暗示的，包括但不限于
+//对适销性和/或适用性的默示保证
+//特殊用途。
 //
-// Copyright (c) Microsoft Corporation. All rights reserved
+//版权所有 (c) Microsoft Corporation。版权所有
 
 using System;
 using System.Runtime.InteropServices;
@@ -14,20 +14,20 @@ using static Microsoft.Windows.Input.TouchKeyboard.Rcw.InputPaneRcw;
 namespace Microsoft.Windows.Input.TouchKeyboard
 {
     /// <summary>
-    /// Provides Win10 Touch Keyboard - Show/Hide
-    /// NOTE: Documentation suggests Win10 SDK is required to compile this.
-    /// https://github.com/Microsoft/WPF-Samples/blob/master/Input%20and%20Commands/TouchKeyboard/TouchKeyboardNotifier/Readme.md
-    /// </summary>
-    /// <remarks>
-    /// Adapted from https://github.com/Microsoft/WPF-Samples/blob/master/Input%20and%20Commands/TouchKeyboard/TouchKeyboardNotifier/TouchKeyboardEventManager.cs
-    /// Licensed under an MIT license see https://github.com/Microsoft/WPF-Samples/blob/master/LICENSE
+    /// 提供Win10触摸键盘-显示/隐藏
+    ///注意：文档表明需要 Win10 SDK 来编译它。
+    ///https://github.com/Microsoft/WPF-Samples/blob/master/Input%20and%20Commands/TouchKeyboard/TouchKeyboardNotifier/Readme.md
+    ///</摘要>
+    ///<备注>
+    ///改编自https://github.com/Microsoft/WPF-Samples/blob/master/Input%20and%20Commands/TouchKeyboard/TouchKeyboardNotifier/TouchKeyboardEventManager.cs
+    ///根据 MIT 许可证获得许可，请参阅 https://github.com/Microsoft/WPF-Samples/blob/master/LICENSE
     /// </remarks>
     [CLSCompliant(true)]
     internal class TouchKeyboardEventManager : IDisposable
     {
         private const string InputPaneTypeName = "Windows.UI.ViewManagement.InputPane, Windows, ContentType=WindowsRuntime";
         /// <summary>
-        /// The WinRT InputPane type.
+        /// WinRT 输入窗格类型。
         /// </summary>
         private readonly Type inputPaneType = null;
 
@@ -38,39 +38,39 @@ namespace Microsoft.Windows.Input.TouchKeyboard
         private bool disposed = false;
 
         /// <summary>
-        /// Indicates if calling the touch keyboard is supported
+        /// 是否支持调用触摸键盘
         /// </summary>
         private readonly bool touchKeyboardSupported = false;
 
         /// <summary>
-        /// TouchKeyboardEventManager
-        /// </summary>
-        /// <param name="handle">Need the HWND for the native interop call into IInputPaneInterop</param>
+        /// 触摸键盘事件管理器
+        ///</摘要>
+        /// <paramname="handle">需要 HWND 才能对 IInputPaneInterop 进行本机互操作调用</param>
         internal TouchKeyboardEventManager(IntPtr handle)
         {
             inputPaneType = Type.GetType(InputPaneTypeName);
 
-            // Get and cast an InputPane COM instance
+            // 获取并转换 InputPane COM 实例
             inputPaneInterop = WindowsRuntimeMarshal.GetActivationFactory(inputPaneType) as IInputPaneInterop;
 
             touchKeyboardSupported = inputPaneInterop != null;
 
             if (touchKeyboardSupported)
             {
-                // Get the actual input pane for this HWND
+                //获取此 HWND 的实际输入窗格
                 inputPanel = inputPaneInterop.GetForWindow(handle, typeof(IInputPane2).GUID);
             }
         }
 
         /// <summary>
-        /// Returns an instance of the InputPane
+        /// 返回 InputPane 的实例
         /// </summary>
-        /// <returns>The InputPane</returns>
+        /// <returns>输入面板</returns>
         internal IInputPane2 GetInputPane()
         {
             if (!touchKeyboardSupported)
             {
-                throw new PlatformNotSupportedException("Native access to touch keyboard APIs not supported on this OS!");
+                throw new PlatformNotSupportedException("此操作系统不支持对触摸键盘 API 的本机访问!");
             }
 
             return inputPanel;
@@ -101,7 +101,7 @@ namespace Microsoft.Windows.Input.TouchKeyboard
             disposed = true;
         }
 
-        // This code added to correctly implement the disposable pattern.
+        // 添加此代码是为了正确实现一次性模式。
         public void Dispose()
         {
             Dispose(true);

@@ -1,6 +1,6 @@
-// Copyright © 2013 The CefSharp Authors. All rights reserved.
+//版权所有 © 2013 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Runtime.CompilerServices;
@@ -30,7 +30,7 @@ using Size = System.Windows.Size;
 namespace CefSharp.Wpf
 {
     /// <summary>
-    /// ChromiumWebBrowser is the WPF web browser control
+    /// ChromiumWebBrowser 是 WPF Web 浏览器控件
     /// </summary>
     /// <seealso cref="System.Windows.Controls.Control" />
     /// <seealso cref="CefSharp.Wpf.IWpfWebBrowser" />
@@ -39,40 +39,40 @@ namespace CefSharp.Wpf
     public partial class ChromiumWebBrowser : Control, IRenderWebBrowser, IWpfWebBrowser
     {
         /// <summary>
-        /// TemplatePart Name constant for the Image used to represent the browser
+        /// TemplatePart 用于表示浏览器的 Image 的名称常量
         /// </summary>
         public const string PartImageName = "PART_image";
         /// <summary>
-        /// TemplatePart Name constant for the Image used to represent the popup
+        /// TemplatePart 用于表示弹出窗口的 Image 的名称常量
         /// overlayed on the browser
         /// </summary>
         public const string PartPopupImageName = "PART_popupImage";
 
         /// <summary>
-        /// View Rectangle used by <see cref="GetViewRect"/>
+        /// <see cref="GetViewRect"/> 使用的视图矩形
         /// </summary>
         private Rect viewRect;
         /// <summary>
-        /// Store the previous window state, used to determine if the
-        /// Windows was previous <see cref="WindowState.Minimized"/>
-        /// and resume rendering
+        /// 存储之前的窗口状态，用于确定是否
+        ///Windows 是以前的 <see cref="WindowState.Minimized"/>
+        ///并恢复渲染
         /// </summary>
         private WindowState previousWindowState;
         /// <summary>
-        /// The source
+        /// 来源
         /// </summary>
         private HwndSource source;
         /// <summary>
-        /// The HwndSource RootVisual (Window) - We store a reference
-        /// to unsubscribe event handlers
+        ///HwndSource RootVisual (Window) -我们存储一个引用
+        ///取消订阅事件处理程序
         /// </summary>
         private Window sourceWindow;
         /// <summary>
-        /// The MonitorInfo based on the current hwnd
+        /// 基于当前hwnd的MonitorInfo
         /// </summary>
         private MonitorInfoEx monitorInfo;
         /// <summary>
-        /// The tooltip timer
+        /// 工具提示计时器
         /// </summary>
         private DispatcherTimer tooltipTimer;
         /// <summary>
@@ -80,29 +80,29 @@ namespace CefSharp.Wpf
         /// </summary>
         private ToolTip toolTip;
         /// <summary>
-        /// The managed cef browser adapter
+        /// 托管 cef 浏览器适配器
         /// </summary>
         private IBrowserAdapter managedCefBrowserAdapter;
         /// <summary>
-        /// The ignore URI change
+        /// 忽略 URI 更改
         /// </summary>
         private bool ignoreUriChange;
         /// <summary>
-        /// Initial address
+        /// 初始地址
         /// </summary>
         private string initialAddress;
         /// <summary>
-        /// Used to stop multiple threads trying to load the initial Url multiple times.
-        /// If the Address property is bound after the browser is initialized
+        /// 用于阻止多个线程多次尝试加载初始 Url。
+        ///如果Address属性是在浏览器初始化后绑定的
         /// </summary>
         private bool initialLoadCalled;
         /// <summary>
-        /// Has the underlying Cef Browser been created (slightly different to initialized in that
-        /// the browser is initialized in an async fashion)
+        /// 是否已创建底层 Cef 浏览器（与初始化略有不同）
+        ///浏览器以异步方式初始化）
         /// </summary>
         private bool browserCreated;
         /// <summary>
-        /// The image that represents this browser instances
+        /// 代表该浏览器实例的图像
         /// </summary>
         private Image image;
         /// <summary>
@@ -110,33 +110,33 @@ namespace CefSharp.Wpf
         /// </summary>
         private Image popupImage;
         /// <summary>
-        /// Location of the control on the screen, relative to Top/Left
-        /// Used to calculate GetScreenPoint
-        /// We're unable to call PointToScreen directly due to treading restrictions
-        /// and calling in a sync fashion on the UI thread was problematic.
+        ///屏幕上控件的位置，相对于顶部/左侧
+        ///用于计算GetScreenPoint
+        ///由于踩踏限制，我们无法直接调用 PointToScreen
+        ///并且在 UI 线程上以同步方式调用是有问题的。
         /// </summary>
         private Point browserScreenLocation;
         /// <summary>
-        /// Browser initialization settings
+        ///浏览器初始化设置
         /// </summary>
         private IBrowserSettings browserSettings;
         /// <summary>
-        /// The request context (we deliberately use a private variable so we can throw an exception if
-        /// user attempts to set after browser created)
+        /// 请求上下文（我们故意使用私有变量，这样我们就可以抛出异常
+        ///用户在浏览器创建后尝试设置）
         /// </summary>
         private IRequestContext requestContext;
         /// <summary>
-        /// Keep a short term copy of IDragData, so when calling DoDragDrop, DragEnter is called, 
-        /// we can reuse the drag data provided from CEF
+        /// 保留 IDragData 的短期副本，因此在调用 DoDragDrop 时，会调用 DragEnter， 
+        ///我们可以重用CEF提供的拖动数据
         /// </summary>
         private IDragData currentDragData;
         /// <summary>
-        /// Keep the current drag&amp;drop effects to return the appropriate effects on drag over.
+        /// 保留当前的拖放效果以在拖动时返回适当的效果。
         /// </summary>
         private DragDropEffects currentDragDropEffects;
         /// <summary>
-        /// A flag that indicates whether or not the designer is active
-        /// NOTE: Needs to be static for OnApplicationExit
+        /// 指示设计器是否处于活动状态的标志
+        ///注意：OnApplicationExit 需要是静态的
         /// </summary>
         private static bool DesignMode;
 
@@ -145,36 +145,36 @@ namespace CefSharp.Wpf
         private Structs.Size? resizeHackSize;
 
         /// <summary>
-        /// This flag is set when the browser gets focus before the underlying CEF browser
-        /// has been initialized.
+        /// 当浏览器在底层 CEF 浏览器之前获得焦点时，设置此标志
+        ///已初始化。
         /// </summary>
         private bool initialFocus;
 
         /// <summary>
-        /// The class that coordinates the positioning of the dropdown if wanted.
-        /// </summary>
+        /// 如果需要的话，协调下拉列表位置的类。
+        ///</摘要>
         internal IMousePositionTransform MousePositionTransform { get; set; }
 
         /// <summary>
-        /// When enabled the browser will resize by 1px when it becomes visible to workaround
-        /// the upstream issue
-        /// Hack to work around upstream issue https://github.com/chromiumembedded/cef/issues/3427
-        /// Disabled by default
+        /// 启用后，当浏览器变得可见时，浏览器将调整大小 1px
+        ///上游问题
+        ///解决上游问题的 Hack https://github.com/chromiumembedded/cef/issues/3427
+        ///默认禁用
         /// </summary>
         public bool ResizeHackEnabled { get; set; } = false;
 
         /// <summary>
-        /// Number of milliseconds to wait after resizing the browser when it first
-        /// becomes visible. After the delay the browser will revert to it's
-        /// original size.
-        /// Hack to workaround upstream issue https://github.com/chromiumembedded/cef/issues/3427
+        /// 第一次调整浏览器大小后等待的毫秒数
+        ///变得可见。延迟后浏览器将恢复到原来的状态
+        ///原始尺寸。
+        ///破解上游问题 https://github.com/chromiumembedded/cef/issues/3427
         /// </summary>
         public int ResizeHackDelayInMs { get; set; } = 50;
 
         /// <summary>
-        /// Gets a value indicating whether this instance is disposed.
+        ///获取一个值，该值指示此实例是否已释放。
         /// </summary>
-        /// <value><see langword="true" /> if this instance is disposed; otherwise, <see langword="false" />.</value>
+        /// <value><see langword="true" /> 如果此实例已被处置；否则, <see langword="false" />.</value>
         public bool IsDisposed
         {
             get
@@ -184,14 +184,14 @@ namespace CefSharp.Wpf
         }
 
         /// <summary>
-        /// WPF Keyboard Handled forwards key events to the underlying browser
+        /// WPF Keyboard Handled 将按键事件转发到底层浏览器
         /// </summary>
         public IWpfKeyboardHandler WpfKeyboardHandler { get; set; }
 
         /// <summary>
-        /// Gets or sets the browser settings.
+        /// 获取或设置浏览器设置。
         /// </summary>
-        /// <value>The browser settings.</value>
+        /// <value>浏览器设置.</value>
         public IBrowserSettings BrowserSettings
         {
             get { return browserSettings; }
@@ -199,13 +199,13 @@ namespace CefSharp.Wpf
             {
                 if (browserCreated)
                 {
-                    throw new Exception("Browser has already been created. BrowserSettings must be " +
-                                        "set before the underlying CEF browser is created.");
+                    throw new Exception("浏览器已经创建。浏览器设置必须是 " +
+                                        "在创建底层 CEF 浏览器之前设置.");
                 }
 
-                //New instance is created in the constructor, if you use
-                //xaml to initialize browser settings then it will also create a new
-                //instance, so we dispose of the old one
+                //如果您使用，则在构造函数中创建新实例
+                //xaml 初始化浏览器设置，然后它也会创建一个新的
+                //实例，所以我们处理旧的
                 if (browserSettings != null && browserSettings.AutoDispose)
                 {
                     browserSettings.Dispose();
@@ -215,9 +215,9 @@ namespace CefSharp.Wpf
             }
         }
         /// <summary>
-        /// Gets or sets the request context.
-        /// </summary>
-        /// <value>The request context.</value>
+        /// 获取或设置请求上下文。
+        ///</摘要>
+        ///<value>请求上下文。</value>
         public IRequestContext RequestContext
         {
             get { return requestContext; }
@@ -225,20 +225,20 @@ namespace CefSharp.Wpf
             {
                 if (browserCreated)
                 {
-                    throw new Exception("Browser has already been created. RequestContext must be " +
-                                        "set before the underlying CEF browser is created.");
+                    throw new Exception("浏览器已经创建。 RequestContext 必须是 " +
+                                        "在创建底层 CEF 浏览器之前设置.");
                 }
                 if (value != null && !Core.ObjectFactory.RequestContextType.IsAssignableFrom(value.UnWrap().GetType()))
                 {
-                    throw new Exception(string.Format("RequestContext can only be of type {0} or null", Core.ObjectFactory.RequestContextType));
+                    throw new Exception(string.Format("RequestContext 只能是 {0} 类型或 null", Core.ObjectFactory.RequestContextType));
                 }
                 requestContext = value;
             }
         }
         /// <summary>
-        /// Implement <see cref="IRenderHandler"/> and control how the control is rendered
-        /// </summary>
-        /// <value>The render Handler.</value>
+        /// 实现 <see cref="IRenderHandler"/> 并控制控件的呈现方式
+        ///</摘要>
+        ///<value>渲染处理程序。</value>
         public IRenderHandler RenderHandler { get; set; }
         /// <summary>
         /// Implement <see cref="IAccessibilityHandler" /> to handle events related to accessibility.
@@ -1811,18 +1811,18 @@ namespace CefSharp.Wpf
             {
                 case WindowState.Normal:
                 case WindowState.Maximized:
-                {
-                    if (previousWindowState == WindowState.Minimized && IsVisible)
                     {
-                        OnBrowserWasHidden(false);
+                        if (previousWindowState == WindowState.Minimized && IsVisible)
+                        {
+                            OnBrowserWasHidden(false);
+                        }
+                        break;
                     }
-                    break;
-                }
                 case WindowState.Minimized:
-                {
-                    OnBrowserWasHidden(true);
-                    break;
-                }
+                    {
+                        OnBrowserWasHidden(true);
+                        break;
+                    }
             }
 
             previousWindowState = window.WindowState;
@@ -2323,7 +2323,7 @@ namespace CefSharp.Wpf
                     deltaX: isShiftKeyDown ? e.Delta : 0,
                     deltaY: !isShiftKeyDown ? e.Delta : 0,
                     modifiers: modifiers);
-                
+
                 e.Handled = true;
             }
 
@@ -2469,7 +2469,7 @@ namespace CefSharp.Wpf
                     {
                         clickCount = 1;
                     }
-                    
+
                     MousePositionTransform.TransformMousePoint(ref point);
                     browser.GetHost().SendMouseClickEvent((int)point.X, (int)point.Y, (MouseButtonType)e.ChangedButton, mouseUp, clickCount, modifiers);
                 }
@@ -2527,25 +2527,25 @@ namespace CefSharp.Wpf
                 switch (touchPoint.Action)
                 {
                     case TouchAction.Down:
-                    {
-                        touchEventType = TouchEventType.Pressed;
-                        break;
-                    }
+                        {
+                            touchEventType = TouchEventType.Pressed;
+                            break;
+                        }
                     case TouchAction.Move:
-                    {
-                        touchEventType = TouchEventType.Moved;
-                        break;
-                    }
+                        {
+                            touchEventType = TouchEventType.Moved;
+                            break;
+                        }
                     case TouchAction.Up:
-                    {
-                        touchEventType = TouchEventType.Released;
-                        break;
-                    }
+                        {
+                            touchEventType = TouchEventType.Released;
+                            break;
+                        }
                     default:
-                    {
-                        touchEventType = TouchEventType.Cancelled;
-                        break;
-                    }
+                        {
+                            touchEventType = TouchEventType.Cancelled;
+                            break;
+                        }
                 }
 
                 var touchEvent = new TouchEvent()

@@ -1,6 +1,6 @@
-// Copyright © 2019 The CefSharp Authors. All rights reserved.
+//版权所有 © 2019 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System.Windows.Input;
 using CefSharp.Enums;
@@ -10,31 +10,31 @@ using CefSharp.Wpf.Internals;
 namespace CefSharp.Wpf.Experimental
 {
     /// <summary>
-    /// An Experimental ChromiumWebBrowser implementation that includes support for Stylus
-    /// using the default WPF touch implementation. There are known performance problems with
-    /// this default implementation, workarounds such as https://github.com/jaytwo/WmTouchDevice
-    /// may need to be considered. .Net 4.7 supports the newer WM_Pointer implementation which
-    /// should resolve the issue see https://github.com/dotnet/docs/blob/master/docs/framework/migration-guide/mitigation-pointer-based-touch-and-stylus-support.md
-    /// Original PR https://github.com/cefsharp/CefSharp/pull/2745
-    /// Original Author https://github.com/GSonofNun
-    /// Touch support was merged into ChromiumWebBrowser, only Style support still exists in this class
-    /// </summary>
+    ///实验性 ChromiumWebBrowser 实现，包括对 Stylus 的支持
+    ///使用默认的 WPF 触摸实现。存在已知的性能问题
+    ///此默认实现，解决方法例如 https://github.com/jaytwo/WmTouchDevice
+    ///可能需要考虑。 .Net 4.7 支持较新的 WM_Pointer 实现
+    ///应该解决问题，请参阅https://github.com/dotnet/docs/blob/master/docs/framework/migration-guide/mitigation-pointer-based-touch-and-stylus-support.md
+    ///原始PR https://github.com/cefsharp/CefSharp/pull/2745
+    ///原作者 https://github.com/GSonofNun
+    ///触摸支持已合并到 ChromiumWebBrowser 中，此类中仅存在样式支持
+    ///</摘要>
     public class ChromiumWebBrowserWithTouchSupport : ChromiumWebBrowser
     {
         /// <summary>
-        /// Invoked when an unhandled <see cref="E:System.Windows.Input.StylusDown" /> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
-        /// </summary>
-        /// <param name="e">The <see cref="T:System.Windows.Input.StylusDownEventArgs" /> that contains the event data.</param>
+        /// 当未处理的 <see cref="E:System.Windows.Input.StylusDown" /> 附加事件到达其路由中派生自此类的元素时调用。实现此方法以添加对此事件的类处理。
+        ///</摘要>
+        ///<param name="e">包含事件数据的 <see cref="T:System.Windows.Input.StylusDownEventArgs" />。</param>
         protected override void OnStylusDown(StylusDownEventArgs e)
         {
-            //Both touch and stylus will raise stylus event.
-            //We use the OnTouchXXX methods which contain more intermediate points to handle the user's touch so that we can track the user's fingers faster.
-            //Use e.StylusDevice.TabletDevice.Type == TabletDeviceType.Stylus to ensure only stylus pen.
+            //触摸和手写笔都会引发手写笔事件。
+            //我们使用包含更多中间点的OnTouchXXX方法来处理用户的触摸，以便我们可以更快地跟踪用户的手指。
+            //使用e.StylusDevice.TabletDevice.Type == TabletDeviceType.Stylus确保只有手写笔。
             if (e.StylusDevice.TabletDevice.Type == TabletDeviceType.Stylus)
             {
                 Focus();
-                // Capture stylus so stylus events are still pushed to CEF even if the stylus leaves the control before a StylusUp.
-                // This behavior is similar to how other browsers handle stylus input.
+                // 捕获触控笔，因此即使触控笔在 StylusUp 之前离开控件，触控笔事件仍会推送到 CEF。
+                //此行为类似于其他浏览器处理手写笔输入的方式。
                 CaptureStylus();
                 OnStylus(e, TouchEventType.Pressed);
             }
@@ -42,14 +42,14 @@ namespace CefSharp.Wpf.Experimental
         }
 
         /// <summary>
-        /// Invoked when an unhandled <see cref="E:System.Windows.Input.StylusMove" /> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
-        /// </summary>
-        /// <param name="e">The <see cref="T:System.Windows.Input.StylusDownEventArgs" /> that contains the event data.</param>
+        /// 当未处理的 <see cref="E:System.Windows.Input.StylusMove" /> 附加事件到达其路由中派生自此类的元素时调用。实现此方法以添加对此事件的类处理。
+        ///</摘要>
+        ///<param name="e">包含事件数据的 <see cref="T:System.Windows.Input.StylusDownEventArgs" />。</param>
         protected override void OnStylusMove(StylusEventArgs e)
         {
-            //Both touch and stylus will raise stylus event.
-            //We use the OnTouchXXX methods which contain more intermediate points to handle the user's touch so that we can track the user's fingers faster.
-            //Use e.StylusDevice.TabletDevice.Type == TabletDeviceType.Stylus to ensure only stylus pen.
+            //触摸和手写笔都会引发手写笔事件。
+            //我们使用包含更多中间点的OnTouchXXX方法来处理用户的触摸，以便我们可以更快地跟踪用户的手指。
+            //使用e.StylusDevice.TabletDevice.Type == TabletDeviceType.Stylus确保只有手写笔。
             if (e.StylusDevice.TabletDevice.Type == TabletDeviceType.Stylus)
             {
                 OnStylus(e, TouchEventType.Moved);
@@ -58,14 +58,14 @@ namespace CefSharp.Wpf.Experimental
         }
 
         /// <summary>
-        /// Invoked when an unhandled <see cref="E:System.Windows.Input.StylusUp" /> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event.
-        /// </summary>
-        /// <param name="e">The <see cref="T:System.Windows.Input.StylusDownEventArgs" /> that contains the event data.</param>
+        ///当未处理的 <see cref="E:System.Windows.Input.StylusUp" /> 附加事件到达其路由中派生自此类的元素时调用。实现此方法以添加对此事件的类处理。
+        ///</摘要>
+        ///<param name="e">包含事件数据的 <see cref="T:System.Windows.Input.StylusDownEventArgs" />。</param>
         protected override void OnStylusUp(StylusEventArgs e)
         {
-            //Both touch and stylus will raise stylus event.
-            //We use the OnTouchXXX methods which contain more intermediate points to handle the user's touch so that we can track the user's fingers faster.
-            //Use e.StylusDevice.TabletDevice.Type == TabletDeviceType.Stylus to ensure only stylus pen.
+            //触摸和手写笔都会引发手写笔事件。
+            //我们使用包含更多中间点的OnTouchXXX方法来处理用户的触摸，以便我们可以更快地跟踪用户的手指。
+            //使用e.StylusDevice.TabletDevice.Type == TabletDeviceType.Stylus确保只有手写笔。
             if (e.StylusDevice.TabletDevice.Type == TabletDeviceType.Stylus)
             {
                 ReleaseStylusCapture();
@@ -75,10 +75,10 @@ namespace CefSharp.Wpf.Experimental
         }
 
         /// <summary>
-        /// Handles a <see cref="E:Stylus" /> event.
-        /// </summary>
-        /// <param name="e">The <see cref="StylusEventArgs"/> instance containing the event data.</param>
-        /// <param name="touchEventType">The <see cref="TouchEventType"/> event type</param>
+        /// 处理 <see cref="E:Stylus" /> 事件。
+        ///</摘要>
+        ///<param name="e">包含事件数据的 <see cref="StylusEventArgs"/> 实例。</param>
+        ///<param name="touchEventType"><see cref="TouchEventType"/> 事件类型</param>
         private void OnStylus(StylusEventArgs e, TouchEventType touchEventType)
         {
             var browser = GetBrowser();
@@ -87,7 +87,7 @@ namespace CefSharp.Wpf.Experimental
             {
                 var modifiers = WpfExtensions.GetModifierKeys();
                 var pointerType = e.StylusDevice.Inverted ? PointerType.Eraser : PointerType.Pen;
-                //Send all points to host
+                //将所有点发送给主机
                 foreach (var stylusPoint in e.GetStylusPoints(this))
                 {
                     var touchEvent = new TouchEvent()

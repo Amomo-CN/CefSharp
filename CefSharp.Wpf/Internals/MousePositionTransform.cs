@@ -5,36 +5,36 @@ namespace CefSharp.Wpf.Internals
     public sealed class MousePositionTransform : IMousePositionTransform
     {
         /// <summary>
-        /// The x-offset.
+        /// x 偏移。
         /// </summary>
         private int xOffset;
 
         /// <summary>
-        /// The y-offset.
+        /// Y 轴偏移。
         /// </summary>
         private int yOffset;
 
         /// <summary>
-        /// The original rect.
+        /// 原来的矩形。
         /// </summary>
         private Rect originalRect;
 
         /// <summary>
-        /// The adjusted rect.
+        /// 调整后的矩形
         /// </summary>
         private Rect adjustedRect;
 
         /// <summary>
-        /// If the popup is open or not.
+        /// 弹出窗口是否打开。
         /// </summary>
         private bool isOpen;
 
         /// <summary>
-        /// Updates the size and the position of the popup.
-        /// </summary>
-        /// <param name="originalRect"></param>
-        /// <param name="viewRect"></param>
-        /// <returns>The adjusted point.</returns>
+        ///更新弹出窗口的大小和位置。
+        ///</摘要>
+        ///<param name="originalRect"></param>
+        ///<参数名称=“viewRect”></参数>
+        ///<returns>调整后的点。</returns>
         System.Windows.Point IMousePositionTransform.UpdatePopupSizeAndPosition(Rect originalRect, Rect viewRect)
         {
             int x = originalRect.X,
@@ -44,7 +44,7 @@ namespace CefSharp.Wpf.Internals
                 xOffset = 0,
                 yOffset = 0;
 
-            // If popup goes outside the view, try to reposition origin
+            //如果弹出窗口超出视图，请尝试重新定位原点
             if (originalRect.X + originalRect.Width > viewRect.Width)
             {
                 x = viewRect.Width - originalRect.Width;
@@ -57,7 +57,7 @@ namespace CefSharp.Wpf.Internals
                 yOffset = prevY - y;
             }
 
-            // If x or y became negative, move them to 0 again
+            // 如果 x 或 y 变为负数，则将它们再次移至 0
             if (x < 0)
             {
                 x = 0;
@@ -93,8 +93,8 @@ namespace CefSharp.Wpf.Internals
         }
 
         /// <summary>
-        /// Resets the offsets and original-rect.
-        /// <param name="isOpen">If the popup is open or not.</param>
+        /// 重置偏移量和原始矩形。
+        ///<param name="isOpen">弹出窗口是否打开。</param>
         /// </summary>
         void IMousePositionTransform.OnPopupShow(bool isOpen)
         {
@@ -111,10 +111,10 @@ namespace CefSharp.Wpf.Internals
         }
 
         /// <summary>
-        /// Adjusts the mouse-coordinates when the popup is visible.
-        /// </summary>
-        /// <param name="point">The original point.</param>
-        /// <returns>The transformed point if needed, else the original point.</returns>
+        ///当弹出窗口可见时调整鼠标坐标。
+        ///</摘要>
+        ///<param name="point">原点</param>
+        ///<returns>如果需要则变换后的点，否则返回原始点.</returns>
         void IMousePositionTransform.TransformMousePoint(ref System.Windows.Point point)
         {
             if (!isOpen)
@@ -125,10 +125,10 @@ namespace CefSharp.Wpf.Internals
         }
 
         /// <summary>
-        /// Checks if the given point is inside the original-rect.
-        /// </summary>
-        /// <param name="point">The point.</param>
-        /// <returns>Returns true if the point is inside the original rect, else return false.</returns>
+        /// 检查给定点是否在原始矩形内。
+        ///</摘要>
+        ///<param name="point">点。</param>
+        ///<returns>如果该点位于原始矩形内，则返回 true，否则返回 false.</returns>
         private bool IsInsideOriginalRect(System.Windows.Point point)
         {
             return point.X >= this.originalRect.X &&
@@ -138,10 +138,10 @@ namespace CefSharp.Wpf.Internals
         }
 
         /// <summary>
-        /// Checks if the given point is inside the adjusted rect.
-        /// </summary>
-        /// <param name="point">The point.</param>
-        /// <returns>Returns true if the point is inside the adjusted rect, else return false.</returns>
+        /// 检查给定点是否位于调整后的矩形内。
+        ///</摘要>
+        ///<param name="point">点。</param>
+        ///<returns>如果该点位于调整后的矩形内，则返回 true，否则返回 false.</returns>
         private bool IsInsideAdjustedRect(System.Windows.Point point)
         {
             return point.X >= this.adjustedRect.X &&

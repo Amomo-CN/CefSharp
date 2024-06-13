@@ -1,26 +1,26 @@
-// Copyright © 2018 The CefSharp Authors. All rights reserved.
+//版权所有 © 2018 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 namespace CefSharp.Wpf
 {
     /// <summary>
-    /// Initialization settings. Many of these and other settings can also configured
-    /// using command-line switches.
+    /// 初始化设置。其中许多设置和其他设置也可以配置
+    ///使用命令行开关。
     /// </summary>
     public class CefSettings : CefSettingsBase
     {
         /// <summary>
-        /// Intialize with default values
+        /// 使用默认值初始化
         /// </summary>
         public CefSettings() : base()
         {
             WindowlessRenderingEnabled = true;
 
-            //Disable multithreaded, compositor scrolling of web content
-            //With OSR rendering it's fairly common for this to improve scrolling performace
+            //禁用 Web 内容的多线程、合成器滚动
+            //通过 OSR 渲染，提高滚动性能是相当常见的
             //https://peter.sh/experiments/chromium-command-line-switches/#disable-threaded-scrolling
-            //CefCommandLineArgs.Add("disable-threaded-scrolling");
+            //CefCommandLineArgs.Add("禁用线程滚动");
         }
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-  <!-- Note: We cannot use the recommended style of specifying <Project Sdk=...> because we need
-       to set BaseIntermediateOutputPath and BaseOutputPath before the SDK props are imported. -->
+  <!-- Note: 我们不能使用指定 <Project Sdk=...> 的推荐样式，因为我们需要
+       在导入 SDK props 之前设置 BaseIntermediateOutputPath 和 BaseOutputPath. -->
   <PropertyGroup>
     <BaseIntermediateOutputPath>obj.netcore\</BaseIntermediateOutputPath>
     <BaseOutputPath>bin.netcore\</BaseOutputPath>

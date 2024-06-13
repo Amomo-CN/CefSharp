@@ -1,6 +1,6 @@
-// Copyright © 2018 The CefSharp Authors. All rights reserved.
+//版权所有 © 2018 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Collections.Generic;
@@ -11,13 +11,13 @@ using Range = CefSharp.Structs.Range;
 namespace CefSharp.Wpf.Internals
 {
     /// <summary>
-    /// ImeHandler provides implementation when message WM_IME_COMPOSITION is received.
+    /// ImeHandler 在收到消息 WM_IME_COMPOSITION 时提供实现。
     /// </summary>
     public static class ImeHandler
     {
-        // Black SkColor value for underline.
+        //下划线的黑色 SkColor 值。
         public static uint ColorUNDERLINE = 0xFF000000;
-        // Transparent SkColor value for background.
+        //背景的透明 SkColor 值。
         public static uint ColorBKCOLOR = 0x00000000;
 
         public static bool GetResult(IntPtr hwnd, uint lParam, out string text)
@@ -61,7 +61,7 @@ namespace CefSharp.Wpf.Internals
                 return false;
             }
 
-            // buffer contains char (2 bytes)
+            // 缓冲区包含字符（2 个字节）
             byte[] buffer = new byte[strLen];
             ImeNative.ImmGetCompositionString(hIMC, type, buffer, strLen);
             text = Encoding.Unicode.GetString(buffer);
@@ -83,14 +83,14 @@ namespace CefSharp.Wpf.Internals
                 attributes = GetCompositionSelectionRange(hIMC, ref targetStart, ref targetEnd);
             }
 
-            // Retrieve the selection range information. If CS_NOMOVECARET is specified
-            // it means the cursor should not be moved and we therefore place the caret at
-            // the beginning of the composition string. Otherwise we should honour the
-            // GCS_CURSORPOS value if it's available.
+            //检索选择范围信息。如果指定了 CS_NOMOVECARET
+            //这意味着不应移动光标，因此我们将插入符号放在
+            //组合字符串的开头。否则我们应该尊重
+            //GCS_CURSORPOS 值（如果可用）。
             if (!IsParam(lParam, ImeNative.CS_NOMOVECARET) && IsParam(lParam, ImeNative.GCS_CURSORPOS))
             {
-                // IMM32 does not support non-zero-width selection in a composition. So
-                // always use the caret position as selection range.
+                // IMM32 不支持组合中的非零宽度选择。所以
+                //始终使用插入符号位置作为选择范围。
                 int cursor = (int)ImeNative.ImmGetCompositionString(hIMC, ImeNative.GCS_CURSORPOS, null, 0);
                 compositionStart = cursor;
             }
@@ -100,14 +100,14 @@ namespace CefSharp.Wpf.Internals
             }
 
             if (attributes != null &&
-                // character before
+                // 之前的字符
                 ((compositionStart > 0 && (compositionStart - 1) < attributes.Length && attributes[compositionStart - 1] == ImeNative.ATTR_INPUT)
                 ||
-                // character after
+                // 之后的字符
                 (compositionStart >= 0 && compositionStart < attributes.Length && attributes[compositionStart] == ImeNative.ATTR_INPUT)))
             {
-                // as MS does with their ime implementation we should only use the GCS_CURSORPOS if the character
-                // before or after is new input.
+                // 正如 MS 对其 ime 实现所做的那样，我们应该只使用 GCS_CURSORPOS 如果字符
+                //在新输入之前或之后。
                 // https://referencesource.microsoft.com/#PresentationFramework/src/Framework/System/windows/Documents/ImmComposition.cs,1079
             }
             else
@@ -158,7 +158,7 @@ namespace CefSharp.Wpf.Internals
 
             int clauseLength = (int)clauseSize / sizeof(Int32);
 
-            // buffer contains 32 bytes (4 bytes) array
+            // buffer包含32字节（4字节）数组
             var clauseData = new byte[(int)clauseSize];
             ImeNative.ImmGetCompositionString(hIMC, ImeNative.GCS_COMPCLAUSE, clauseData, clauseSize);
 
@@ -186,7 +186,7 @@ namespace CefSharp.Wpf.Internals
             int start = 0;
             int end = 0;
 
-            // Buffer contains 8bit array
+            // 缓冲区包含8位数组
             var attributeData = new byte[attributeSize];
             ImeNative.ImmGetCompositionString(hIMC, ImeNative.GCS_COMPATTR, attributeData, attributeSize);
 

@@ -1,6 +1,6 @@
-// Copyright © 2015 The CefSharp Authors. All rights reserved.
+//版权所有 © 2015 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 
@@ -17,18 +17,18 @@ namespace CefSharp.Example.Handlers
 
         void IRenderProcessMessageHandler.OnContextCreated(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame)
         {
-            // called for every created V8Context, check IFrame.IsMain to determine that V8Context is from Main frame
+            // 为每个创建的 V8Context 调用，检查 IFrame.IsMain 以确定 V8Context 来自主框架
             if (frame.IsMain)
             {
-                 //const string script = "document.addEventListener('DOMContentLoaded', function(){ alert('DomLoaded'); });";
+                //const string script = "document.addEventListener('DOMContentLoaded', function(){ alert('DomLoaded'); });";
 
-                 //frame.ExecuteJavaScriptAsync(script);
+                //frame.ExecuteJavaScriptAsync(script);
             }
         }
 
         void IRenderProcessMessageHandler.OnContextReleased(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame)
         {
-            //The V8Context is about to be released, use this notification to cancel any long running tasks your might have
+            //V8Context 即将发布，使用此通知取消您可能拥有的任何长时间运行的任务
         }
 
         void IRenderProcessMessageHandler.OnUncaughtException(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, JavascriptException exception)
