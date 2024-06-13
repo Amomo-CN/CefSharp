@@ -8,6 +8,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+
 using CefSharp.Example;
 using CefSharp.Example.Handlers;
 using CefSharp.Example.JavascriptBinding;
@@ -126,114 +127,67 @@ namespace CefSharp.Wpf.Example.Views
             // 设置显示处理器
             browser.DisplayHandler = new DisplayHandler();
 
-<<<<<<< Updated upstream
-            // 设置生命周期处理器
-            // browser.LifeSpanHandler = CefSharp.Wpf.Experimental.LifeSpanHandler
-            //     .Create()
-            //     .OnPopupCreated((ctrl, targetUrl, targetFrameName, windowInfo) =>
-            //     {
-=======
-            // 以下代码演示了如何在一个新的ChromiumWebBrowser实例中托管弹出窗口，这仍被视为实验性功能。
-            // 弹出窗口将在一个新的Window中展示。同样可以应用于Tab、ContentControl等。
-           
-            // browser.LifeSpanHandler = CefSharp.Wpf.Experimental.LifeSpanHandler
-            //     .Create() // 创建LifeSpanHandler实例
-            //     .OnPopupCreated((ctrl, targetUrl, targetFrameName, windowInfo) => // 弹出窗口创建时的处理
-            //     {
-            //         // 设置新窗口的位置和大小
->>>>>>> Stashed changes
-            //         var windowX = (windowInfo.X == int.MinValue) ? double.NaN : windowInfo.X;
-            //         var windowY = (windowInfo.Y == int.MinValue) ? double.NaN : windowInfo.Y;
-            //         var windowWidth = (windowInfo.Width == int.MinValue) ? double.NaN : windowInfo.Width;
-            //         var windowHeight = (windowInfo.Height == int.MinValue) ? double.NaN : windowInfo.Height;
+            browser.DisplayHandler = new DisplayHandler();
+            //这个 LifeSpanHandler 实现演示在 ChromiumWebBrowser 中托管弹出窗口
+            //例如，它仍然被认为是实验性的。 ChromiumWeb 浏览器
+            //显示在新窗口中。这可以很容易地成为选项卡/内容控件/等
+            /*
+            browser.LifeSpanHandler = CefSharp.Wpf.Experimental.LifeSpanHandler
+                .Create()
+                .OnPopupCreated((ctrl, targetUrl, targetFrameName, windowInfo) =>
+                {
+                    var windowX = (windowInfo.X == int.MinValue) ? double.NaN : windowInfo.X;
+                    var windowY = (windowInfo.Y == int.MinValue) ? double.NaN : windowInfo.Y;
+                    var windowWidth = (windowInfo.Width == int.MinValue) ? double.NaN : windowInfo.Width;
+                    var windowHeight = (windowInfo.Height == int.MinValue) ? double.NaN : windowInfo.Height;
 
-<<<<<<< Updated upstream
-            //         var popup = new System.Windows.Window
-=======
-            //         var popup = new System.Windows.Window // 创建新窗口
->>>>>>> Stashed changes
-            //         {
-            //             Left = windowX,
-            //             Top = windowY,
-            //             Width = windowWidth,
-            //             Height = windowHeight,
-<<<<<<< Updated upstream
-            //             Content = ctrl,
-            //             Owner = Window.GetWindow(browser),
-            //             Title = targetFrameName
-            //         };
+                    var popup = new System.Windows.Window
+                    {
+                        Left = windowX,
+                        Top = windowY,
+                        Width = windowWidth,
+                        Height = windowHeight,
+                        Content = ctrl,
+                        Owner = Window.GetWindow(browser),
+                        Title = targetFrameName
+                    };
 
-=======
-            //             Content = ctrl, // 将ChromiumWebBrowser作为内容
-            //             Owner = Window.GetWindow(browser), // 设置拥有者窗口
-            //             Title = targetFrameName // 设置标题
-            //         };
+                    popup.Closed += (o, e) =>
+                    {
+                        var w = o as System.Windows.Window;
+                        if (w != null && w.Content is IWebBrowser)
+                        {
+                            (w.Content as IWebBrowser)?.Dispose();
+                            w.Content = null;
+                        }
+                    };
+                })
+                .OnPopupBrowserCreated((ctrl, browser) =>
+                {
+                    ctrl.Dispatcher.Invoke(() =>
+                    {
+                        var owner = System.Windows.Window.GetWindow(ctrl);
 
-                    
+                        if (owner != null && owner.Content == ctrl)
+                        {
+                            owner.Show();
+                        }
+                    });
+                })
+                .OnPopupDestroyed((ctrl, popupBrowser) =>
+                {
+                    //如果浏览器已被处置，那么我们不需要删除选项卡
+                    if (!ctrl.IsDisposed)
+                    {
+                        var owner = System.Windows.Window.GetWindow(ctrl);
 
-            //         // 关闭事件处理，释放资源
->>>>>>> Stashed changes
-            //         popup.Closed += (o, e) =>
-            //         {
-            //             var w = o as System.Windows.Window;
-            //             if (w != null && w.Content is IWebBrowser)
-            //             {
-            //                 (w.Content as IWebBrowser)?.Dispose();
-            //                 w.Content = null;
-            //             }
-            //         };
-            //     })
-<<<<<<< Updated upstream
-=======
-            //     // 浏览器在弹出窗口中创建后的处理
->>>>>>> Stashed changes
-            //     .OnPopupBrowserCreated((ctrl, browser) =>
-            //     {
-            //         ctrl.Dispatcher.Invoke(() =>
-            //         {
-            //             var owner = System.Windows.Window.GetWindow(ctrl);
-<<<<<<< Updated upstream
-=======
-            //             if (owner != null && owner.Content == ctrl)
-            //             {
-            //                 owner.Show(); // 显示窗口
-            //             }
-            //         });
-            //     })
-            //     // 弹出窗口销毁后的处理
-            //     .OnPopupDestroyed((ctrl, popupBrowser) =>
-            //     {
-            //         if (!ctrl.IsDisposed)
-            //         {
-            //             var owner = System.Windows.Window.GetWindow(ctrl);
-            //             if (owner != null && owner.Content == ctrl)
-            //             {
-            //                 owner.Close(); // 关闭窗口
-            //             }
-            //         }
-            //     }).Build(); // 构建LifeSpanHandler实例
-            
->>>>>>> Stashed changes
-
-            //             if (owner != null && owner.Content == ctrl)
-            //             {
-            //                 owner.Show();
-            //             }
-            //         });
-            //     })
-            //     .OnPopupDestroyed((ctrl, popupBrowser) =>
-            //     {
-            //         // 如果浏览器已被disposed，则不需要删除tab
-            //         if (!ctrl.IsDisposed)
-            //         {
-            //             var owner = System.Windows.Window.GetWindow(ctrl);
-
-            //             if (owner != null && owner.Content == ctrl)
-            //             {
-            //                 owner.Close();
-            //             }
-            //         }
-            //     }).Build();
+                        if (owner != null && owner.Content == ctrl)
+                        {
+                            owner.Close();
+                        }
+                    }
+                }).Build();
+            */
 
             // 设置菜单处理器
             browser.MenuHandler = new MenuHandler(addDevtoolsMenuItems: true);

@@ -1,6 +1,6 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Collections;
@@ -12,7 +12,7 @@ using System.Runtime.Serialization;
 namespace CefSharp.DevTools
 {
     /// <summary>
-    /// Common Base class for DevTools Domain Model classes
+    /// DevTools 域模型类的公共基类
     /// </summary>
     [DataContract]
     public abstract class DevToolsDomainEntityBase
@@ -52,7 +52,7 @@ namespace CefSharp.DevTools
                 if (string.IsNullOrEmpty(input) || input == "[]" || input == "[ ]")
                 {
                     return null;
-                    //return Array.CreateInstance(enumType.GetElementType(), 0);
+                    //返回Array.CreateInstance(enumType.GetElementType(), 0);
                 }
 
                 var values = input.Substring(1, input.Length - 2).Split(',');
@@ -139,7 +139,7 @@ namespace CefSharp.DevTools
             {
                 var propertyAttribute = (System.Text.Json.Serialization.JsonPropertyNameAttribute)Attribute.GetCustomAttribute(prop, typeof(System.Text.Json.Serialization.JsonPropertyNameAttribute), false);
 
-                //Only add members that have JsonPropertyNameAttribute
+                //仅添加具有 JsonPropertyNameAttribute 的成员
                 if (propertyAttribute == null)
                 {
                     continue;
@@ -155,7 +155,7 @@ namespace CefSharp.DevTools
                     throw new DevToolsClientException(prop.Name + " is required");
                 }
 
-                //Not required and value null, don't add to dictionary
+                //不需要且值为空，不添加到字典中
                 if (propertyValue == null)
                 {
                     continue;
@@ -209,7 +209,7 @@ namespace CefSharp.DevTools
             {
                 var dataMemberAttribute = (DataMemberAttribute)Attribute.GetCustomAttribute(prop, typeof(DataMemberAttribute), false);
 
-                //Only add members that have DataMemberAttribute
+                //仅添加具有 DataMemberAttribute 的成员
                 if (dataMemberAttribute == null)
                 {
                     continue;
@@ -224,7 +224,7 @@ namespace CefSharp.DevTools
                     throw new DevToolsClientException(prop.Name + " is required");
                 }
 
-                //Not required and value null, don't add to dictionary
+                //不需要且值为空，不添加到字典中
                 if (propertyValue == null)
                 {
                     continue;

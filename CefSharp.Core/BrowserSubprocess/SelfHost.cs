@@ -1,8 +1,8 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
-//NOTE:Classes in the CefSharp.Core namespace have been hidden from intellisnse so users don't use them directly
+//注意：CefSharp.Core 命名空间中的类已对 intellisnse 隐藏，因此用户不会直接使用它们
 
 using CefSharp.Internals;
 using System;
@@ -11,12 +11,12 @@ using System.IO;
 namespace CefSharp.BrowserSubprocess
 {
     /// <summary>
-    /// SelfHost allows your application executable to be used as the BrowserSubProcess
-    /// with minimal effort.
+    /// SelfHost 允许您的应用程序可执行文件用作 BrowserSubProcess
+    ///以最小的努力。
     /// https://github.com/cefsharp/CefSharp/wiki/SelfHost-BrowserSubProcess
     /// </summary>
     /// <example>
-    /// //WinForms Example
+    /// //WinForms 示例
     /// public class Program
     /// {
     ///	  [STAThread]
@@ -30,7 +30,7 @@ namespace CefSharp.BrowserSubprocess
     ///     }
     ///
     ///     var settings = new CefSettings();
-    ///     //Absolute path to your applications executable
+    ///     //应用程序可执行文件的绝对路径
     ///     settings.BrowserSubprocessPath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
     ///
     ///     Cef.Initialize(settings);
@@ -45,17 +45,17 @@ namespace CefSharp.BrowserSubprocess
     public class SelfHost
     {
         /// <summary>
-        /// This function should be called from the application entry point function (typically Program.Main)
-        /// to execute a secondary process e.g. gpu, renderer, utility
-        /// This overload is specifically used for .Net Core. For hosting your own BrowserSubProcess
-        /// it's preferable to use the Main method provided by this class.
-        /// - Pass in command line args
-        /// </summary>
-        /// <param name="args">command line args</param>
-        /// <returns>
-        /// If called for the browser process (identified by no "type" command-line value) it will return immediately
-        /// with a value of -1. If called for a recognized secondary process it will block until the process should exit
-        /// and then return the process exit code.
+        ///应从应用程序入口点函数（通常为 Program.Main）调用此函数
+        ///执行辅助进程，例如GPU、渲染器、实用程序
+        ///此重载专门用于.Net Core。用于托管您自己的 BrowserSubProcess
+        ///最好使用此类提供的 Main 方法。
+        ///-传入命令行参数
+        ///</摘要>
+        ///<param name="args">命令行参数</param>
+        ///<返回>
+        ///如果为浏览器进程调用（由无“type”命令行值标识），它将立即返回
+        ///值为-1。如果调用一个可识别的辅助进程，它将阻塞，直到该进程退出
+        ///然后返回进程退出代码。
         /// </returns>
         public static int Main(string[] args)
         {
@@ -63,9 +63,9 @@ namespace CefSharp.BrowserSubprocess
 
             if (string.IsNullOrEmpty(type))
             {
-                //If --type param missing from command line CEF/Chromium assums
-                //this is the main process (as all subprocesses must have a type param).
-                //Return -1 to indicate this behaviour.
+                //如果命令行 CEF/Chromium 假定缺少 --type 参数
+                //这是主进程（因为所有子进程都必须有一个类型参数）。
+                //返回-1来指示此行为。
                 return -1;
             }
 

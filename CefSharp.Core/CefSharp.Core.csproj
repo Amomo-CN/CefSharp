@@ -9,8 +9,8 @@
     <AssemblyOriginatorKeyFile>..\CefSharp.snk</AssemblyOriginatorKeyFile>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <!--
-    Stop MSBuild from appending TargetFramework to output path.
-    Remove if we use TargetFrameworks
+     阻止 MSBuild 将 TargetFramework 附加到输出路径。
+    如果我们使用 TargetFrameworks 则删除
     -->
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>

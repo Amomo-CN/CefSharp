@@ -1,20 +1,20 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 namespace CefSharp.DevTools
 {
     /// <summary>
-    /// DevToolsDomainResponseBase
+    /// 开发工具域响应库
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute]
     public abstract class DevToolsDomainResponseBase
     {
         /// <summary>
-        /// Convert from string to base64 byte array
-        /// </summary>
-        /// <param name="data">string data</param>
-        /// <returns>byte array</returns>
+        ///从字符串转换为base64字节数组
+        ///</摘要>
+        ///<param name="data">字符串数据</param>
+        ///<returns>字节数组</returns>
         public byte[] Convert(string data)
         {
             return System.Convert.FromBase64String(data);

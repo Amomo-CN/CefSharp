@@ -19,7 +19,7 @@
         <KeyBinding Key="W" Modifiers="Control" Command="Close"/>
     </Window.InputBindings>
     <DockPanel>
-        <Menu DockPanel.Dock="Top" materialDesign:MenuAssist.TopLevelMenuItemHeight="25">
+        <Menu DockPanel.Dock="Top" materialDesign:MenuAssist.TopLevelMenuItemHeight="20">
             <MenuItem Header="文件">
                 <MenuItem Header="新选项卡" Command="New"/>
                 <MenuItem Header="关闭选项卡" Command="Close"/>
@@ -65,7 +65,7 @@
             </MenuItem>
         </Menu>
         <controls:NonReloadingTabControl x:Name="TabControl"
-                               Margin="0,5,0,0"
+                               Margin="0,1,0,0"
                                ItemsSource="{Binding BrowserTabs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                SelectedIndex="0">
             <controls:NonReloadingTabControl.ItemTemplate>
@@ -79,7 +79,7 @@
                                 Command="Close"
                                 FontSize="10"
                                 Padding="0"
-                                Margin="10,0,0,0"
+                                Margin="0,0,0,0"
                                 ToolTip="Close"/>
                     </StackPanel>
                 </DataTemplate>

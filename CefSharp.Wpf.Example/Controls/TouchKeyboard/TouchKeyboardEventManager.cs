@@ -8,6 +8,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+
 using static Microsoft.Windows.Input.TouchKeyboard.Rcw.InputPaneRcw;
 
 namespace Microsoft.Windows.Input.TouchKeyboard

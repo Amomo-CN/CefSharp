@@ -1,11 +1,9 @@
 // 版权声明，指出CefSharp项目的作者及源代码使用的BSD风格许可协议
 // 使用者需遵守LICENSE文件中的条款
 
-using CefSharp.Wpf.Example.Views; // 引入示例视图，可能包含与UI交互的自定义控件
 using System; // 引入基础类库，提供基本的类型和命名空间
 using System.Windows; // 引入WPF类库，提供窗口和UI元素相关功能
 using System.Windows.Controls; // 引入WPF控件类库，用于处理控件和布局
-using System.Windows.Data; // 引入数据绑定类库，用于实现UI和数据之间的绑定
 using System.Windows.Media; // 引入WPF媒体类库，用于处理图形和颜色
 
 // 命名空间定义，组织相关的类和接口

@@ -1,6 +1,6 @@
-// Copyright © 2021 The CefSharp Authors. All rights reserved.
+//版权所有 © 2021 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System.Collections.Generic;
 using System.Windows.Controls.Primitives;
@@ -10,17 +10,17 @@ using System.Windows;
 namespace CefSharp.Wpf.Handler
 {
     /// <summary>
-    /// Implementation of <see cref="IContextMenuHandler"/> that uses a <see cref="ContextMenu"/>
-    /// to display the context menu.
+    ///使用 <see cref="ContextMenu"/> 的 <see cref="IContextMenuHandler"/> 实现
+    ///显示上下文菜单。
     /// </summary>
     public class ContextMenuHandler : CefSharp.Handler.ContextMenuHandler
     {
         /// <summary>
-        /// Open DevTools <see cref="CefMenuCommand"/> Id
+        ///打开 DevTools <see cref="CefMenuCommand"/> Id
         /// </summary>
         public const int CefMenuCommandShowDevToolsId = 28440;
         /// <summary>
-        /// Close DevTools <see cref="CefMenuCommand"/> Id
+        /// 关闭 DevTools <see cref="CefMenuCommand"/> Id
         /// </summary>
         public const int CefMenuCommandCloseDevToolsId = 28441;
 
@@ -41,8 +41,8 @@ namespace CefSharp.Wpf.Handler
                     model.AddSeparator();
                 }
 
-                model.AddItem((CefMenuCommand)CefMenuCommandShowDevToolsId, "Show DevTools (Inspect)");
-                model.AddItem((CefMenuCommand)CefMenuCommandCloseDevToolsId, "Close DevTools");
+                model.AddItem((CefMenuCommand)CefMenuCommandShowDevToolsId, "显示开发工具（检查）");
+                model.AddItem((CefMenuCommand)CefMenuCommandCloseDevToolsId, "关闭开发工具");
             }
         }
 
@@ -63,7 +63,7 @@ namespace CefSharp.Wpf.Handler
         {
             var webBrowser = (ChromiumWebBrowser)chromiumWebBrowser;
 
-            //IMenuModel is only valid in the context of this method, so need to read the values before invoking on the UI thread
+            //IMenuModel 仅在此方法的上下文中有效，因此需要在 UI 线程上调用之前读取值
             var menuItems = GetMenuItems(model);
             var dictionarySuggestions = parameters.DictionarySuggestions;
             var xCoord = parameters.XCoord;
@@ -85,8 +85,8 @@ namespace CefSharp.Wpf.Handler
                 {
                     menu.Closed -= handler;
 
-                    //If the callback has been disposed then it's already been executed
-                    //so don't call Cancel
+                    //如果回调已被处理，那么它已经被执行
+                    //所以不要调用Cancel
                     if (!callback.IsDisposed)
                     {
                         callback.Cancel();
@@ -107,7 +107,7 @@ namespace CefSharp.Wpf.Handler
                     if (item.CommandId == CefMenuCommand.NotFound)
                     {
                         continue;
-                    }                    
+                    }
 
                     var menuItem = new MenuItem
                     {
@@ -117,18 +117,18 @@ namespace CefSharp.Wpf.Handler
                         IsCheckable = item.IsChecked.HasValue,
                         Command = new DelegateCommand(() =>
                         {
-                            //BUG: CEF currently not executing callbacks correctly so we manually map the commands below
-                            //see https://github.com/cefsharp/CefSharp/issues/1767
-                            //The following line worked in previous versions, it doesn't now, so custom handling below
+                            //BUG：CEF 当前未正确执行回调，因此我们手动映射以下命令
+                            //看 https://github.com/cefsharp/CefSharp/issues/1767
+                            //以下行在以前的版本中有效，但现在不行，因此下面的自定义处理
                             //callback.Continue(item.Item2, CefEventFlags.None);
                             ExecuteCommand(browser, new ContextMenuExecuteModel(item.CommandId, dictionarySuggestions, xCoord, yCoord, selectionText, misspelledWord));
                         }),
                     };
 
                     //TODO: Make this recursive and remove duplicate code
-                    if(item.SubMenus != null && item.SubMenus.Count > 0)
+                    if (item.SubMenus != null && item.SubMenus.Count > 0)
                     {
-                        foreach(var subItem in item.SubMenus)
+                        foreach (var subItem in item.SubMenus)
                         {
                             if (subItem.CommandId == CefMenuCommand.NotFound)
                             {
@@ -150,9 +150,9 @@ namespace CefSharp.Wpf.Handler
                                 IsCheckable = subItem.IsChecked.HasValue,
                                 Command = new DelegateCommand(() =>
                                 {
-                                    //BUG: CEF currently not executing callbacks correctly so we manually map the commands below
-                                    //see https://github.com/cefsharp/CefSharp/issues/1767
-                                    //The following line worked in previous versions, it doesn't now, so custom handling below
+                                    //BUG：CEF 当前未正确执行回调，因此我们手动映射以下命令
+                                    //看 https://github.com/cefsharp/CefSharp/issues/1767
+                                    //以下行在以前的版本中有效，但现在不行，因此下面的自定义处理
                                     //callback.Continue(item.Item2, CefEventFlags.None);
                                     ExecuteCommand(browser, new ContextMenuExecuteModel(subItem.CommandId, dictionarySuggestions, xCoord, yCoord, selectionText, misspelledWord));
                                 }),
@@ -172,7 +172,7 @@ namespace CefSharp.Wpf.Handler
 
         protected virtual void ExecuteCommand(IBrowser browser, ContextMenuExecuteModel model)
         {
-            // If the user chose a replacement word for a misspelling, replace it here.
+            // 如果用户为拼写错误选择了替换词，请在此处替换。
             if (model.MenuCommand >= CefMenuCommand.SpellCheckSuggestion0 &&
                 model.MenuCommand <= CefMenuCommand.SpellCheckSuggestion4)
             {
@@ -188,104 +188,104 @@ namespace CefSharp.Wpf.Handler
 
             switch (model.MenuCommand)
             {
-                // Navigation.
+                // 导航。
                 case CefMenuCommand.Back:
-                {
-                    browser.GoBack();
-                    break;
-                }
+                    {
+                        browser.GoBack();
+                        break;
+                    }
                 case CefMenuCommand.Forward:
-                {
-                    browser.GoForward();
-                    break;
-                }
+                    {
+                        browser.GoForward();
+                        break;
+                    }
                 case CefMenuCommand.Reload:
-                {
-                    browser.Reload();
-                    break;
-                }
+                    {
+                        browser.Reload();
+                        break;
+                    }
                 case CefMenuCommand.ReloadNoCache:
-                {
-                    browser.Reload(ignoreCache: true);
-                    break;
-                }
+                    {
+                        browser.Reload(ignoreCache: true);
+                        break;
+                    }
                 case CefMenuCommand.StopLoad:
-                {
-                    browser.StopLoad();
-                    break;
-                }
+                    {
+                        browser.StopLoad();
+                        break;
+                    }
 
-                //Editing
+                //编辑
                 case CefMenuCommand.Undo:
-                {
-                    browser.FocusedFrame.Undo();
-                    break;
-                }
+                    {
+                        browser.FocusedFrame.Undo();
+                        break;
+                    }
                 case CefMenuCommand.Redo:
-                {
-                    browser.FocusedFrame.Redo();
-                    break;
-                }
+                    {
+                        browser.FocusedFrame.Redo();
+                        break;
+                    }
                 case CefMenuCommand.Cut:
-                {
-                    browser.FocusedFrame.Cut();
-                    break;
-                }
+                    {
+                        browser.FocusedFrame.Cut();
+                        break;
+                    }
                 case CefMenuCommand.Copy:
-                {
-                    browser.FocusedFrame.Copy();
-                    break;
-                }
+                    {
+                        browser.FocusedFrame.Copy();
+                        break;
+                    }
                 case CefMenuCommand.Paste:
-                {
-                    browser.FocusedFrame.Paste();
-                    break;
-                }
+                    {
+                        browser.FocusedFrame.Paste();
+                        break;
+                    }
                 case CefMenuCommand.Delete:
-                {
-                    browser.FocusedFrame.Delete();
-                    break;
-                }
+                    {
+                        browser.FocusedFrame.Delete();
+                        break;
+                    }
                 case CefMenuCommand.SelectAll:
-                {
-                    browser.FocusedFrame.SelectAll();
-                    break;
-                }
+                    {
+                        browser.FocusedFrame.SelectAll();
+                        break;
+                    }
 
-                // Miscellaneous.
+                // 各种各样的。
                 case CefMenuCommand.Print:
-                {
-                    browser.GetHost().Print();
-                    break;
-                }
+                    {
+                        browser.GetHost().Print();
+                        break;
+                    }
                 case CefMenuCommand.ViewSource:
-                {
-                    browser.FocusedFrame.ViewSource();
-                    break;
-                }
+                    {
+                        browser.FocusedFrame.ViewSource();
+                        break;
+                    }
                 case CefMenuCommand.Find:
-                {
-                    browser.GetHost().Find(model.SelectionText, true, false, false);
-                    break;
-                }
+                    {
+                        browser.GetHost().Find(model.SelectionText, true, false, false);
+                        break;
+                    }
 
-                // Spell checking.
+                // 拼写检查。
                 case CefMenuCommand.AddToDictionary:
-                {
-                    browser.GetHost().AddWordToDictionary(model.MisspelledWord);
-                    break;
-                }
+                    {
+                        browser.GetHost().AddWordToDictionary(model.MisspelledWord);
+                        break;
+                    }
 
                 case (CefMenuCommand)CefMenuCommandShowDevToolsId:
-                {
-                    browser.GetHost().ShowDevTools(inspectElementAtX: model.XCoord, inspectElementAtY: model.YCoord);
-                    break;
-                }
+                    {
+                        browser.GetHost().ShowDevTools(inspectElementAtX: model.XCoord, inspectElementAtY: model.YCoord);
+                        break;
+                    }
                 case (CefMenuCommand)CefMenuCommandCloseDevToolsId:
-                {
-                    browser.GetHost().CloseDevTools();
-                    break;
-                }
+                    {
+                        browser.GetHost().CloseDevTools();
+                        break;
+                    }
             }
         }
 
@@ -298,7 +298,7 @@ namespace CefSharp.Wpf.Handler
                 var type = model.GetTypeAt(i);
                 bool? isChecked = null;
 
-                if(type == MenuItemType.Check)
+                if (type == MenuItemType.Check)
                 {
                     isChecked = model.IsCheckedAt(i);
                 }
@@ -324,7 +324,7 @@ namespace CefSharp.Wpf.Handler
             return menuItems;
         }
 
-        //TODO: One class per file
+        //TODO:每个文件一个类
         internal class MenuModel
         {
             internal string Label { get; set; }

@@ -1,8 +1,8 @@
-// Copyright © 2021 The CefSharp Authors. All rights reserved.
+//版权所有 © 2021 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
-//Originally based on https://github.com/CefNet/CefNet.DevTools.Protocol/blob/0a124720474a469b5cef03839418f5e1debaf2f0/CefNet.DevTools.Protocol/Internal/EventProxy.T.cs
+//最初基于 https://github.com/CefNet/CefNet.DevTools.Protocol/blob/0a124720474a469b5cef03839418f5e1debaf2f0/CefNet.DevTools.Protocol/Internal/EventProxy.T.cs
 
 using System;
 using System.IO;
@@ -11,37 +11,37 @@ using System.Threading;
 namespace CefSharp.DevTools
 {
     /// <summary>
-    /// Generic Typed Event Proxy
-    /// </summary>
-    /// <typeparam name="T">Event Args Type</typeparam>
+    /// 通用类型事件代理
+    ///</摘要>
+    ///<typeparam name="T">事件参数类型</typeparam>
     internal class EventProxy<T> : IEventProxy
     {
         private event EventHandler<T> handlers;
         private Func<string, Stream, T> convert;
 
         /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="convert">Delegate used to convert from the Stream to event args</param>
+        ///构造函数
+        ///</摘要>
+        ///<param name="convert">用于从流转换为事件参数的委托</param>
         public EventProxy(Func<string, Stream, T> convert)
         {
             this.convert = convert;
         }
 
         /// <summary>
-        /// Add the event handler
-        /// </summary>
-        /// <param name="handler">event handler to add</param>
+        /// 添加事件处理程序
+        ///</摘要>
+        ///<param name="handler">要添加的事件处理程序</param>
         public void AddHandler(EventHandler<T> handler)
         {
             handlers += handler;
         }
 
         /// <summary>
-        /// Remove the event handler
-        /// </summary>
-        /// <param name="handler">event handler to remove</param>
-        /// <returns>returns true if the last event handler for this proxy was removed.</returns>
+        /// 删除事件处理程序
+        ///</摘要>
+        ///<param name="handler">要删除的事件处理程序</param>
+        ///<returns>如果此代理的最后一个事件处理程序已被删除，则返回 true.</returns>
         public bool RemoveHandler(EventHandler<T> handler)
         {
             handlers -= handler;

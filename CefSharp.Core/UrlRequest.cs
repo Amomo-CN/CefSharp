@@ -1,8 +1,8 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
-//NOTE:Classes in the CefSharp.Core namespace have been hidden from intellisnse so users don't use them directly
+//注意：CefSharp.Core 命名空间中的类已对 intellisnse 隐藏，因此用户不会直接使用它们
 
 using System;
 
@@ -14,30 +14,30 @@ namespace CefSharp
         private CefSharp.Core.UrlRequest urlRequest;
 
         /// <summary>
-        /// Create a new URL request that is not associated with a specific browser or frame.
-        /// Use <see cref="IFrame.CreateUrlRequest(IRequest, IUrlRequestClient)"/> instead if you want the
-        /// request to have this association, in which case it may be handled differently.
-        /// For requests originating from the browser process: It may be intercepted by the client via <see cref="IResourceRequestHandler"/>  or <see cref="ISchemeHandlerFactory"/>.
-        /// POST data may only contain only a single element of type PDE_TYPE_FILE or PDE_TYPE_BYTES.
-        /// Uses the Global RequestContext
-        /// </summary>
-        /// <param name="request">request</param>
-        /// <param name="urlRequestClient">url request client</param>
+        ///创建一个不与特定浏览器或框架关联的新 URL 请求。
+        ///如果您想要，请使用 <see cref="IFrame.CreateUrlRequest(IRequest, IUrlRequestClient)"/>
+        ///请求具有此关联，在这种情况下可能会有不同的处理方式。
+        ///对于来自浏览器进程的请求：可能会被客户端通过 <see cref="IResourceRequestHandler"/> 或 <see cref="ISchemeHandlerFactory"/> 拦截。
+        ///POST 数据只能包含 PDE_TYPE_FILE 或 PDE_TYPE_BYTES 类型的单个元素。
+        ///使用全局RequestContext
+        ///</摘要>
+        ///<param name="request">请求</param>
+        ///<param name="urlRequestClient">url请求客户端</param>
         public UrlRequest(IRequest request, IUrlRequestClient urlRequestClient) : this(request, urlRequestClient, null)
         {
 
         }
 
         /// <summary>
-        /// Create a new URL request that is not associated with a specific browser or frame.
-        /// Use <see cref="IFrame.CreateUrlRequest(IRequest, IUrlRequestClient)"/> instead if you want the
-        /// request to have this association, in which case it may be handled differently.
-        /// For requests originating from the browser process: It may be intercepted by the client via <see cref="IResourceRequestHandler"/>  or <see cref="ISchemeHandlerFactory"/>.
-        /// POST data may only contain only a single element of type PDE_TYPE_FILE or PDE_TYPE_BYTES.
-        /// </summary>
-        /// <param name="request">request</param>
-        /// <param name="urlRequestClient">url request client</param>
-        /// <param name="requestContext">request context associated with this requets.</param>
+        ///创建一个不与特定浏览器或框架关联的新 URL 请求。
+        ///如果您想要，请使用 <see cref="IFrame.CreateUrlRequest(IRequest, IUrlRequestClient)"/>
+        ///请求具有此关联，在这种情况下可能会有不同的处理方式。
+        ///对于来自浏览器进程的请求：可能会被客户端通过 <see cref="IResourceRequestHandler"/> 或 <see cref="ISchemeHandlerFactory"/> 拦截。
+        ///POST 数据只能包含 PDE_TYPE_FILE 或 PDE_TYPE_BYTES 类型的单个元素。
+        ///</摘要>
+        ///<param name="request">请求</param>
+        ///<param name="urlRequestClient">url请求客户端</param>
+        ///<param name="requestContext">与此请求关联的请求上下文。</param>
         public UrlRequest(IRequest request, IUrlRequestClient urlRequestClient, IRequestContext requestContext)
         {
             if (request == null)
@@ -78,30 +78,30 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// Create a new URL request that is not associated with a specific browser or frame.
-        /// Use <see cref="IFrame.CreateUrlRequest(IRequest, IUrlRequestClient)"/> instead if you want the
-        /// request to have this association, in which case it may be handled differently.
-        /// For requests originating from the browser process: It may be intercepted by the client via <see cref="IResourceRequestHandler"/>  or <see cref="ISchemeHandlerFactory"/>.
-        /// POST data may only contain only a single element of type PDE_TYPE_FILE or PDE_TYPE_BYTES.
-        /// Uses the Global RequestContext
-        /// </summary>
-        /// <param name="request">request</param>
-        /// <param name="urlRequestClient">url request client</param>
+        ///创建一个不与特定浏览器或框架关联的新 URL 请求。
+        ///如果您想要，请使用 <see cref="IFrame.CreateUrlRequest(IRequest, IUrlRequestClient)"/>
+        ///请求具有此关联，在这种情况下可能会有不同的处理方式。
+        ///对于来自浏览器进程的请求：可能会被客户端通过 <see cref="IResourceRequestHandler"/> 或 <see cref="ISchemeHandlerFactory"/> 拦截。
+        ///POST 数据只能包含 PDE_TYPE_FILE 或 PDE_TYPE_BYTES 类型的单个元素。
+        ///使用全局RequestContext
+        ///</摘要>
+        ///<param name="request">请求</param>
+        ///<param name="urlRequestClient">url请求客户端</param>
         public IUrlRequest Create(IRequest request, IUrlRequestClient urlRequestClient)
         {
             return new CefSharp.Core.UrlRequest(request, urlRequestClient);
         }
 
         /// <summary>
-        /// Create a new URL request that is not associated with a specific browser or frame.
-        /// Use <see cref="IFrame.CreateUrlRequest(IRequest, IUrlRequestClient)"/> instead if you want the
-        /// request to have this association, in which case it may be handled differently.
-        /// For requests originating from the browser process: It may be intercepted by the client via <see cref="IResourceRequestHandler"/>  or <see cref="ISchemeHandlerFactory"/>.
-        /// POST data may only contain only a single element of type PDE_TYPE_FILE or PDE_TYPE_BYTES.
-        /// </summary>
-        /// <param name="request">request</param>
-        /// <param name="urlRequestClient">url request client</param>
-        /// <param name="requestContext">request context associated with this requets.</param>
+        ///创建一个不与特定浏览器或框架关联的新 URL 请求。
+        ///如果您想要，请使用 <see cref="IFrame.CreateUrlRequest(IRequest, IUrlRequestClient)"/>
+        ///请求具有此关联，在这种情况下可能会有不同的处理方式。
+        ///对于来自浏览器进程的请求：可能会被客户端通过 <see cref="IResourceRequestHandler"/> 或 <see cref="ISchemeHandlerFactory"/> 拦截。
+        ///POST 数据只能包含 PDE_TYPE_FILE 或 PDE_TYPE_BYTES 类型的单个元素。
+        ///</摘要>
+        ///<param name="request">请求</param>
+        ///<param name="urlRequestClient">url请求客户端</param>
+        ///<param name="requestContext">与此请求关联的请求上下文。</param>
         public IUrlRequest Create(IRequest request, IUrlRequestClient urlRequestClient, IRequestContext requestContext)
         {
             return new CefSharp.Core.UrlRequest(request, urlRequestClient, requestContext);

@@ -1,26 +1,26 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
-//NOTE:Classes in the CefSharp.Core namespace have been hidden from intellisnse so users don't use them directly
+//注意：CefSharp.Core 命名空间中的类已对 intellisnse 隐藏，因此用户不会直接使用它们
 
 using CefSharp.Internals;
 
 namespace CefSharp
 {
-    /// <summary>
-    /// Create <see cref="IBrowserAdapter"/> instance via <see cref="Create(IWebBrowserInternal, bool)"/>
-    /// This is the primary object for bridging the ChromiumWebBrowser implementation and VC++
-    /// </summary>
+    ///<摘要>
+    ///通过 <see cref="Create(IWebBrowserInternal, bool)"/> 创建 <see cref="IBrowserAdapter"/> 实例
+    ///这是桥接 ChromiumWebBrowser 实现和 VC++ 的主要对象
+    ///</摘要>
     public static class ManagedCefBrowserAdapter
     {
         /// <summary>
-        /// Create a new <see cref="IBrowserAdapter"/> instance which is the main method of interaction between the unmanged
-        /// CEF implementation and our ChromiumWebBrowser instances.
-        /// </summary>
-        /// <param name="webBrowserInternal">reference to the ChromiumWebBrowser instance</param>
-        /// <param name="offScreenRendering">true for WPF/OffScreen, false for WinForms and other Hwnd based implementations</param>
-        /// <returns>instance of <see cref="IBrowserAdapter"/></returns>
+        ///创建一个新的<see cref="IBrowserAdapter"/>实例，它是unmanged之间交互的主要方法
+        ///CEF 实现和我们的 ChromiumWebBrowser 实例。
+        ///</摘要>
+        ///<param name="webBrowserInternal">对 ChromiumWebBrowser 实例的引用</param>
+        ///<param name="offScreenRendering">对于 WPF/OffScreen 为 true，对于 WinForms 和其他基于 Hwnd 的实现为 false</param>
+        ///<returns><see cref="IBrowserAdapter"/> 的实例</returns>
         public static IBrowserAdapter Create(IWebBrowserInternal webBrowserInternal, bool offScreenRendering)
         {
             return new CefSharp.Core.ManagedCefBrowserAdapter(webBrowserInternal, offScreenRendering);

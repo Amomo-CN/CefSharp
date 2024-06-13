@@ -1,6 +1,6 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Collections.Concurrent;
@@ -15,7 +15,7 @@ using CefSharp.Internals;
 namespace CefSharp.DevTools
 {
     /// <summary>
-    /// DevTool Client 
+    /// 开发工具客户端
     /// </summary>
     public partial class DevToolsClient : IDevToolsMessageObserver, IDevToolsClient
     {
@@ -34,21 +34,21 @@ namespace CefSharp.DevTools
         public event EventHandler<DevToolsErrorEventArgs> DevToolsEventError;
 
         /// <summary>
-        /// Capture the current <see cref="SynchronizationContext"/> so
-        /// continuation executes on the original calling thread. If
-        /// <see cref="SynchronizationContext.Current"/> is null for
-        /// <see cref="ExecuteDevToolsMethodAsync(string, IDictionary{string, object})"/>
-        /// then the continuation will be run on the CEF UI Thread (by default
-        /// this is not the same as the WPF/WinForms UI Thread).
-        /// </summary>
+        ///捕获当前的 <see cref="SynchronizationContext"/> 所以
+        ///继续在原始调用线程上执行。如果
+        ///<see cref="SynchronizationContext.Current"/> 为 null
+        ///<see cref="ExecuteDevToolsMethodAsync(string, IDictionary{string, object})"/>
+        ///然后延续将在 CEF UI 线程上运行（默认情况下
+        ///这与 WPF/WinForms UI 线程不同）。
+        ///</摘要>
         public bool CaptureSyncContext { get; set; }
 
         /// <summary>
-        /// When not null provided <see cref="SynchronizationContext"/>
-        /// will be used to run the contination. Defaults to null
-        /// Setting this property will change <see cref="CaptureSyncContext"/>
-        /// to false.
-        /// </summary>
+        ///当提供不为 null 时 <see cref="SynchronizationContext"/>
+        ///将用于运行连续。默认为空
+        ///设置此属性将会改变 <see cref="CaptureSyncContext"/>
+        ///为假。
+        ///</摘要>
         public SynchronizationContext SyncContext
         {
             get { return syncContext; }
@@ -60,9 +60,9 @@ namespace CefSharp.DevTools
         }
 
         /// <summary>
-        /// DevToolsClient
-        /// </summary>
-        /// <param name="browser">Browser associated with this DevTools client</param>
+        ///开发工具客户端
+        ///</摘要>
+        ///<param name="browser">与此 DevTools 客户端关联的浏览器</param>
         public DevToolsClient(IBrowser browser)
         {
             this.browser = browser;
@@ -71,10 +71,10 @@ namespace CefSharp.DevTools
         }
 
         /// <summary>
-        /// Store a reference to the IRegistration that's returned when
-        /// you register an observer.
-        /// </summary>
-        /// <param name="devToolsRegistration">registration</param>
+        ///存储对 IRegistration 的引用，该引用在以下情况下返回
+        ///你注册了一个观察者。
+        ///</摘要>
+        ///<param name="devToolsRegistration">注册</param>
         public void SetDevToolsObserverRegistration(IRegistration devToolsRegistration)
         {
             this.devToolsRegistration = devToolsRegistration;
@@ -97,7 +97,7 @@ namespace CefSharp.DevTools
             {
                 var p = ((EventProxy<T>)eventProxy);
 
-                if(p.RemoveHandler(eventHandler))
+                if (p.RemoveHandler(eventHandler))
                 {
                     return !eventHandlers.TryRemove(eventName, out _);
                 }
@@ -107,34 +107,34 @@ namespace CefSharp.DevTools
         }
 
         /// <summary>
-        /// Execute a method call over the DevTools protocol. This method can be called on any thread.
-        /// See the DevTools protocol documentation at https://chromedevtools.github.io/devtools-protocol/ for details
-        /// of supported methods and the expected <paramref name="parameters"/> dictionary contents.
-        /// </summary>
-        /// <param name="method">is the method name</param>
-        /// <param name="parameters">are the method parameters represented as a dictionary,
-        /// which may be empty.</param>
-        /// <returns>return a Task that can be awaited to obtain the method result</returns>
+        ///通过 DevTools 协议执行方法调用。该方法可以在任何线程上调用。
+        ///有关详细信息，请参阅 https://chromedevtools.github.io/devtools-protocol/上的 DevTools 协议文档
+        ///支持的方法和预期的 <paramref name="parameters"/> 字典内容。
+        ///</摘要>
+        ///<param name="method">是方法名称</param>
+        ///<param name="parameters">是以字典形式表示的方法参数，
+        ///可能为空。</param>
+        ///<returns>返回一个可以等待获取方法结果的Task</returns>
         public Task<DevToolsMethodResponse> ExecuteDevToolsMethodAsync(string method, IDictionary<string, object> parameters = null)
         {
             return ExecuteDevToolsMethodAsync<DevToolsMethodResponse>(method, parameters);
         }
 
         /// <summary>
-        /// Execute a method call over the DevTools protocol. This method can be called on any thread.
-        /// See the DevTools protocol documentation at https://chromedevtools.github.io/devtools-protocol/ for details
-        /// of supported methods and the expected <paramref name="parameters"/> dictionary contents.
-        /// </summary>
-        /// <typeparam name="T">The type into which the result will be deserialzed.</typeparam>
-        /// <param name="method">is the method name</param>
-        /// <param name="parameters">are the method parameters represented as a dictionary,
-        /// which may be empty.</param>
-        /// <returns>return a Task that can be awaited to obtain the method result</returns>
+        ///通过 DevTools 协议执行方法调用。该方法可以在任何线程上调用。
+        ///有关详细信息，请参阅 https://chromedevtools.github.io/devtools-protocol/上的 DevTools 协议文档
+        ///支持的方法和预期的 <paramref name="parameters"/> 字典内容。
+        ///</摘要>
+        ///<typeparam name="T">结果将被反序列化成的类型。</typeparam>
+        ///<param name="method">是方法名称</param>
+        ///<param name="parameters">是以字典形式表示的方法参数，
+        ///可能为空。</param>
+        ///<returns>返回一个可以等待获取方法结果的Task</returns>
         public Task<T> ExecuteDevToolsMethodAsync<T>(string method, IDictionary<string, object> parameters = null) where T : DevToolsDomainResponseBase
         {
             if (browser == null || browser.IsDisposed)
             {
-                //TODO: Queue up commands where possible
+                //TODO：尽可能将命令排队
                 throw new ObjectDisposedException(nameof(IBrowser));
             }
 
@@ -153,15 +153,15 @@ namespace CefSharp.DevTools
 
             if (!queuedCommandResults.TryAdd(messageId, methodResultContext))
             {
-                throw new DevToolsClientException(string.Format("Unable to add MessageId {0} to queuedCommandResults ConcurrentDictionary.", messageId));
+                throw new DevToolsClientException(string.Format("无法将 MessageId {0} 添加到queuedCommandResults ConcurrentDictionary。", messageId));
             }
 
-            //Currently on CEF UI Thread we can directly execute
+            //目前在CEF UI Thread上我们可以直接执行
             if (CefThread.CurrentlyOnUiThread)
             {
                 ExecuteDevToolsMethod(browserHost, messageId, method, parameters, methodResultContext);
             }
-            //ExecuteDevToolsMethod can only be called on the CEF UI Thread
+            //ExecuteDevToolsMethod 只能在 CEF UI 线程上调用
             else if (CefThread.CanExecuteOnUiThread)
             {
                 CefThread.ExecuteOnUiThread(() =>
@@ -172,7 +172,7 @@ namespace CefSharp.DevTools
             else
             {
                 queuedCommandResults.TryRemove(messageId, out methodResultContext);
-                throw new DevToolsClientException("Unable to invoke ExecuteDevToolsMethod on CEF UI Thread.");
+                throw new DevToolsClientException("无法在 CEF UI 线程上调用 ExecuteDevToolsMethod.");
             }
 
             return taskCompletionSource.Task;
@@ -185,12 +185,12 @@ namespace CefSharp.DevTools
                 var returnedMessageId = browserHost.ExecuteDevToolsMethod(messageId, method, parameters);
                 if (returnedMessageId == 0)
                 {
-                    throw new DevToolsClientException(string.Format("Failed to execute dev tools method {0}.", method));
+                    throw new DevToolsClientException(string.Format("无法执行开发工具方法 {0}.", method));
                 }
                 else if (returnedMessageId != messageId)
                 {
-                    //For some reason our message Id's don't match
-                    throw new DevToolsClientException(string.Format("Generated MessageId {0} doesn't match returned Message Id {1}", returnedMessageId, messageId));
+                    //由于某种原因，我们的消息 ID 不匹配
+                    throw new DevToolsClientException(string.Format("生成的消息 ID {0} 与返回的消息 ID 不匹配 {1}", returnedMessageId, messageId));
                 }
             }
             catch (Exception ex)
@@ -203,11 +203,11 @@ namespace CefSharp.DevTools
         /// <inheritdoc/>
         public void Dispose()
         {
-            //Dispose can be called from different Threads
-            //CEF maintains a reference and the user
-            //maintains a reference, we in a rare case
-            //we end up disposing of #3725 twice from different
-            //threads. This will ensure our dispose only runs once.
+            //Dispose 可以从不同的线程调用
+            //CEF维护一个引用和用户
+            //维护一个参考，我们在极少数情况下
+            //我们最终从不同的地方处理了两次#3725
+            //线程。这将确保我们的处理只运行一次。
             if (Interlocked.Increment(ref disposeCount) == 1)
             {
                 DevToolsEvent = null;
@@ -218,7 +218,7 @@ namespace CefSharp.DevTools
                 var events = eventHandlers.Values;
                 eventHandlers.Clear();
 
-                foreach(var evt in events)
+                foreach (var evt in events)
                 {
                     evt.Dispose();
                 }
@@ -244,7 +244,7 @@ namespace CefSharp.DevTools
             {
                 var evt = DevToolsEvent;
 
-                //Only parse the data if we have an event handler
+                //仅当我们有事件处理程序时才解析数据
                 if (evt != null)
                 {
                     var paramsAsJsonString = StreamToString(parameters, leaveOpen: true);
@@ -257,13 +257,13 @@ namespace CefSharp.DevTools
                     eventProxy.Raise(this, method, parameters, SyncContext);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var errorEvent = DevToolsEventError;
 
                 var json = "";
 
-                if(parameters.Length > 0)
+                if (parameters.Length > 0)
                 {
                     parameters.Position = 0;
 
@@ -271,9 +271,9 @@ namespace CefSharp.DevTools
                     {
                         json = StreamToString(parameters, leaveOpen: false);
                     }
-                    catch(Exception)
+                    catch (Exception)
                     {
-                        //TODO: do we somehow pass this exception to the user?
+                        //TODO：我们是否以某种方式将此异常传递给用户？
                     }
                 }
 
@@ -330,15 +330,15 @@ namespace CefSharp.DevTools
 
 
         /// <summary>
-        /// Deserialize the JSON stream into a .Net object.
-        /// For .Net Core/.Net 5.0 uses System.Text.Json
-        /// for .Net 4.6.2 uses System.Runtime.Serialization.Json
-        /// </summary>
-        /// <typeparam name="T">Object type</typeparam>
-        /// <param name="eventName">event Name</param>
-        /// <param name="stream">JSON stream</param>
-        /// <returns>object of type <typeparamref name="T"/></returns>
-        private static T DeserializeJsonEvent<T>(string eventName, Stream stream)  where T : EventArgs
+        /// 将 JSON 流反序列化为 .Net 对象。
+        ///对于.Net Core/.Net 5.0 使用System.Text.Json
+        ///.Net 4.6.2 使用 System.Runtime.Serialization.Json
+        ///</摘要>
+        ///<typeparam name="T">对象类型</typeparam>
+        ///<param name="eventName">事件名称</param>
+        ///<param name="stream">JSON 流</param>
+        ///<returns>类型为<typeparamref name="T"/>的对象</returns>
+        private static T DeserializeJsonEvent<T>(string eventName, Stream stream) where T : EventArgs
         {
             if (typeof(T) == typeof(EventArgs))
             {
@@ -357,26 +357,26 @@ namespace CefSharp.DevTools
         }
 
         /// <summary>
-        /// Deserialize the JSON stream into a .Net object.
-        /// For .Net Core/.Net 5.0 uses System.Text.Json
-        /// for .Net 4.6.2 uses System.Runtime.Serialization.Json
+        /// 将 JSON 流反序列化为 .Net 对象。
+        ///对于.Net Core/.Net 5.0 使用System.Text.Json
+        ///.Net 4.6.2 使用 System.Runtime.Serialization.Json
         /// </summary>
-        /// <typeparam name="T">Object type</typeparam>
-        /// <param name="stream">JSON stream</param>
-        /// <returns>object of type <typeparamref name="T"/></returns>
+        /// <typeparam name="T">对象类型</typeparam>
+        ///<param name="stream">JSON 流</param>
+        ///<returns>类型为<typeparamref name="T"/>的对象</returns>
         private static T DeserializeJson<T>(Stream stream)
         {
             return (T)DeserializeJson(typeof(T), stream);
         }
 
         /// <summary>
-        /// Deserialize the JSON stream into a .Net object.
-        /// For .Net Core/.Net 5.0 uses System.Text.Json
-        /// for .Net 4.6.2 uses System.Runtime.Serialization.Json
-        /// </summary>
-        /// <param name="type">Object type</param>
-        /// <param name="stream">JSON stream</param>
-        /// <returns>object of type <paramref name="type"/></returns>
+        ///将 JSON 流反序列化为 .Net 对象。
+        ///对于.Net Core/.Net 5.0 使用System.Text.Json
+        ///.Net 4.6.2 使用 System.Runtime.Serialization.Json
+        ///</摘要>
+        ///<param name="type">对象类型</param>
+        ///<param name="stream">JSON 流</param>
+        ///<returns>类型为<paramref name="type"/>的对象</returns>
         private static object DeserializeJson(Type type, Stream stream)
         {
 #if NETCOREAPP
@@ -388,7 +388,7 @@ namespace CefSharp.DevTools
 
             options.Converters.Add(new CefSharp.Internals.Json.JsonEnumConverterFactory());
 
-            // TODO: use synchronus Deserialize<T>(Stream) when System.Text.Json gets updated
+            // TODO: 当 System.Text.Json 更新时使用 synchronus Deserialize<T>(Stream)
             var memoryStream = new MemoryStream((int)stream.Length);
             stream.CopyTo(memoryStream);
 

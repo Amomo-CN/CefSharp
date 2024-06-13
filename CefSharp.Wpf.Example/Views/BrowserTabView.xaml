@@ -8,8 +8,8 @@
              xmlns:local="clr-namespace:CefSharp.Wpf.Example.ViewModels"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
-             d:DesignWidth="640"
-             d:DesignHeight="480"
+             d:DesignWidth="1093"
+             d:DesignHeight="670.5"
              FocusManager.FocusedElement="{Binding ElementName=browser}"
              d:DataContext="{d:DesignInstance local:BrowserTabViewModel}">
     <UserControl.Resources>
@@ -21,7 +21,7 @@
         </ObjectDataProvider>
     </UserControl.Resources>
     <DockPanel LastChildFill="True">
-        <DockPanel DockPanel.Dock="Top" Margin="5">
+        <DockPanel DockPanel.Dock="Top" Margin="2">
             <Button Command="{Binding HomeCommand}"
                     Margin="16,0,0,0"
                     ToolTip="Navigate Home"

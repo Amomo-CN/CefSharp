@@ -1,6 +1,6 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Runtime.Serialization;
@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace CefSharp.DevTools
 {
     /// <summary>
-    /// The exception that is thrown when there's a problem executing a DevTools protocol method.
+    /// 执行 DevTools 协议方法出现问题时引发的异常。
     /// </summary>
     [Serializable]
     public class DevToolsClientException : Exception
@@ -22,37 +22,37 @@ namespace CefSharp.DevTools
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DevToolsClientException"/> class with its message
-        /// string set to a default message.
+        /// 使用其消息初始化 <see cref="DevToolsClientException"/> 类的新实例
+        ///字符串设置为默认消息。
         /// </summary>
         public DevToolsClientException() : base("Error occurred whilst executing DevTools protocol method")
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DevToolsClientException"/> class with a specified error message.
+        ///使用指定的错误消息初始化 <see cref="DevToolsClientException"/> 类的新实例。
         /// </summary>
-        /// <param name="message">message</param>
+        /// <param name="message">信息</param>
         public DevToolsClientException(string message) : base(message)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DevToolsClientException"/> class with a specified error message.
+        /// 使用指定的错误消息初始化 <see cref="DevToolsClientException"/> 类的新实例。
         /// </summary>
-        /// <param name="message">message</param>
-        /// <param name="errorResponse">error response</param>
+        /// <param name="message">信息</param>
+        /// <param name="errorResponse">错误响应</param>
         public DevToolsClientException(string message, DevToolsDomainErrorResponse errorResponse) : base(message)
         {
             Response = errorResponse;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DevToolsClientException"/> class with a specified error message
-        /// and an inner exception.
+        /// 使用指定的错误消息初始化 <see cref="DevToolsClientException"/> 类的新实例
+        ///和一个内部异常。
         /// </summary>
-        /// <param name="message">message</param>
-        /// <param name="inner">inner exception</param>
+        /// <param name="message">信息</param>
+        /// <param name="inner">内部异常</param>
         public DevToolsClientException(string message, Exception inner) : base(message, inner)
         {
         }
@@ -60,7 +60,7 @@ namespace CefSharp.DevTools
         /// <inheritdoc/>
         protected DevToolsClientException(SerializationInfo serializationInfo, StreamingContext streamingContext) : base(serializationInfo, streamingContext)
         {
-            
+
         }
     }
 }

@@ -1,26 +1,26 @@
-// Copyright © 2021 The CefSharp Authors. All rights reserved.
+//版权所有 © 2021 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System.IO;
 
 namespace CefSharp.Fluent
 {
     /// <summary>
-    /// Fluent UrlRequestClient Builder
+    ///流畅的 UrlRequestClient 构建器
     /// </summary>
     public class UrlRequestClientBuilder
     {
         private UrlRequestClient client = new UrlRequestClient();
 
         /// <summary>
-        /// See <see cref="IUrlRequestClient.GetAuthCredentials(bool, string, int, string, string, IAuthCallback)"/> for details
-        /// </summary>
-        /// <param name="func">function to be executed when <see cref="IUrlRequestClient.GetAuthCredentials(bool, string, int, string, string, IAuthCallback)"/>
-        /// is called </param>
-        /// <returns>
-        /// Fluent Builder, call <see cref="UrlRequestClientBuilder.Build"/> to create
-        /// a new <see cref="IUrlRequestClient"/> instance
+        ///详细信息请参见 <see cref="IUrlRequestClient.GetAuthCredentials(bool, string, int, string, string, IAuthCallback)"/>
+        ///</摘要>
+        ///<param name="func">当 <see cref="IUrlRequestClient.GetAuthCredentials(bool, string, int, string, string, IAuthCallback)"/> 时执行的函数
+        ///称为 </param>
+        ///<返回>
+        ///Fluent Builder，调用<see cref="UrlRequestClientBuilder.Build"/>创建
+        ///一个新的 <see cref="IUrlRequestClient"/> 实例
         /// </returns>
         public UrlRequestClientBuilder GetAuthCredentials(GetAuthCredentialsDelegate func)
         {
@@ -30,13 +30,13 @@ namespace CefSharp.Fluent
         }
 
         /// <summary>
-        /// See <see cref="IUrlRequestClient.OnDownloadData(IUrlRequest, Stream)"/> for details.
-        /// </summary>
-        /// <param name="action">Action to be executed when <see cref="IUrlRequestClient.OnDownloadData(IUrlRequest, Stream)"/>
-        /// is called</param>
-        /// <returns>
-        /// Fluent Builder, call <see cref="UrlRequestClientBuilder.Build"/> to create
-        /// a new <see cref="IUrlRequestClient"/> instance
+        ///有关详细信息，请参阅 <see cref="IUrlRequestClient.OnDownloadData(IUrlRequest, Stream)"/>。
+        ///</摘要>
+        ///<param name="action">当 <see cref="IUrlRequestClient.OnDownloadData(IUrlRequest, Stream)"/> 时执行的操作
+        ///被调用</param>
+        ///<返回>
+        ///Fluent Builder，调用<see cref="UrlRequestClientBuilder.Build"/>创建
+        ///一个新的 <see cref="IUrlRequestClient"/> 实例
         /// </returns>
         public UrlRequestClientBuilder OnDownloadData(OnDownloadDataDelegate action)
         {
@@ -46,13 +46,13 @@ namespace CefSharp.Fluent
         }
 
         /// <summary>
-        /// See <see cref="IUrlRequestClient.OnDownloadProgress(IUrlRequest, long, long)"/> for details.
-        /// </summary>
-        /// <param name="action">Action to be executed when <see cref="IUrlRequestClient.OnDownloadProgress(IUrlRequest, long, long)"/>
-        /// is called</param>
-        /// <returns>
-        /// Fluent Builder, call <see cref="UrlRequestClientBuilder.Build"/> to create
-        /// a new <see cref="IUrlRequestClient"/> instance
+        ///有关详细信息，请参阅 <see cref="IUrlRequestClient.OnDownloadProgress(IUrlRequest, long, long)"/>。
+        ///</摘要>
+        ///<param name="action">当 <see cref="IUrlRequestClient.OnDownloadProgress(IUrlRequest, long, long)"/> 时执行的操作
+        ///被调用</param>
+        ///<返回>
+        ///Fluent Builder，调用<see cref="UrlRequestClientBuilder.Build"/>创建
+        ///一个新的 <see cref="IUrlRequestClient"/> 实例
         /// </returns>
         public UrlRequestClientBuilder OnDownloadProgress(OnDownloadProgressDelegate action)
         {
@@ -62,13 +62,13 @@ namespace CefSharp.Fluent
         }
 
         /// <summary>
-        /// See <see cref="IUrlRequestClient.OnRequestComplete"/> for details.
-        /// </summary>
-        /// <param name="action">Action to be executed when <see cref="IUrlRequestClient.OnRequestComplete(IUrlRequest)"/>
-        /// is called</param>
-        /// <returns>
-        /// Fluent Builder, call <see cref="UrlRequestClientBuilder.Build"/> to create
-        /// a new <see cref="IUrlRequestClient"/> instance
+        ///有关详细信息，请参阅 <see cref="IUrlRequestClient.OnRequestComplete"/>。
+        ///</摘要>
+        ///<param name="action">当 <see cref="IUrlRequestClient.OnRequestComplete(IUrlRequest)"/> 时执行的操作
+        ///被调用</param>
+        ///<返回>
+        ///Fluent Builder，调用<see cref="UrlRequestClientBuilder.Build"/>创建
+        ///一个新的 <see cref="IUrlRequestClient"/> 实例
         /// </returns>
         public UrlRequestClientBuilder OnRequestComplete(OnRequestCompleteDelegate action)
         {
@@ -78,13 +78,13 @@ namespace CefSharp.Fluent
         }
 
         /// <summary>
-        /// See <see cref="IUrlRequestClient.OnUploadProgress(IUrlRequest, long, long)"/> for details.
-        /// </summary>
-        /// <param name="action">Action to be executed when <see cref="IUrlRequestClient.OnUploadProgress(IUrlRequest, long, long)"/>
-        /// is called</param>
-        /// <returns>
-        /// Fluent Builder, call <see cref="UrlRequestClientBuilder.Build"/> to create
-        /// a new <see cref="IUrlRequestClient"/> instance
+        ///详细信息请参见 <see cref="IUrlRequestClient.OnUploadProgress(IUrlRequest, long, long)"/>。
+        ///</摘要>
+        ///<param name="action">当 <see cref="IUrlRequestClient.OnUploadProgress(IUrlRequest, long, long)"/> 时执行的操作
+        ///被调用</param>
+        ///<返回>
+        ///Fluent Builder，调用<see cref="UrlRequestClientBuilder.Build"/>创建
+        ///一个新的 <see cref="IUrlRequestClient"/> 实例
         /// </returns>
         public UrlRequestClientBuilder OnUploadProgress(OnUploadProgressDelegate action)
         {
@@ -94,9 +94,9 @@ namespace CefSharp.Fluent
         }
 
         /// <summary>
-        /// Create a <see cref="IUrlRequestClient"/> instance
-        /// </summary>
-        /// <returns> a <see cref="IUrlRequestClient"/> instance</returns>
+        ///创建一个 <see cref="IUrlRequestClient"/> 实例
+        ///</摘要>
+        ///<returns> 一个 <see cref="IUrlRequestClient"/> 实例</returns>
         public IUrlRequestClient Build()
         {
             return client;

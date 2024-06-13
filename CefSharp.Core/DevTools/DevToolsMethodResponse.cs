@@ -1,26 +1,26 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 namespace CefSharp.DevTools
 {
     /// <summary>
-    /// DevTools Method Response
+    /// DevTools 方法响应
     /// </summary>
     public class DevToolsMethodResponse : DevToolsDomainResponseBase
     {
         /// <summary>
-        /// MessageId
+        /// 消息ID
         /// </summary>
         public int MessageId { get; set; }
 
         /// <summary>
-        /// Success
+        /// 成功
         /// </summary>
         public bool Success { get; set; }
 
         /// <summary>
-        /// Method Response as Json string
+        /// 方法响应为 Json 字符串
         /// </summary>
         public string ResponseAsJsonString { get; set; }
     }

@@ -1,6 +1,6 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace CefSharp.DevTools
 {
-    // Helper class for setting the method response in the correct sync context
+    // 用于在正确的同步上下文中设置方法响应的帮助程序类
     internal struct DevToolsMethodResponseContext
     {
         public readonly Type Type;
@@ -42,7 +42,7 @@ namespace CefSharp.DevTools
             }
             else
             {
-                // Using a KeyValuePair to pass the method and value into the callback to avoid capturing local variables in the delegate.
+                // 使用 KeyValuePair 将方法和值传递到回调中以避免捕获委托中的局部变量。
                 syncContext.Post(new SendOrPostCallback(state =>
                 {
                     var kv = (KeyValuePair<Func<T, bool>, T>)state;

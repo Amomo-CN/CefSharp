@@ -1,72 +1,72 @@
-// Copyright © 2021 The CefSharp Authors. All rights reserved.
+//版权所有 © 2021 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System.IO;
 
 namespace CefSharp.Fluent
 {
     /// <summary>
-    /// Called before a download begins in response to a user-initiated action
-    /// (e.g. alt + link click or link click that returns a `Content-Disposition:
-    /// attachment` response from the server).
-    /// </summary>
-    /// <param name="chromiumWebBrowser">the ChromiumWebBrowser control</param>
-    /// <param name="browser">The browser instance</param>
-    /// <param name="url">is the target download URL</param>
-    /// <param name="requestMethod">is the target method (GET, POST, etc)</param>
-    /// <returns>Return true to proceed with the download or false to cancel the download.</returns>
+    ///在下载开始之前调用以响应用户启动的操作
+    ///（例如 alt + 链接单击或返回 `Content-Disposition: 的链接单击：
+    ///来自服务器的附件`响应）。
+    ///</摘要>
+    ///<param name="chromiumWebBrowser">ChromiumWebBrowser 控件</param>
+    ///<param name="browser">浏览器实例</param>
+    ///<param name="url">为目标下载网址</param>
+    ///<param name="requestMethod">是目标方法（GET、POST等）</param>
+    ///<returns>返回 true 继续下载，返回 false 取消下载。</returns>
     public delegate bool CanDownloadDelegate(IWebBrowser chromiumWebBrowser, IBrowser browser, string url, string requestMethod);
 
     /// <summary>
-    /// Called before a download begins.
-    /// </summary>
-    /// <param name="chromiumWebBrowser">the ChromiumWebBrowser control</param>
-    /// <param name="browser">The browser instance</param>
-    /// <param name="downloadItem">Represents the file being downloaded.</param>
-    /// <param name="callback">Callback interface used to asynchronously continue a download.</param>
-    /// <returns>Return true and execute <paramref name="callback"/> either
-    /// asynchronously or in this method to continue or cancel the download.
-    /// Return false to proceed with default handling (cancel with Alloy style,
-    /// download shelf with Chrome style).</returns>
+    ///下载开始之前调用。
+    ///</摘要>
+    ///<param name="chromiumWebBrowser">ChromiumWebBrowser 控件</param>
+    ///<param name="browser">浏览器实例</param>
+    ///<param name="downloadItem">代表正在下载的文件</param>
+    ///<param name="callback">用于异步继续下载的回调接口</param>
+    ///<returns>返回 true 并执行 <paramref name="callback"/>
+    ///异步或在此方法中继续或取消下载。
+    ///返回 false 继续默认处理（使用 Alloy 样式取消，
+    ///下载 Chrome 风格的架子）。</returns>
     public delegate bool OnBeforeDownloadDelegate(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IBeforeDownloadCallback callback);
 
     /// <summary>
-    /// Called when a download's status or progress information has been updated. This may be called multiple times before and after <see cref="IDownloadHandler.OnBeforeDownload"/>.
-    /// </summary>
-    /// <param name="chromiumWebBrowser">the ChromiumWebBrowser control</param>
-    /// <param name="browser">The browser instance</param>
-    /// <param name="downloadItem">Represents the file being downloaded.</param>
-    /// <param name="callback">The callback used to Cancel/Pause/Resume the process</param>
+    ///当下载的状态或进度信息已更新时调用。这可能在 <see cref="IDownloadHandler.OnBeforeDownload"/> 之前和之后调用多次。
+    ///</摘要>
+    ///<param name="chromiumWebBrowser">ChromiumWebBrowser 控件</param>
+    ///<param name="browser">浏览器实例</param>
+    ///<param name="downloadItem">代表正在下载的文件</param>
+    ///<param name="callback">用于取消/暂停/恢复进程的回调</param>
     public delegate void OnDownloadUpdatedDelegate(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IDownloadItemCallback callback);
 
     /// <summary>
-    /// A <see cref="IDownloadHandler"/> implementation used by <see cref="DownloadHandlerBuilder"/>
-    /// to provide a fluent means of creating a <see cref="IDownloadHandler"/>.
-    /// </summary>
+    ///<see cref="DownloadHandlerBuilder"/> 使用的 <see cref="IDownloadHandler"/> 实现
+    ///提供创建 <see cref="IDownloadHandler"/> 的流畅方法。
+    ///</摘要>
     public class DownloadHandler : Handler.DownloadHandler
     {
         private CanDownloadDelegate canDownload;
         private OnBeforeDownloadDelegate onBeforeDownload;
         private OnDownloadUpdatedDelegate onDownloadUpdated;
 
-        /// <summary>
-        /// Create a new DownloadHandler Builder
-        /// </summary>
-        /// <returns>Fluent DownloadHandler Builder</returns>
+        ///<摘要>
+        ///创建一个新的 DownloadHandler 构建器
+        ///</摘要>
+        ///<returns>Fluent DownloadHandler Builder</returns>
         public static DownloadHandlerBuilder Create()
         {
             return new DownloadHandlerBuilder();
         }
 
         /// <summary>
-        /// Creates a new <see cref="IDownloadHandler"/> instances
-        /// where all downloads are automatically downloaded to the specified folder.
-        /// No dialog is dispolayed to the user.
-        /// </summary>
-        /// <param name="folder">folder where files are download.</param>
-        /// <param name="downloadUpdated">optional delegate for download updates, track progress, completion etc.</param>
-        /// <returns><see cref="IDownloadHandler"/> instance.</returns>
+        ///创建一个新的 <see cref="IDownloadHandler"/> 实例
+        ///其中所有下载都会自动下载到指定文件夹。
+        ///不向用户显示任何对话框。
+        ///</摘要>
+        ///<param name="folder">下载文件的文件夹。</param>
+        ///<param name="downloadUpdated">用于下载更新、跟踪进度、完成等的可选委托</param>
+        ///<returns><see cref="IDownloadHandler"/> 实例。</returns>     
         public static IDownloadHandler UseFolder(string folder, OnDownloadUpdatedDelegate downloadUpdated = null)
         {
             return Create()
@@ -75,7 +75,7 @@ namespace CefSharp.Fluent
                     using (callback)
                     {
                         var path = Path.Combine(folder, item.SuggestedFileName);
-                        
+
                         callback.Continue(path, showDialog: false);
                     }
 
@@ -86,11 +86,11 @@ namespace CefSharp.Fluent
         }
 
         /// <summary>
-        /// Creates a new <see cref="IDownloadHandler"/> instances
-        /// where a default "Save As" dialog is displayed to the user.
-        /// </summary>
-        /// <param name="downloadUpdated">optional delegate for download updates, track progress, completion etc.</param>
-        /// <returns><see cref="IDownloadHandler"/> instance.</returns>
+        ///创建一个新的 <see cref="IDownloadHandler"/> 实例
+        ///其中向用户显示默认的“另存为”对话框。
+        ///</摘要>
+        ///<param name="downloadUpdated">用于下载更新、跟踪进度、完成等的可选委托</param>
+        ///<returns><see cref="IDownloadHandler"/> 实例。</returns>
         public static IDownloadHandler AskUser(OnDownloadUpdatedDelegate downloadUpdated = null)
         {
             return Create()
@@ -108,8 +108,8 @@ namespace CefSharp.Fluent
         }
 
         /// <summary>
-        /// Use <see cref="Create"/> to create a new instance of the fluent builder
-        /// </summary>
+        /// 使用 <see cref="Create"/> 创建 Fluent 构建器的新实例
+        ///</摘要>
         internal DownloadHandler()
         {
 

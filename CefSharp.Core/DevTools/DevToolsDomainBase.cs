@@ -1,6 +1,6 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 
 using System;
@@ -12,14 +12,14 @@ using CefSharp.DevTools.Network;
 namespace CefSharp.DevTools
 {
     /// <summary>
-    /// DevTools Domain base class
-    /// Provides some basic helper methods
+    ///DevTools 域基类
+    ///提供一些基本的辅助方法
     /// </summary>
     public abstract class DevToolsDomainBase
     {
 #if NETCOREAPP
         /// <summary>
-        /// Convert Enum to String
+        /// 将枚举转换为字符串
         /// </summary>
         /// <param name="val">enum</param>
         /// <returns>string</returns>
@@ -29,10 +29,10 @@ namespace CefSharp.DevTools
         }
 
         /// <summary>
-        /// Enum to string
+        /// 枚举到字符串
         /// </summary>
-        /// <param name="values">array of type <see cref="CefSharp.DevTools.Network.ContentEncoding"/></param>
-        /// <returns>enumerable string</returns>
+        /// <param name="values">类型数组 <see cref="CefSharp.DevTools.Network.ContentEncoding"/></param>
+        /// <returns>可枚举字符串</returns>
         protected IEnumerable<string> EnumToString(CefSharp.DevTools.Network.ContentEncoding[] values)
         {
             foreach (var val in values)
@@ -42,10 +42,10 @@ namespace CefSharp.DevTools
         }
 
         /// <summary>
-        /// Enum to string
+        /// 枚举到字符串
         /// </summary>
-        /// <param name="values">array of type <see cref="CefSharp.DevTools.Emulation.DisabledImageType"/></param>
-        /// <returns>enumerable string</returns>
+        /// <param name="values">类型数组<see cref="CefSharp.DevTools.Emulation.DisabledImageType"/></param>
+        /// <returns>可枚举字符串</returns>
         protected IEnumerable<string> EnumToString(CefSharp.DevTools.Emulation.DisabledImageType[] values)
         {
             foreach (var val in values)
@@ -55,10 +55,10 @@ namespace CefSharp.DevTools
         }
 
         /// <summary>
-        /// Enum to string
+        /// 枚举到字符串
         /// </summary>
-        /// <param name="values">array of type <see cref="PermissionType"/></param>
-        /// <returns>enumerable string</returns>
+        /// <param name="values">类型数组 <see cref="PermissionType"/></param>
+        /// <returns>可枚举字符串</returns>
         protected IEnumerable<string> EnumToString(PermissionType[] values)
         {
             foreach (var val in values)
@@ -70,8 +70,8 @@ namespace CefSharp.DevTools
         /// <summary>
         /// Enum to string
         /// </summary>
-        /// <param name="values">array of type <see cref="CefSharp.DevTools.DOMDebugger.CSPViolationType"/></param>
-        /// <returns>enumerable string</returns>
+        /// <param name="values">类型数组 <see cref="CefSharp.DevTools.DOMDebugger.CSPViolationType"/></param>
+        /// <returns>可枚举字符串</returns>
         protected IEnumerable<string> EnumToString(CefSharp.DevTools.DOMDebugger.CSPViolationType[] values)
         {
             foreach (var val in values)
@@ -88,7 +88,7 @@ namespace CefSharp.DevTools
             return dataMemberAttribute.Value;
         }
 
-        //TODO: Create a generic function that converts enum array to string
+        //TODO: 创建一个将枚举数组转换为字符串的通用函数
         protected IEnumerable<string> EnumToString(ContentEncoding[] values)
         {
             foreach (var val in values)

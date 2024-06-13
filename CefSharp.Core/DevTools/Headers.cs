@@ -1,6 +1,6 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Collections.Generic;
@@ -9,25 +9,25 @@ using System.Linq;
 namespace CefSharp.DevTools.Network
 {
     /// <summary>
-    /// Request / response headers as keys / values of JSON object.
-    /// </summary>
-    /// <remarks>
-    /// CDP uses comma seperated values to store multiple header values.
-    /// Use <see cref="TryGetValues(string, out string[])"/> or <see cref="GetCommaSeparatedValues(string)"/> to get a string[]
-    /// for headers that have multiple values.
-    /// </remarks>
-    /// Helper methods for dealing with comma separated header values based on https://github.com/dotnet/aspnetcore/blob/52eff90fbcfca39b7eb58baad597df6a99a542b0/src/Http/Http.Abstractions/src/Extensions/HeaderDictionaryExtensions.cs
+    /// 请求/响应标头作为 JSON 对象的键/值。
+    /// </摘要>
+    /// <备注>
+    /// CDP 使用逗号分隔值来存储多个标头值。
+    /// 使用 <see cref="TryGetValues(string, out string[])"/> 或 <see cref="GetCommaSeparatedValues(string)"/> 获取 string[]
+    /// 对于具有多个值的标头。
+    /// </备注>
+    /// 用于处理基于逗号分隔的标头值的辅助方法 https://github.com/dotnet/aspnetcore/blob/52eff90fbcfca39b7eb58baad597df6a99a542b0/src/Http/Http.Abstractions/src/Extensions/HeaderDictionaryExtensions.cs
     public class Headers : Dictionary<string, string>
     {
         /// <summary>
-        /// Initializes a new instance of the Headers class.
+        /// 初始化 Headers 类的新实例。
         /// </summary>
         public Headers() : base(StringComparer.OrdinalIgnoreCase)
         {
         }
 
         /// <summary>
-        /// Returns itself
+        ///返回自身
         /// </summary>
         /// <returns>Dictionary of headers</returns>
         public Dictionary<string, string> ToDictionary()
@@ -36,12 +36,12 @@ namespace CefSharp.DevTools.Network
         }
 
         /// <summary>
-        /// Gets an array of values for the specified key. Values are comma seperated and will be split into a string[].
-        /// Quoted values will not be split, and the quotes will be removed.
-        /// </summary>
-        /// <param name="key">The header name.</param>
-        /// <param name="values">the associated values from the dictionary separated into individual values, or null if the key is not present.</param>
-        /// <returns>true if the Dictionary contains an element with the specified key; otherwise, false.</returns>
+        /// 获取指定键的值数组。值以逗号分隔，并将被拆分为字符串[]。
+        ///引用的值不会被分割，并且引号将被删除。
+        ///</摘要>
+        ///<param name="key">标头名称。</param>
+        ///<param name="values">将字典中的关联值分成单独的值，如果键不存在则返回 null。</param>
+        ///<returns>如果字典包含具有指定键的元素则为 true；否则为假.</returns>
         public bool TryGetValues(string key, out string[] values)
         {
             values = null;
@@ -109,11 +109,11 @@ namespace CefSharp.DevTools.Network
         }
 
         /// <summary>
-        /// Get the associated values from the dictionary separated into individual values.
-        /// Quoted values will not be split, and the quotes will be removed.
-        /// </summary>
-        /// <param name="key">The header name.</param>
-        /// <returns>the associated values from the dictionary separated into individual values, or null if the key is not present.</returns>
+        /// 从字典中获取关联值，并将其分成单独的值。
+        ///引用的值不会被分割，并且引号将被删除。
+        ///</摘要>
+        ///<param name="key">标头名称。</param>
+        ///<returns>将字典中的关联值分成单独的值，如果键不存在则返回 null.</returns>
         public string[] GetCommaSeparatedValues(string key)
         {
             string[] values;
@@ -127,10 +127,10 @@ namespace CefSharp.DevTools.Network
         }
 
         /// <summary>
-        /// Quotes any values containing commas, and then comma joins all of the values with any existing values.
-        /// </summary>
-        /// <param name="key">The header name.</param>
-        /// <param name="values">The header values.</param>
+        /// 引用包含逗号的任何值，然后用逗号将所有值与任何现有值连接起来。
+        ///</摘要>
+        ///<param name="key">标头名称。</param>
+        ///<param name="values">标头值.</param>
         public void AppendCommaSeparatedValues(string key, params string[] values)
         {
             if (TryGetValue(key, out var existingValue))
@@ -144,10 +144,10 @@ namespace CefSharp.DevTools.Network
         }
 
         /// <summary>
-        /// Quotes any values containing commas, and then comma joins all of the values.
-        /// </summary>
-        /// <param name="key">The header name.</param>
-        /// <param name="values">The header values.</param>
+        /// 引用包含逗号的任何值，然后用逗号连接所有值。
+        ///</摘要>
+        ///<param name="key">标头名称。</param>
+        ///<param name="values">标头值.</param>
         public void SetCommaSeparatedValues(string key, params string[] values)
         {
             this[key] = string.Join(",", values.Select(QuoteIfNeeded));

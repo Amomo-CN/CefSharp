@@ -1,8 +1,9 @@
-// Copyright © 2014 The CefSharp Authors. All rights reserved.
+//版权所有 © 2014 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
+
 using CefSharp.Wpf.Handler;
 
 namespace CefSharp.Wpf.Example.Handlers
@@ -17,7 +18,7 @@ namespace CefSharp.Wpf.Example.Handlers
         {
             base.OnBeforeContextMenu(chromiumWebBrowser, browser, frame, parameters, model);
 
-            Console.WriteLine("Context menu opened");
+            Console.WriteLine("上下文菜单已打开");
             Console.WriteLine(parameters.MisspelledWord);
 
             if (model.Count > 0)
@@ -25,8 +26,8 @@ namespace CefSharp.Wpf.Example.Handlers
                 model.AddSeparator();
             }
 
-            //For this menu handler 28440 and 28441 are used by the Show/Close DevTools commands
-            model.AddItem((CefMenuCommand)26501, "Do Something");
+            //对于此菜单处理程序 28440 和 28441 由 Show/Close DevTools 命令使用
+            model.AddItem((CefMenuCommand)26501, "做点什么");
 
             //To disable context menu then clear
             // model.Clear();
@@ -37,7 +38,7 @@ namespace CefSharp.Wpf.Example.Handlers
             //Custom item
             if (model.MenuCommand == (CefMenuCommand)26501)
             {
-                Console.WriteLine("Custom menu used");
+                Console.WriteLine("使用自定义菜单");
             }
             else
             {

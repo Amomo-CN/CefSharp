@@ -25,7 +25,7 @@ namespace CefSharp.Wpf.Example
     // 定义MainWindow类，它是WPF窗口的扩展，用于展示浏览器功能。
     public partial class MainWindow : Window
     {
-        
+
         // 常量定义，表示新增标签页时默认打开的URL。
         private const string DefaultUrlForAddedTabs = "https://www.google.com";
 

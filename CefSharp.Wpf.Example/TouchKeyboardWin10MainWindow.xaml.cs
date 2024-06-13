@@ -1,7 +1,9 @@
 // 版权声明信息，指明源代码的使用许可遵循BSD风格的许可证，具体条款见LICENSE文件。
 
 using System.Windows;          // 引入WPF基础类型和UI元素的命名空间
+
 using CefSharp.Enums;         // 引入CefSharp库中枚举类型的命名空间
+
 using Microsoft.Windows.Input.TouchKeyboard; // 引入Windows触摸键盘管理的命名空间
 
 namespace CefSharp.Wpf.Example   // 命名空间声明，属于CefSharp.Wpf.Example项目

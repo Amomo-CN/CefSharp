@@ -1,63 +1,62 @@
-// Copyright © 2021 The CefSharp Authors. All rights reserved.
+//版权所有 © 2021 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
-
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 using System.IO;
 
 namespace CefSharp.Fluent
 {
     /// <summary>
-    /// Called on the CEF IO thread when the browser needs credentials from the user.
-    /// This method will only be called for requests initiated from the browser process. 
-    /// </summary>
-    /// <param name="isProxy">indicates whether the host is a proxy server.</param>
-    /// <param name="host">the hostname.</param>
-    /// <param name="port">the port number.</param>
-    /// <param name="realm">realm</param>
-    /// <param name="scheme">scheme</param>
-    /// <param name="callback">is a callback for authentication information</param>
-    /// <returns>
-    /// Return true to continue the request and call <see cref="IAuthCallback.Continue(string, string)"/> when the authentication information is available.
-    /// If the request has an associated browser/frame then returning false will result in a call to <see cref="IRequestHandler.GetAuthCredentials"/> 
-    /// on the <see cref="IRequestHandler"/> associated with that browser, if any.
-    /// Otherwise, returning false will cancel the request immediately.
+    ///当浏览器需要用户的凭据时在 CEF IO 线程上调用。
+    ///只有浏览器进程发起的请求才会调用此方法。 
+    ///</摘要>
+    ///<param name="isProxy">表示该主机是否为代理服务器</param>
+    ///<param name="host">主机名。</param>
+    ///<param name="port">端口号。</param>
+    ///<param name="realm">领域</param>
+    ///<param name="scheme">方案</param>
+    ///<param name="callback">是认证信息的回调</param>
+    ///<返回>
+    ///返回true继续请求，当认证信息可用时调用<see cref="IAuthCallback.Continue(string, string)"/>。
+    ///如果请求有关联的浏览器/框架，则返回 false 将导致调用 <see cref="IRequestHandler.GetAuthCredentials"/> 
+    ///与该浏览器关联的 <see cref="IRequestHandler"/>（如果有）。
+    ///否则，返回 false 将立即取消请求。
     /// </returns>
     public delegate bool GetAuthCredentialsDelegate(bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback);
 
     /// <summary>
-    /// Called when some part of the response is read. This method will not be called if the <see cref="UrlRequestFlags.NoDownloadData"/> flag is set on the request. 
-    /// </summary>
-    /// <param name="request">request</param>
-    /// <param name="data">A stream containing the bytes received since the last call. Cannot be used outside the scope of this method. </param>
+    ///当读取响应的某些部分时调用。如果在请求上设置了 <see cref="UrlRequestFlags.NoDownloadData"/> 标志，则不会调用此方法。 
+    ///</摘要>
+    ///<param name="request">请求</param>
+    ///<param name="data">包含自上次调用以来接收到的字节的流。不能在该方法的范围之外使用。 </参数>
     public delegate void OnDownloadDataDelegate(IUrlRequest request, Stream data);
 
     /// <summary>
-    /// Notifies the client of download progress.
-    /// </summary>
-    /// <param name="request">request</param>
-    /// <param name="current">denotes the number of bytes received up to the call </param>
-    /// <param name="total">is the expected total size of the response (or -1 if not determined).</param>
+    ///通知客户端下载进度。
+    ///</摘要>
+    ///<param name="request">请求</param>
+    ///<param name="current">表示调用之前接收到的字节数</param>
+    ///<param name="total">是响应的预期总大小（如果未确定，则为 -1）。</param>
     public delegate void OnDownloadProgressDelegate(IUrlRequest request, long current, long total);
 
     /// <summary>
-    /// Notifies the client that the request has completed.
-    /// Use the <see cref="IUrlRequest.RequestStatus"/> property to determine if the
-    /// request was successful or not.
-    /// </summary>
-    /// <param name="request">request</param>
+    ///通知客户端请求已完成。
+    ///使用 <see cref="IUrlRequest.RequestStatus"/> 属性来确定是否
+    ///请求是否成功。
+    ///</摘要>
+    ///<param name="request">请求</param>
     public delegate void OnRequestCompleteDelegate(IUrlRequest request);
 
     /// <summary>
-    /// Notifies the client of upload progress.
-    /// This method will only be called if the UR_FLAG_REPORT_UPLOAD_PROGRESS flag is set on the request.
-    /// </summary>
-    /// <param name="request">request</param>
-    /// <param name="current">denotes the number of bytes sent so far.</param>
-    /// <param name="total">is the total size of uploading data (or -1 if chunked upload is enabled).</param>
+    ///通知客户端上传进度。
+    ///仅当请求上设置了 UR_FLAG_REPORT_UPLOAD_PROGRESS 标志时才会调用此方法。
+    ///</摘要>
+    ///<param name="request">请求</param>
+    ///<param name="current">表示到目前为止发送的字节数。</param>
+    ///<param name="total">是上传数据的总大小（如果启用分块上传，则为-1）。</param>
     public delegate void OnUploadProgressDelegate(IUrlRequest request, long current, long total);
 
     /// <summary>
-    /// Fluent UrlRequestClient
+    /// 流畅的 UrlRequestClient
     /// </summary>
     public class UrlRequestClient : CefSharp.UrlRequestClient
     {
@@ -68,16 +67,16 @@ namespace CefSharp.Fluent
         private OnUploadProgressDelegate onUploadProgress;
 
         /// <summary>
-        /// Create a new UrlRequestClient Builder
-        /// </summary>
-        /// <returns>Fluent UrlRequestClient Builder</returns>
+        ///创建一个新的 UrlRequestClient 构建器
+        ///</摘要>
+        ///<returns>Fluent UrlRequestClient Builder</returns>
         public static UrlRequestClientBuilder Create()
         {
             return new UrlRequestClientBuilder();
         }
 
         /// <summary>
-        /// Use <see cref="Create"/> to create a new instance of the fluent builder
+        /// 使用 <see cref="Create"/> 创建 Fluent 构建器的新实例
         /// </summary>
         internal UrlRequestClient()
         {

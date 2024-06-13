@@ -1,8 +1,8 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
-//NOTE:Classes in the CefSharp.Core namespace have been hidden from intellisnse so users don't use them directly
+//注意：CefSharp.Core 命名空间中的类已对 intellisnse 隐藏，因此用户不会直接使用它们
 
 namespace CefSharp
 {
@@ -211,10 +211,10 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// Used internally to get the underlying <see cref="IBrowserSettings"/> instance.
-        /// Unlikely you'll use this yourself.
-        /// </summary>
-        /// <returns>the inner most instance</returns>
+       ///在内部用于获取底层 <see cref="IBrowserSettings"/> 实例。
+        ///您不太可能自己使用它。
+        ///</摘要>
+        ///<returns>最里面的实例</returns>
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public IBrowserSettings UnWrap()
         {
@@ -222,10 +222,10 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// Create a new instance of <see cref="IBrowserSettings"/>
-        /// </summary>
-        /// <param name="autoDispose">set to false if you plan to reuse the instance, otherwise true</param>
-        /// <returns>BrowserSettings</returns>
+       ///创建 <see cref="IBrowserSettings"/> 的新实例
+        ///</摘要>
+        ///<param name="autoDispose">如果您打算重用实例，则设置为 false，否则设置为 true</param>
+        ///<returns>浏览器设置</returns>
         public static IBrowserSettings Create(bool autoDispose = false)
         {
             return new CefSharp.Core.BrowserSettings(autoDispose);

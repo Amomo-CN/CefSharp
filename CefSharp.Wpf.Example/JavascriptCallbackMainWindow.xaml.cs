@@ -25,14 +25,14 @@ namespace CefSharp.Wpf.Example
             boundObjectTwo = new JavascriptCallbackBoundObject(BrowserTwo);
 
             // 如果是.NET Core环境，直接注册JavaScript对象仓库
-            #if NETCOREAPP
+#if NETCOREAPP
                 BrowserOne.JavascriptObjectRepository.Register("boundObject", boundObjectOne);
                 BrowserTwo.JavascriptObjectRepository.Register("boundObject", boundObjectTwo);
             // 否则，对于非.NET Core环境，注册JavaScript对象仓库，第三个参数为false表示不启用异步调用
-            #else
-                BrowserOne.JavascriptObjectRepository.Register("boundObject", boundObjectOne, false);
-                BrowserTwo.JavascriptObjectRepository.Register("boundObject", boundObjectTwo, false);
-            #endif
+#else
+            BrowserOne.JavascriptObjectRepository.Register("boundObject", boundObjectOne, false);
+            BrowserTwo.JavascriptObjectRepository.Register("boundObject", boundObjectTwo, false);
+#endif
         }
 
         // 立即执行回调方法点击事件处理程序

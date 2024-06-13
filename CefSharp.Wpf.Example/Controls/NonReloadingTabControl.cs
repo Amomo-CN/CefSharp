@@ -4,6 +4,7 @@ using System.Windows; // 引入WPF核心类库，提供依赖属性、事件和U
 using System.Windows.Automation.Peers; // 引入UI自动化支持，用于辅助技术
 using System.Windows.Controls; // 引入WPF控件类库，提供基本的UI控件
 using System.Windows.Controls.Primitives; // 引入WPF控件基础类库，提供控件的基本行为和模板支持
+
 using TabControlAutomationPeer = CefSharp.Wpf.Experimental.Accessibility.TabControlAutomationPeer; // 重命名Tab控件的自动化同行，以便在命名空间中避免冲突
 
 // 命名空间定义，组织相关控件和逻辑
@@ -50,7 +51,8 @@ namespace CefSharp.Wpf.Example.Controls
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
             base.OnItemsChanged(e);
-            if (itemsHolderPanel == null) return;
+            if (itemsHolderPanel == null)
+                return;
 
             switch (e.Action)
             {
@@ -77,10 +79,12 @@ namespace CefSharp.Wpf.Example.Controls
         // 更新当前选中的项的显示
         private void UpdateSelectedItem()
         {
-            if (itemsHolderPanel == null) return;
+            if (itemsHolderPanel == null)
+                return;
 
             var item = GetSelectedTabItem();
-            if (item != null) CreateChildContentPresenter(item);
+            if (item != null)
+                CreateChildContentPresenter(item);
 
             foreach (ContentPresenter child in itemsHolderPanel.Children)
                 child.Visibility = ((child.Tag as TabItem)?.IsSelected ?? false) ? Visibility.Visible : Visibility.Collapsed;
@@ -89,10 +93,12 @@ namespace CefSharp.Wpf.Example.Controls
         // 为指定项创建ContentPresenter，如果已存在则直接返回
         private ContentPresenter CreateChildContentPresenter(object item)
         {
-            if (item == null) return null;
+            if (item == null)
+                return null;
 
             var cp = FindChildContentPresenter(item);
-            if (cp != null) return cp;
+            if (cp != null)
+                return cp;
 
             var tabItem = item as TabItem;
             cp = new ContentPresenter
@@ -111,11 +117,14 @@ namespace CefSharp.Wpf.Example.Controls
         // 查找与特定数据关联的ContentPresenter
         private ContentPresenter FindChildContentPresenter(object data)
         {
-            if (data is TabItem) data = (data as TabItem).Content;
-            if (data == null || itemsHolderPanel == null) return null;
+            if (data is TabItem)
+                data = (data as TabItem).Content;
+            if (data == null || itemsHolderPanel == null)
+                return null;
 
             foreach (ContentPresenter cp in itemsHolderPanel.Children)
-                if (cp.Content == data) return cp;
+                if (cp.Content == data)
+                    return cp;
 
             return null;
         }

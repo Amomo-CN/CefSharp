@@ -1,50 +1,50 @@
-// Copyright © 2021 The CefSharp Authors. All rights reserved.
+//版权所有 © 2021 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System.Collections.Generic;
 
 namespace CefSharp.Wpf.Handler
 {
     /// <summary>
-    /// ContextMenuExecuteModel
+    /// 上下文菜单执行模型
     /// </summary>
     public class ContextMenuExecuteModel
     {
         /// <summary>
-        /// Menu Command
+        /// 菜单命令
         /// </summary>
         public CefMenuCommand MenuCommand { get; private set; }
         /// <summary>
-        /// Dictioanry Suggestions
+        /// 词典建议
         /// </summary>
         public IList<string> DictionarySuggestions { get; private set; }
         /// <summary>
-        /// X Coordinate
+        /// X坐标
         /// </summary>
         public int XCoord { get; private set; }
         /// <summary>
-        /// Y Coordinate
+        /// Y坐标
         /// </summary>
         public int YCoord { get; private set; }
         /// <summary>
-        /// Selection Text
+        /// 选择文本
         /// </summary>
         public string SelectionText { get; private set; }
         /// <summary>
-        /// Misspelled Word
+        /// 拼写错误的单词
         /// </summary>
         public string MisspelledWord { get; private set; }
 
         /// <summary>
-        /// Default constructor
+        /// 默认构造函数
         /// </summary>
-        /// <param name="menuCommand">menu command</param>
-        /// <param name="dictionarySuggestions">dictioanry suggestion</param>
-        /// <param name="xCoord">x coordinate</param>
-        /// <param name="yCoord">y coordinate</param>
-        /// <param name="selectionText">selection text</param>
-        /// <param name="misspelledWord">misspelled word</param>
+        /// <param name="menuCommand">菜单命令</param>
+        ///<param name="dictionarySuggestions">词典建议</param>
+        ///<param name="xCoord">x 坐标</param>
+        ///<param name="yCoord">y 坐标</param>
+        ///<param name="selectionText">选择文本</param>
+        ///<param name="misspelledWord">拼写错误的单词</param>
         public ContextMenuExecuteModel(CefMenuCommand menuCommand, IList<string> dictionarySuggestions, int xCoord, int yCoord, string selectionText, string misspelledWord)
         {
             MenuCommand = menuCommand;

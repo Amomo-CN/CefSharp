@@ -1,8 +1,8 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
-//NOTE:Classes in the CefSharp.Core namespace have been hidden from intellisnse so users don't use them directly
+//注意：CefSharp.Core 命名空间中的类已对 intellisnse 隐藏，因此用户不会直接使用它们
 
 using CefSharp.Handler;
 using System;
@@ -10,7 +10,7 @@ using System;
 namespace CefSharp
 {
     /// <summary>
-    /// Fluent style builder for creating IRequestContext instances.
+    ///用于创建 IRequestContext 实例的流畅样式构建器。
     /// </summary>
     public class RequestContextBuilder
     {
@@ -33,10 +33,10 @@ namespace CefSharp
                 throw new Exception("A call to WithCachePath/PersistUserPreferences has already been made, it's not possible to share settings with another RequestContext.");
             }
         }
-        /// <summary>
-        /// Create the actual RequestContext instance
-        /// </summary>
-        /// <returns>Returns a new RequestContext instance.</returns>
+        ///<摘要>
+        ///创建实际的RequestContext实例
+        ///</摘要>
+        ///<returns>返回一个新的RequestContext实例。</returns>
         public IRequestContext Create()
         {
             if (otherContext != null)
@@ -58,10 +58,10 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// Action is called in IRequestContextHandler.OnRequestContextInitialized
-        /// </summary>
-        /// <param name="action">called when the context has been initialized.</param>
-        /// <returns>Returns RequestContextBuilder instance</returns>
+        ///Action在IRequestContextHandler.OnRequestContextInitialized中被调用
+        ///</摘要>
+        ///<param name="action">当上下文初始化时调用。</param>
+        ///<returns>返回RequestContextBuilder实例</returns>      
         public RequestContextBuilder OnInitialize(Action<IRequestContext> action)
         {
             if (handler == null)
@@ -74,20 +74,20 @@ namespace CefSharp
             return this;
         }
 
-        /// <summary>
-        /// Sets the Cache Path
-        /// </summary>
-        /// <param name="cachePath">
-        /// The location where cache data for this request context will be stored on
-        /// disk. If this value is non-empty then it must be an absolute path that is
-        /// either equal to or a child directory of CefSettings.RootCachePath.
-        /// If the value is empty then browsers will be created in "incognito mode"
-        /// where in-memory caches are used for storage and no data is persisted to disk.
-        /// HTML5 databases such as localStorage will only persist across sessions if a
-        /// cache path is specified. To share the global browser cache and related
-        /// configuration set this value to match the CefSettings.CachePath value.
-        /// </param>
-        /// <returns>Returns RequestContextBuilder instance</returns>
+        ///<摘要>
+        ///设置缓存路径
+        ///</摘要>
+        ///<参数名称=“缓存路径”>
+        ///此请求上下文的缓存数据将存储的位置
+        ///磁盘。如果该值非空，则它必须是绝对路径
+        ///等于 CefSettings.RootCachePath 或其子目录。
+        ///如果该值为空，则浏览器将以“隐身模式”创建
+        ///其中内存缓存用于存储，并且没有数据持久保存到磁盘。
+        ///HTML5 数据库（例如 localStorage）仅在以下情况下才会跨会话持久存在：
+        ///指定缓存路径。共享全局浏览器缓存及相关
+        ///配置设置此值以匹配 CefSettings.CachePath 值。
+        ///</参数>
+        ///<returns>返回RequestContextBuilder实例</returns>
         public RequestContextBuilder WithCachePath(string cachePath)
         {
             ThrowExceptionIfContextAlreadySet();

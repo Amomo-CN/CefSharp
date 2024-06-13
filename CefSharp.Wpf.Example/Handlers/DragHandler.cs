@@ -4,6 +4,7 @@
 using System; // 引入基础类库，提供基本的类型和命名空间
 using System.Collections.Generic; // 引入集合类库，用于处理列表和集合
 using System.Drawing; // 引入Windows Forms中的绘图类库，用于处理图形区域
+
 using CefSharp.Enums; // 引入CefSharp枚举类型，用于处理拖放操作
 
 // 命名空间定义，组织相关的类和接口
@@ -59,10 +60,10 @@ namespace CefSharp.Wpf.Example.Handlers
                         // 如果区域不可拖动，则从复合区域中排除它
                         else
                         {
-                        //在这个场景中，我们有一个外部区域，它是可拖动的
-                        // 不是的内部区域，我们必须排除不可拖动的。
-                        // 本例中并未涵盖所有场景。
-                        // 注意：这里仅处理了简单情况，复杂的嵌套不可拖动区域可能需要更精细的逻辑
+                            //在这个场景中，我们有一个外部区域，它是可拖动的
+                            // 不是的内部区域，我们必须排除不可拖动的。
+                            // 本例中并未涵盖所有场景。
+                            // 注意：这里仅处理了简单情况，复杂的嵌套不可拖动区域可能需要更精细的逻辑
                             draggableRegion.Exclude(rect);
                         }
                     }

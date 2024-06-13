@@ -1,19 +1,19 @@
-// Copyright © 2021 The CefSharp Authors. All rights reserved.
+//版权所有 © 2021 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 
 namespace CefSharp.DevTools
 {
     /// <summary>
-    /// DevToolsErrorEventArgs - Raised when an exception occurs when
-    /// attempting to raise <see cref="IDevToolsClient.DevToolsEvent"/>
+    ///DevToolsErrorEventArgs -当发生异常时引发
+    ///尝试引发 <see cref="IDevToolsClient.DevToolsEvent"/>
     /// </summary>
     public class DevToolsErrorEventArgs : EventArgs
     {
         /// <summary>
-        /// Event Name
+        /// 活动名称
         /// </summary>
         public string EventName { get; private set; }
 
@@ -23,16 +23,16 @@ namespace CefSharp.DevTools
         public string Json { get; private set; }
 
         /// <summary>
-        /// Exception
+        /// 例外
         /// </summary>
         public Exception Exception { get; private set; }
 
         /// <summary>
-        /// DevToolsErrorEventArgs
-        /// </summary>
-        /// <param name="eventName">Event Name</param>
-        /// <param name="json">json</param>
-        /// <param name="ex">Exception</param>
+        /// 开发工具错误事件参数
+        ///</摘要>
+        ///<param name="eventName">事件名称</param>
+        ///<param name="json">json</param>
+        ///<param name="ex">异常</param>
         public DevToolsErrorEventArgs(string eventName, string json, Exception ex)
         {
             EventName = eventName;

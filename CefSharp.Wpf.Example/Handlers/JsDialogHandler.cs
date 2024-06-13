@@ -25,7 +25,7 @@ namespace CefSharp.Wpf.Example.Handlers
                     case CefJsDialogType.Confirm:
                         // 显示一个确认对话框，标题为"A page at [URL] says:"，内容为messageText
                         // 用户可以选择"Yes"或"No"，返回值为用户的选择结果
-                        var messageBoxResult = MessageBox.Show(messageText, $"A page at {originUrl} says:", MessageBoxButton.YesNo);
+                        var messageBoxResult = MessageBox.Show(messageText, $"{originUrl} 上的页面显示:", MessageBoxButton.YesNo);
 
                         // 如果用户点击"Yes"，则继续执行JavaScript对话框；否则取消
                         callback.Continue(messageBoxResult == MessageBoxResult.Yes);
@@ -35,7 +35,7 @@ namespace CefSharp.Wpf.Example.Handlers
                     case CefJsDialogType.Alert:
                         // 显示一个警告对话框，标题为"A page at [URL] says:"，内容为messageText
                         // 用户只能点击"OK"，返回值为用户点击了"OK"
-                        var messageBoxResult2 = MessageBox.Show(messageText, $"A page at {originUrl} says:", MessageBoxButton.OK);
+                        var messageBoxResult2 = MessageBox.Show(messageText, $"{originUrl} 上的页面显示:", MessageBoxButton.OK);
 
                         // 总是继续执行JavaScript对话框，因为警告对话框没有取消选项
                         callback.Continue(messageBoxResult2 == MessageBoxResult.OK);
@@ -44,7 +44,7 @@ namespace CefSharp.Wpf.Example.Handlers
                     // 处理提示对话框
                     case CefJsDialogType.Prompt:
                         // 使用PromptDialog显示自定义提示对话框，获取用户输入
-                        var result = PromptDialog.Prompt(messageText, $"A page at {originUrl} says:", defaultPromptText);
+                        var result = PromptDialog.Prompt(messageText, $"{originUrl} 上的页面显示:", defaultPromptText);
 
                         // 继续执行JavaScript对话框，同时传递用户输入的文本
                         callback.Continue(result.Item1, userInput: result.Item2);

@@ -1,8 +1,8 @@
-// Copyright © 2020 The CefSharp Authors. All rights reserved.
+//版权所有 © 2020 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
-//NOTE:Classes in the CefSharp.Core namespace have been hidden from intellisnse so users don't use them directly
+//注意：CefSharp.Core 命名空间中的类已对 intellisnse 隐藏，因此用户不会直接使用它们
 
 using System;
 
@@ -16,12 +16,12 @@ namespace CefSharp
         internal Core.RequestContextSettings settings = new Core.RequestContextSettings();
 
         /// <summary>
-        /// To persist session cookies (cookies without an expiry date or validity
-        /// interval) by default when using the global cookie manager set this value to
-        /// true. Session cookies are generally intended to be transient and most
-        /// Web browsers do not persist them. Can be set globally using the
-        /// CefSettings.PersistSessionCookies value. This value will be ignored if
-        /// CachePath is empty or if it matches the CefSettings.CachePath value.
+        ///保存会话cookie（没有过期日期或有效性的cookie
+        ///间隔）默认情况下，当使用全局cookie管理器时将此值设置为
+        ///真的。会话 cookie 通常是暂时的，并且大多数
+        ///Web 浏览器不会保留它们。可以使用全局设置
+        ///CefSettings.PersistSessionCookies 值。如果出现以下情况，该值将被忽略
+        ///CachePath 为空或者是否与 CefSettings.CachePath 值匹配。
         /// </summary>
         public bool PersistSessionCookies
         {
@@ -30,10 +30,10 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// To persist user preferences as a JSON file in the cache path directory set
-        /// this value to true. Can be set globally using the
-        /// CefSettings.PersistUserPreferences value. This value will be ignored if
-        /// CachePath is empty or if it matches the CefSettings.CachePath value.
+        ///将用户首选项作为 JSON 文件保存在缓存路径目录集中
+        ///该值为 true。可以使用全局设置
+        ///CefSettings.PersistUserPreferences 值。如果出现以下情况，该值将被忽略
+        ///CachePath 为空或者是否与 CefSettings.CachePath 值匹配。
         /// </summary>
         public bool PersistUserPreferences
         {
@@ -42,14 +42,14 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// The location where cache data for this request context will be stored on
-        /// disk. If this value is non-empty then it must be an absolute path that is
-        /// either equal to or a child directory of CefSettings.RootCachePath.
-        /// If the value is empty then browsers will be created in "incognito mode"
-        /// where in-memory caches are used for storage and no data is persisted to disk.
-        /// HTML5 databases such as localStorage will only persist across sessions if a
-        /// cache path is specified. To share the global browser cache and related
-        /// configuration set this value to match the CefSettings.CachePath value.
+        ///此请求上下文的缓存数据将存储的位置
+        ///磁盘。如果该值非空，则它必须是绝对路径
+        ///等于 CefSettings.RootCachePath 或其子目录。
+        ///如果该值为空，则浏览器将以“隐身模式”创建
+        ///其中内存缓存用于存储，并且没有数据持久保存到磁盘。
+        ///HTML5 数据库（例如 localStorage）仅在以下情况下才会跨会话持久存在：
+        ///指定缓存路径。共享全局浏览器缓存及相关
+        ///配置设置此值以匹配 CefSettings.CachePath 值。
         /// </summary>
         public String CachePath
         {
@@ -58,12 +58,12 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// Comma delimited ordered list of language codes without any whitespace that
-        /// will be used in the "Accept-Language" HTTP header. Can be set globally
-        /// using the CefSettings.accept_language_list value or overridden on a per-
-        /// browser basis using the BrowserSettings.AcceptLanguageList value. If
-        /// all values are empty then "en-US,en" will be used. This value will be
-        /// ignored if CachePath matches the CefSettings.CachePath value.
+        ///逗号分隔的语言代码有序列表，没有任何空格
+        ///将在“Accept-Language”HTTP 标头中使用。可以全局设置
+        ///使用 CefSettings.accept_language_list 值或重写
+        ///浏览器基础使用BrowserSettings.AcceptLanguageList 值。如果
+        ///所有值均为空，则将使用“en-US,en”。该值将是
+        ///如果 CachePath 与 CefSettings.CachePath 值匹配，则忽略。
         /// </summary>
         public String AcceptLanguageList
         {
@@ -72,13 +72,13 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// Comma delimited list of schemes supported by the associated
-        /// ICookieManager. If CookieableSchemesExcludeDefaults is false the
-        /// default schemes ("http", "https", "ws" and "wss") will also be supported.
-        /// Specifying a CookieableSchemesList value and setting
-        /// CookieableSchemesExcludeDefaults to true will disable all loading
-        /// and saving of cookies for this manager. This value will be ignored if
-        /// <see cref="CachePath"/> matches the <see cref="CefSettingsBase.CachePath"/> value.
+        ///关联支持的以逗号分隔的方案列表
+        ///ICookieManager。如果 CookieableSchemesExcludeDefaults 为 false
+        ///默认方案（“http”、“https”、“ws”和“wss”）也将受到支持。
+        ///指定 CookieableSchemesList 值和设置
+        ///CookieableSchemesExcludeDefaults 为 true 将禁用所有加载
+        ///并为此管理器保存 cookie。如果出现以下情况，该值将被忽略
+        ///<see cref="CachePath"/> 与 <see cref="CefSettingsBase.CachePath"/> 值匹配。
         /// </summary>
         public string CookieableSchemesList
         {
@@ -87,12 +87,12 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// If CookieableSchemesExcludeDefaults is false the
-        /// default schemes ("http", "https", "ws" and "wss") will also be supported.
-        /// Specifying a CookieableSchemesList value and setting
-        /// CookieableSchemesExcludeDefaults to true will disable all loading
-        /// and saving of cookies for this manager. This value will be ignored if
-        /// <see cref="CachePath"/> matches the <see cref="CefSettingsBase.CachePath"/> value.
+        ///如果 CookieableSchemesExcludeDefaults 为 false
+        ///默认方案（“http”、“https”、“ws”和“wss”）也将受到支持。
+        ///指定 CookieableSchemesList 值和设置
+        ///CookieableSchemesExcludeDefaults 为 true 将禁用所有加载
+        ///并为此管理器保存 cookie。如果出现以下情况，该值将被忽略
+        ///<see cref="CachePath"/> 与 <see cref="CefSettingsBase.CachePath"/> 值匹配。
         /// </summary>
         public bool CookieableSchemesExcludeDefaults
         {

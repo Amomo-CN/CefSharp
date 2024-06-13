@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-    <!-- Note: We cannot use the recommended style of specifying <Project Sdk=...> because we need
-       to set BaseIntermediateOutputPath and BaseOutputPath before the SDK props are imported. -->
+    <!--注意：我们不能使用指定 <Project Sdk=...> 的推荐样式，因为我们需要
+       在导入 SDK props 之前设置 BaseIntermediateOutputPath 和 BaseOutputPath。 -->
     <PropertyGroup>
         <BaseIntermediateOutputPath>obj.netcore\</BaseIntermediateOutputPath>
         <BaseOutputPath>bin.netcore\</BaseOutputPath>
@@ -46,7 +46,7 @@
       <Compile Remove="UrlRequest.cs" />
       <Compile Remove="WindowInfo.cs" />
       <Compile Remove="DevTools\DevToolsClient.Generated.cs" />
-      <!-- Don't include items from the "bin" and "obj" folders used by the .NET Framework projects. -->
+      <!--不包含 .NET Framework 项目使用的“bin”和“obj”文件夹中的项目。 -->
       <None Remove="bin/**/*.*" />
       <None Remove="obj/**/*.*" />
       <Compile Remove="obj/**/*.*" />
