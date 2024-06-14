@@ -1,6 +1,6 @@
-// Copyright © 2014 The CefSharp Authors. All rights reserved.
+//版权所有 © 2014 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Diagnostics;
@@ -14,11 +14,11 @@ namespace CefSharp.Example
 {
     public static class CefExample
     {
-        //TODO: Revert after https://github.com/chromiumembedded/cef/issues/2685
-        //has been fixed.
+        //TODO:在 https://github.com/chromiumembedded/cef/issues/2685 之后恢复
+        //已修复。
         public const string ExampleDomain = "cefsharp.example";
         public const string BaseUrl = "https://" + ExampleDomain;
-        public const string DefaultUrl = BaseUrl + "/home.html";
+        public const string DefaultUrl = BaseUrl + "/home.html";//滴滴 打开主页
 #if NETCOREAPP
         public const string BindingTestUrl = BaseUrl + "/BindingTestNetCore.html";
 #else
@@ -47,93 +47,93 @@ namespace CefSharp.Example
         public const string ChromeNetInternalUrls = "chrome://net-internals";
         public const string ChromeProcessInternalUrls = "chrome://process-internals";
 
-        // Use when debugging the actual SubProcess, to make breakpoints etc. inside that project work.
+        // 在调试实际的子流程时使用，以使该项目内的断点等工作。  
         private static readonly bool DebuggingSubProcess = Debugger.IsAttached;
 
         public static void Init(CefSettingsBase settings, IBrowserProcessHandler browserProcessHandler)
         {
-            // Set Google API keys, used for Geolocation requests sans GPS.  See http://www.chromium.org/developers/how-tos/api-keys
+            // 设置 Google API 密钥，用于无 GPS 的地理定位请求。  看 http://www.chromium.org/developers/how-tos/api-keys
             // Environment.SetEnvironmentVariable("GOOGLE_API_KEY", "");
             // Environment.SetEnvironmentVariable("GOOGLE_DEFAULT_CLIENT_ID", "");
             // Environment.SetEnvironmentVariable("GOOGLE_DEFAULT_CLIENT_SECRET", "");
 
-            //Chromium Command Line args
+            //Chromium 命令行参数
             //http://peter.sh/experiments/chromium-command-line-switches/
-            //NOTE: Not all relevant in relation to `CefSharp`, use for reference purposes only.
-            //CEF specific command line args
+            //NOTE:并非全部与“CefSharp”相关，仅供参考。
+            //CEF特定命令行参数
             //https://bitbucket.org/chromiumembedded/cef/src/master/libcef/common/cef_switches.cc?fileviewer=file-view-default
 
-            //**IMPORTANT**: For enabled/disabled command line arguments like disable-gpu specifying a value of "0" like
-            //settings.CefCommandLineArgs.Add("disable-gpu", "0"); will have no effect as the second argument is ignored.
+            //**重要**：对于启用/禁用的命令行参数，例如disable-gpu，指定值“0”，例如
+            //settings.CefCommandLineArgs.Add("disable-gpu", "0");不会有任何效果，因为第二个参数被忽略。
 
-            //**IMPORTANT**: When using command line arguments the behaviour may change between Chromium versions, if you are experiencing
-            //issues after upgrading to a newer version, you should remove all custom command line arguments and add test them in
-            //isolation to determine if they are causing issues.
-            //The command line arguments shown here are here as a reference only and are not tested to confirm they work with each version
+            //**重要**：使用命令行参数时，如果您遇到以下情况，Chromium 版本之间的行为可能会发生变化
+            //升级到新版本后出现的问题，您应该删除所有自定义命令行参数并添加测试它们
+            //隔离以确定它们是否引起问题。
+            //此处显示的命令行参数仅供参考，未经测试以确认它们适用于每个版本
 
             settings.RemoteDebuggingPort = 8088;
-            //The location where cache data will be stored on disk. If empty an in-memory cache will be used for some features and a temporary disk cache for others.
-            //HTML5 databases such as localStorage will only persist across sessions if a cache path is specified. 
+            //缓存数据在磁盘上的存储位置。如果为空，内存缓存将用于某些功能，临时磁盘缓存将用于其他功能。
+            //如果指定了缓存路径，HTML5 数据库（例如 localStorage）只会跨会话持久保存。
             settings.RootCachePath = Path.GetFullPath("cache");
-            //If non-null then CachePath must be equal to or a child of RootCachePath
-            //We're using a sub folder.
+            //如果非空，则 CachePath 必须等于 RootCachePath 或者是 RootCachePath 的子级
+            //我们正在使用一个子文件夹。
             //
             settings.CachePath = Path.GetFullPath("cache\\global");
-            //settings.UserAgent = "CefSharp Browser" + Cef.CefSharpVersion; // Example User Agent
+            //settings.UserAgent = "CefSharp Browser" + Cef.CefSharpVersion; // 用户代理示例
             //settings.CefCommandLineArgs.Add("renderer-startup-dialog");
             //settings.CefCommandLineArgs.Add("disable-site-isolation-trials");
-            //settings.CefCommandLineArgs.Add("enable-media-stream"); //Enable WebRTC
-            //settings.CefCommandLineArgs.Add("no-proxy-server"); //Don't use a proxy server, always make direct connections. Overrides any other proxy server flags that are passed.
-            //settings.CefCommandLineArgs.Add("allow-running-insecure-content"); //By default, an https page cannot run JavaScript or CSS from http URLs. This provides an override to get the old insecure behavior. Only available in 47 and above.
+            //settings.CefCommandLineArgs.Add("enable-media-stream"); //启用 WebRTC
+            //settings.CefCommandLineArgs.Add("no-proxy-server"); //不要使用代理服务器，始终进行直接连接。覆盖传递的任何其他代理服务器标志。
+            //settings.CefCommandLineArgs.Add("allow-running-insecure-content"); //默认情况下，https 页面无法从 http URL 运行 JavaScript 或 CSS。这提供了一个覆盖来获取旧的不安全行为。仅适用于 47 及以上。
             //https://peter.sh/experiments/chromium-command-line-switches/#disable-site-isolation-trials
             //settings.CefCommandLineArgs.Add("disable-site-isolation-trials");
-            //NOTE: Running the Network Service in Process is not something CEF officially supports
-            //It may or may not work for newer versions.
+            //NOTE: 在进程中运行网络服务不是 CEF 官方支持的
+            //它可能适用于新版本，也可能不适用于新版本。
             //settings.CefCommandLineArgs.Add("enable-features", "CastMediaRouteProvider,NetworkServiceInProcess");
 
-            //settings.CefCommandLineArgs.Add("enable-logging"); //Enable Logging for the Renderer process (will open with a cmd prompt and output debug messages - use in conjunction with setting LogSeverity = LogSeverity.Verbose;)
-            //settings.LogSeverity = LogSeverity.Verbose; // Needed for enable-logging to output messages
+            //settings.CefCommandLineArgs.Add("enable-logging"); //为渲染器进程启用日志记录（将使用 cmd 提示符打开并输出调试消息 -与设置 LogSeverity = LogSeverity.Verbose 结合使用；）
+            //settings.LogSeverity = LogSeverity.Verbose; // 需要启用日志记录来输出消息
 
-            //settings.CefCommandLineArgs.Add("disable-extensions"); //Extension support can be disabled
-            //settings.CefCommandLineArgs.Add("disable-pdf-extension"); //The PDF extension specifically can be disabled
+            //settings.CefCommandLineArgs.Add("disable-extensions"); //可以禁用扩展支持
+            //settings.CefCommandLineArgs.Add("disable-pdf-extension"); //PDF 扩展名可以专门禁用
 
-            //Audo play example
+            //音频播放示例
             //settings.CefCommandLineArgs["autoplay-policy"] = "no-user-gesture-required";
 
-            //NOTE: For OSR best performance you should run with GPU disabled:
+            //NOTE: 为了获得 OSR 最佳性能，您应该在禁用 GPU 的情况下运行：
             // `--disable-gpu --disable-gpu-compositing --enable-begin-frame-scheduling`
-            // (you'll loose WebGL support but gain increased FPS and reduced CPU usage).
+            // （您将失去 WebGL 支持，但会提高 FPS 并减少 CPU 使用率）。
             // http://magpcss.org/ceforum/viewtopic.php?f=6&t=13271#p27075
             //https://bitbucket.org/chromiumembedded/cef/commits/e3c1d8632eb43c1c2793d71639f3f5695696a5e8
 
-            //NOTE: The following function will set all three params
+            //NOTE: 以下函数将设置所有三个参数
             //settings.SetOffScreenRenderingBestPerformanceArgs();
             //settings.CefCommandLineArgs.Add("disable-gpu");
             //settings.CefCommandLineArgs.Add("disable-gpu-compositing");
             //settings.CefCommandLineArgs.Add("enable-begin-frame-scheduling");
 
-            //settings.CefCommandLineArgs.Add("disable-gpu-vsync"); //Disable Vsync
+            //settings.CefCommandLineArgs.Add("disable-gpu-vsync"); //禁用垂直同步
 
-            // The following options control accessibility state for all frames.
-            // These options only take effect if accessibility state is not set by IBrowserHost.SetAccessibilityState call.
+            // 以下选项控制所有框架的可访问性状态。
+            //仅当 IBrowserHost.SetAccessibilityState 调用未设置可访问性状态时，这些选项才会生效。
             // --force-renderer-accessibility enables browser accessibility.
             // --disable-renderer-accessibility completely disables browser accessibility.
             //settings.CefCommandLineArgs.Add("force-renderer-accessibility");
             //settings.CefCommandLineArgs.Add("disable-renderer-accessibility");
 
-            //Enables Uncaught exception handler
+            //启用未捕获的异常处理程序
             settings.UncaughtExceptionStackSize = 10;
 
-            //Disable WebAssembly
+            //禁用 WebAssembly
             //settings.JavascriptFlags = "--noexpose_wasm";
 
-            // Off Screen rendering (WPF/Offscreen)
+            //离屏渲染（WPF/离屏）
             if (settings.WindowlessRenderingEnabled)
             {
-                //Disable Direct Composition to test https://github.com/cefsharp/CefSharp/issues/1634
+                //禁用直接组合进行测试 https://github.com/cefsharp/CefSharp/issues/1634
                 //settings.CefCommandLineArgs.Add("disable-direct-composition");
 
-                // DevTools doesn't seem to be working when this is enabled
+                // 启用此功能后，DevTools 似乎无法工作
                 // http://magpcss.org/ceforum/viewtopic.php?f=6&t=14095
                 //settings.CefCommandLineArgs.Add("enable-begin-frame-scheduling");
             }
@@ -142,27 +142,27 @@ namespace CefSharp.Example
             switch (proxy.AccessType)
             {
                 case InternetOpenType.Direct:
-                {
-                    //Don't use a proxy server, always make direct connections.
-                    settings.CefCommandLineArgs.Add("no-proxy-server");
-                    break;
-                }
+                    {
+                        //不要使用代理服务器，始终进行直接连接。
+                        settings.CefCommandLineArgs.Add("no-proxy-server");
+                        break;
+                    }
                 case InternetOpenType.Proxy:
-                {
-                    settings.CefCommandLineArgs.Add("proxy-server", proxy.ProxyAddress);
-                    break;
-                }
+                    {
+                        settings.CefCommandLineArgs.Add("proxy-server", proxy.ProxyAddress);
+                        break;
+                    }
                 case InternetOpenType.PreConfig:
-                {
-                    settings.CefCommandLineArgs.Add("proxy-auto-detect");
-                    break;
-                }
+                    {
+                        settings.CefCommandLineArgs.Add("proxy-auto-detect");
+                        break;
+                    }
             }
 
             //settings.LogSeverity = LogSeverity.Verbose;
 
-            //Experimental setting see https://github.com/chromiumembedded/cef/issues/2969
-            //for details
+            //实验设置见 https://github.com/chromiumembedded/cef/issues/2969
+            //欲了解详情
             //settings.ChromeRuntime = true;
 
             if (DebuggingSubProcess)
@@ -181,7 +181,7 @@ namespace CefSharp.Example
             {
                 SchemeName = CefSharpSchemeHandlerFactory.SchemeName,
                 SchemeHandlerFactory = new CefSharpSchemeHandlerFactory(),
-                IsSecure = true, //treated with the same security rules as those applied to "https" URLs
+                IsSecure = true, //使用与“https”URL 相同的安全规则进行处理
             });
 
             settings.RegisterScheme(new CefCustomScheme
@@ -195,16 +195,16 @@ namespace CefSharp.Example
             {
                 SchemeName = CefSharpSchemeHandlerFactory.SchemeNameTest,
                 SchemeHandlerFactory = new CefSharpSchemeHandlerFactory(),
-                IsSecure = true //treated with the same security rules as those applied to "https" URLs
+                IsSecure = true //使用与“https”URL 相同的安全规则进行处理
             });
 
-            //You can use the http/https schemes - best to register for a specific domain
+            //您可以使用 http/https 方案 -最好注册特定域
             settings.RegisterScheme(new CefCustomScheme
             {
                 SchemeName = "https",
                 SchemeHandlerFactory = new CefSharpSchemeHandlerFactory(),
                 DomainName = "cefsharp.com",
-                IsSecure = true //treated with the same security rules as those applied to "https" URLs
+                IsSecure = true //使用与“https”URL 相同的安全规则进行处理
             });
 
             const string cefSharpExampleResourcesFolder =
@@ -218,37 +218,37 @@ namespace CefSharp.Example
             {
                 SchemeName = "localfolder",
                 SchemeHandlerFactory = new FolderSchemeHandlerFactory(rootFolder: cefSharpExampleResourcesFolder,
-                                                                    schemeName: "localfolder", //Optional param no schemename checking if null
-                                                                    hostName: "cefsharp", //Optional param no hostname checking if null
-                                                                    defaultPage: "home.html") //Optional param will default to index.html
+                                                                    schemeName: "localfolder", //可选参数无方案名称检查是否为空
+                                                                    hostName: "cefsharp", //可选参数无主机名检查是否为空
+                                                                    defaultPage: "home.html") //可选参数默认为index.html
             });
 
-            //This must be set before Cef.Initialized is called
+            //必须在调用 Cef.Initialized 之前设置
             CefSharpSettings.FocusedNodeChangedEnabled = true;
 
-            //Async Javascript Binding - methods are queued on TaskScheduler.Default.
-            //Set this to true to when you have methods that return Task<T>
+            //异步 Javascript 绑定 -方法在 TaskScheduler.Default 上排队。
+            //当您有返回 Task<T> 的方法时，将其设置为 true
             //CefSharpSettings.ConcurrentTaskExecution = true;
 
-            //Legacy Binding Behaviour - Same as Javascript Binding in version 57 and below
-            //See issue https://github.com/cefsharp/CefSharp/issues/1203 for details
+            //旧版绑定行为 -与版本 57 及更低版本中的 Javascript 绑定相同
+            //有关详细信息，请参阅问题 https://github.com/cefsharp/CefSharp/issues/1203
             //CefSharpSettings.LegacyJavascriptBindingEnabled = true;
 
-            //Exit the subprocess if the parent process happens to close
-            //This is optional at the moment
+            //如果父进程关闭则退出子进程
+            //目前这是可选的
             //https://github.com/cefsharp/CefSharp/pull/2375/
             CefSharpSettings.SubprocessExitIfParentProcessClosed = true;
 
-            //NOTE: Set this before any calls to Cef.Initialize to specify a proxy with username and password
-            //One set this cannot be changed at runtime. If you need to change the proxy at runtime (dynamically) then
-            //see https://github.com/cefsharp/CefSharp/wiki/General-Usage#proxy-resolution
+            //NOTE: 在调用 Cef.Initialize 之前设置此项以使用用户名和密码指定代理
+            //一组不能在运行时更改。如果您需要在运行时（动态）更改代理，那么
+            //看 https://github.com/cefsharp/CefSharp/wiki/General-Usage#proxy-resolution
             //CefSharpSettings.Proxy = new ProxyOptions(ip: "127.0.0.1", port: "8080", username: "cefsharp", password: "123");
 
             bool performDependencyCheck = !DebuggingSubProcess;
 
             if (!Cef.Initialize(settings, performDependencyCheck: performDependencyCheck, browserProcessHandler: browserProcessHandler))
             {
-                throw new Exception("Unable to Initialize Cef");
+                throw new Exception("无法初始化Cef");
             }
 
             Cef.AddCrossOriginWhitelistEntry(BaseUrl, "https", "cefsharp.com", false);
@@ -265,10 +265,10 @@ namespace CefSharp.Example
 
             if (handler != null)
             {
-                const string renderProcessCrashedBody = "<html><body><h1>Render Process Crashed</h1><p>Your seeing this message as the render process has crashed</p></body></html>";
+                const string renderProcessCrashedBody = "<html><body><h1>渲染进程崩溃</h1><p>您看到此消息是因为渲染进程已崩溃</p></body></html>";
                 handler.RegisterHandler(RenderProcessCrashedUrl, ResourceHandler.GetByteArray(renderProcessCrashedBody, Encoding.UTF8));
 
-                const string responseBody = "<html><body><h1>Success</h1><p>This document is loaded from a System.IO.Stream</p></body></html>";
+                const string responseBody = "<html><body><h1>成功</h1><p>该文档是从 System.IO.Stream 加载的</p></body></html>";
                 handler.RegisterHandler(TestResourceUrl, ResourceHandler.GetByteArray(responseBody, Encoding.UTF8));
 
                 const string unicodeResponseBody = "<html><body>整体满意度</body></html>";

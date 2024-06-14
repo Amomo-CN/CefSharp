@@ -1,6 +1,6 @@
-// Copyright © 2016 The CefSharp Authors. All rights reserved.
+//版权所有 © 2016 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System.Collections.Specialized;
 using System.IO;
@@ -11,22 +11,22 @@ using System.Threading.Tasks;
 namespace CefSharp.Example
 {
     /// <summary>
-    /// A simple <see cref="ResourceHandler"/> that uses <see cref="WebRequest.Create(string)"/> to fulfill requests.
-    /// </summary>
-    /// <remarks>
-    /// This example doesn't cover all cases, for example POST requests, if you'd like to see the example
-    /// expanded then please subit a Pull Request.
+    /// 一个简单的 <see cref="ResourceHandler"/> 使用 <see cref="WebRequest.Create(string)"/> 来满足请求。
+    ///</摘要>
+    ///<备注>
+    ///如果您想查看示例，此示例并未涵盖所有情况，例如 POST 请求
+    ///展开后请提交拉取请求。
     /// </remarks>
     public class WebRequestResourceHandler : ResourceHandler
     {
         public override CefReturnValue ProcessRequestAsync(IRequest request, ICallback callback)
         {
-            //Spawn a Task and immediately return CefReturnValue.ContinueAsync
+            //生成一个任务并立即返回 CefReturnValue.ContinueAsync
             Task.Run(async () =>
             {
                 using (callback)
                 {
-                    //Create a clone of the headers so we can modify it
+                    //创建标头的克隆，以便我们可以修改它
                     var headers = new NameValueCollection(request.Headers);
 
                     var httpWebRequest = (HttpWebRequest)WebRequest.Create(request.Url);
@@ -35,18 +35,18 @@ namespace CefSharp.Example
                     httpWebRequest.Method = request.Method;
                     httpWebRequest.Referer = request.ReferrerUrl;
 
-                    //These headers must be set via the appropriate properties.
+                    //这些标头必须通过适当的属性进行设置。
                     headers.Remove("User-Agent");
                     headers.Remove("Accept");
 
                     httpWebRequest.Headers.Add(headers);
 
-                    //TODO: Deal with post data
+                    //TODO: 处理发送数据
                     var postData = request.PostData;
 
                     var httpWebResponse = await httpWebRequest.GetResponseAsync() as HttpWebResponse;
 
-                    // Get the stream associated with the response.
+                    // 获取与响应关联的流。
                     var receiveStream = httpWebResponse.GetResponseStream();
 
                     var contentType = new ContentType(httpWebResponse.ContentType);
@@ -59,7 +59,7 @@ namespace CefSharp.Example
                     receiveStream.Dispose();
                     httpWebResponse.Dispose();
 
-                    //Reset the stream position to 0 so the stream can be copied into the underlying unmanaged buffer
+                    //将流位置重置为 0，以便可以将流复制到底层非托管缓冲区中
                     memoryStream.Position = 0;
 
                     ResponseLength = memoryStream.Length;

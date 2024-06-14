@@ -1,6 +1,6 @@
-// Copyright © 2013 The CefSharp Authors. All rights reserved.
+//版权所有 © 2013 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Collections.Generic;
@@ -70,21 +70,20 @@ namespace CefSharp.Example
 
         public IResourceHandler Create(IBrowser browser, IFrame frame, string schemeName, IRequest request)
         {
-            //Notes:
-            // - The 'host' portion is entirely ignored by this scheme handler.
-            // - If you register a ISchemeHandlerFactory for http/https schemes you should also specify a domain name
-            // - Avoid doing lots of processing in this method as it will affect performance.
-            // - Use the Default ResourceHandler implementation
-
+            //笔记：
+            //-该方案处理程序完全忽略“主机”部分。
+            //-如果您为 http/https 方案注册 ISchemeHandlerFactory，您还应该指定一个域名
+            //-避免在此方法中进行大量处理，因为这会影响性能。
+            //-使用默认 ResourceHandler 实现
             var uri = new Uri(request.Url);
             var fileName = uri.AbsolutePath;
 
-            //Load a file directly from Disk
+            //直接从磁盘加载文件
             if (fileName.EndsWith("CefSharp.Core.xml", StringComparison.OrdinalIgnoreCase))
             {
-                //Convenient helper method to lookup the mimeType
+                //查找 mimeType 的便捷帮助方法
                 var mimeType = Cef.GetMimeType("xml");
-                //Load a resource handler for CefSharp.Core.xml
+                //加载 CefSharp.Core.xml 的资源处理程序
                 return ResourceHandler.FromFilePath("CefSharp.Core.xml", mimeType, autoDisposeStream: true);
             }
 
@@ -118,7 +117,7 @@ namespace CefSharp.Example
                     return ResourceHandler.FromString(resourceString, includePreamble: true, mimeType: mimeType);
                 }
 
-                if(resource is byte[] resourceByteArray)
+                if (resource is byte[] resourceByteArray)
                 {
                     return ResourceHandler.FromByteArray(resourceByteArray, mimeType: mimeType);
                 }

@@ -1,33 +1,33 @@
-// Copyright © 2015 The CefSharp Authors. All rights reserved.
+//版权所有 © 2015 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 
 namespace CefSharp.Example
 {
     /// <summary>
-    /// A class that is used to demonstrate how asynchronous javascript events can be returned to the .Net runtime environment.
+    /// 用于演示如何将异步 JavaScript 事件返回到 .Net 运行时环境的类。
     /// </summary>
     /// <seealso cref="ScriptedMethods"/>
     /// <seealso cref="resources/ScriptedMethodsTest.html"/>
     public class ScriptedMethodsBoundObject
     {
         /// <summary>
-        /// Raised when a Javascript event arrives.
+        /// 当 Javascript 事件到达时引发。
         /// </summary>
         public event Action<string, object> EventArrived;
 
         /// <summary>
-        /// This method will be exposed to the Javascript environment. It is
-        /// invoked in the Javascript environment when some event of interest
-        /// happens.
+        /// 该方法将暴露在Javascript环境中。这是
+        ///当某些感兴趣的事件发生时在 Javascript 环境中调用
+        ///发生。
         /// </summary>
-        /// <param name="eventName">The name of the event.</param>
-        /// <param name="eventData">Data provided by the invoker pertaining to the event.</param>
-        /// <remarks>
-        /// By default RaiseEvent will be translated to raiseEvent as a javascript function.
-        /// This is configurable when calling RegisterJsObject by setting camelCaseJavascriptNames;
+        /// <param name="eventName">事件的名称。</param>
+        /// <param name="eventData">调用者提供的与事件相关的数据。</param>
+        /// <备注>
+        /// 默认情况下 RaiseEvent 将被转换为 raiseEvent 作为 JavaScript 函数。
+        /// 这是通过设置camelCaseJavascriptNames调用RegisterJsObject时可配置的；
         /// </remarks>
         public void RaiseEvent(string eventName, object eventData = null)
         {

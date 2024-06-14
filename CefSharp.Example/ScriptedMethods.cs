@@ -1,6 +1,6 @@
-// Copyright © 2015 The CefSharp Authors. All rights reserved.
+//版权所有 © 2015 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Text.RegularExpressions;
@@ -9,25 +9,25 @@ using System.Threading.Tasks;
 namespace CefSharp.Example
 {
     /// <summary>
-    /// Methods whose functionaity is mostly implemented by evaluating or
-    /// executing scripts in the browser.
+    /// 其功能主要通过评估或实现的方法
+    ///在浏览器中执行脚本。
     /// </summary>
     public static class ScriptedMethods
     {
         /// <summary>
-        /// Determine if the active element in a frame accepts text input.
+        ///确定框架中的活动元素是否接受文本输入。
         /// </summary>
-        /// <param name="frame">Test the active element in this frame.</param>
-        /// <returns>True if the active element accepts text input.</returns>
+        /// <param name="frame">测试该框架中的活动元素。</param>
+        /// <returns>如果活动元素接受文本输入，则为 True.</returns>
         public static async Task<bool> ActiveElementAcceptsTextInput(this IFrame frame)
         {
             if (frame == null)
             {
-                throw new ArgumentException("An IFrame instance is required.", "frame");
+                throw new ArgumentException("需要 IFrame 实例.", "frame");
             }
 
-            // Scripts should be minified for production builds. The script
-            // could also be read from a file...
+            // 应缩小生产版本的脚本。剧本
+            //也可以从文件中读取...
             const string script =
                   @"(function ()
                     {
@@ -60,16 +60,16 @@ namespace CefSharp.Example
         }
 
         /// <summary>
-        /// Determine if the frame contains an element with the specified id.
+        ///确定框架是否包含具有指定 id 的元素。
         /// </summary>
-        /// <param name="frame">Test the elements in this frame.</param>
-        /// <param name="id">The id to find.</param>
-        /// <returns>True if an element with the specified id exists in the frame.</returns>
+        /// <param name="frame">测试此框架中的元素.</param>
+        /// <param name="id">要查找的id.</param>
+        /// <returns>如果框架中存在具有指定 id 的元素，则为 True.</returns>
         public static async Task<bool> ElementWithIdExists(this IFrame frame, string id)
         {
             if (frame == null)
             {
-                throw new ArgumentException("An IFrame instance is required.", "frame");
+                throw new ArgumentException("需要 IFrame 实例.", "frame");
             }
 
             var script =
@@ -78,10 +78,10 @@ namespace CefSharp.Example
                     return n !== null && typeof n !== 'undefined';
                 })();";
 
-            // For simple inline scripts you could use String.Format() but
-            // beware of braces in the javascript code. If reading from a file
-            // it's probably safer to include tokens that can be replaced via
-            // regex.
+            // 对于简单的内联脚本，您可以使用 String.Format() 但
+            //注意 javascript 代码中的大括号。如果从文件中读取
+            //包含可以通过以下方式替换的令牌可能更安全
+            //正则表达式。
             script = Regex.Replace(script, "##ID##", id);
 
             var response = await frame.EvaluateScriptAsync(script);
@@ -94,30 +94,30 @@ namespace CefSharp.Example
         }
 
         /// <summary>
-        /// Set an event listener on the element with the provided id. When the
-        /// event listener callback is invoked an attempt will be made to pass
-        /// event information to a .Net class bound to the browser. See
+        /// 使用提供的 id 在元素上设置事件侦听器。当。。。的时候
+        ///事件侦听器回调被调用时将尝试传递
+        ///绑定到浏览器的.Net 类的事件信息。看
         /// ScriptedMethodsBoundObject.
         /// </summary>
-        /// <param name="frame">The element is in this frame.</param>
-        /// <param name="id">The id of an element that exists in the frame.</param>
-        /// <param name="eventName">Subscribe to this event. For example 'click'.</param>
+        /// <param name="frame">元素在此框架中。</param>
+        ///<param name="id">框架中存在的元素的 id。</param>
+        ///<param name="eventName">订阅此事件。例如“点击'.</param>
         public static void ListenForEvent(this IFrame frame, string id, string eventName)
         {
             if (frame == null)
             {
-                throw new ArgumentException("An IFrame instance is required.", "frame");
+                throw new ArgumentException("需要 IFrame 实例.", "frame");
             }
 
-            // Adds a click event listener to a DOM element with the provided
-            // ID. When the element is clicked the ScriptedMethodsBoundObject's
-            // RaiseEvent function is invoked. This is one way to get
-            // asynchronous events from the web page. Typically though the web
-            // page would be aware of window.boundEvent.RaiseEvent and would
-            // simply raise it as needed.
+            // 使用提供的 DOM 元素添加点击事件侦听器
+            //ID。单击该元素时，ScriptedMethodsBoundObject 的
+            //RaiseEvent 函数被调用。这是获得的一种方法
+            //来自网页的异步事件。通常通过网络
+            //页面会意识到 window.boundEvent.RaiseEvent 并且会
+            //只需根据需要提高它即可。
             //
-            // Scripts should be minified for production builds. The script
-            // could also be read from a file...
+            //应缩小生产版本的脚本。剧本
+            //也可以从文件中读取...
             var script =
                 @"(async function ()
                 {
@@ -131,16 +131,16 @@ namespace CefSharp.Example
                             return;
                         }
                         counter++;
-                        //NOTE RaiseEvent was converted to raiseEvent in JS (this is configurable when registering the object)
+                        //注意RaiseEvent在JS中被转换为raiseEvent（这是在注册对象时配置的）
                         window.boundEvent.raiseEvent('##EVENT##', {count: counter, id: e.target.id, tagName: e.target.tagName});
                     });
                     console.log(`Added ##EVENT## listener to ${elem.id}.`);
                 })();";
 
-            // For simple inline scripts you could use String.Format() but
-            // beware of braces in the javascript code. If reading from a file
-            // it's probably safer to include tokens that can be replaced via
-            // regex.
+            // 对于简单的内联脚本，您可以使用 String.Format() 但
+            //注意 javascript 代码中的大括号。如果从文件中读取
+            //包含可以通过以下方式替换的令牌可能更安全
+            //正则表达式。
             script = Regex.Replace(script, "##ID##", id);
             script = Regex.Replace(script, "##EVENT##", eventName);
 

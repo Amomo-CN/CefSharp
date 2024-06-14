@@ -1,6 +1,6 @@
-// Copyright © 2016 The CefSharp Authors. All rights reserved.
+//版权所有 © 2016 CefSharp 作者。版权所有。
 //
-// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+//此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
 using System.Collections.Generic;
@@ -10,14 +10,14 @@ using CefSharp.Example.Properties;
 namespace CefSharp.Example
 {
     /// <summary>
-    /// Demo ISchemeHandlerFactory reads that from resource in memory, could just
-    /// as easily be from files on disk - only use this method if you already have pre loaded data, don't perform
-    /// any web requests here or database lookups, best for static data only.
+    ///演示 ISchemeHandlerFactory 从内存中的资源中读取该内容，可以
+    ///很容易从磁盘上的文件中获取 -仅当您已经预加载数据时才使用此方法，请勿执行
+    ///此处的任何 Web 请求或数据库查找，仅适用于静态数据。
     /// </summary>
     public class InMemorySchemeHandlerFactory : ISchemeHandlerFactory
     {
         /// <summary>
-        /// Just a simple dictionary for resource lookup
+        /// 只是一个简单的资源查找字典
         /// </summary>
         private static readonly IDictionary<string, string> ResourceDictionary;
 
@@ -54,19 +54,19 @@ namespace CefSharp.Example
         }
 
         /// <summary>
-        /// The only method required to implement an ISchemeHandlerFactory
+        /// 实现 ISchemeHandlerFactory 所需的唯一方法
         /// </summary>
-        /// <param name="browser">browser</param>
-        /// <param name="frame">frame</param>
-        /// <param name="schemeName">scheme name this handler was registered for</param>
-        /// <param name="request">request, we'll use this to check the Url and load the appropriate resource</param>
+        /// <参数名称=“浏览器”>浏览器</参数>
+        ///<param name="frame">框架</param>
+        ///<param name="schemeName">此处理程序注册的方案名称</param>
+        ///<param name="request">请求，我们将使用它来检查 Url 并加载适当的资源</param>
         /// <returns>
-        /// return null to invoke the default behaviour, this is useful when you register a handler on the http/https scheme
-        /// if we have a string that represents our resource in the lookup dictionary then return it as an IResourceHandler
+        /// 返回 null 来调用默认行为，这在您在 http/https 方案上注册处理程序时非常有用
+        ///如果我们在查找字典中有一个表示资源的字符串，则将其作为 IResourceHandler 返回
         /// </returns>
         IResourceHandler ISchemeHandlerFactory.Create(IBrowser browser, IFrame frame, string schemeName, IRequest request)
         {
-            //You can match the scheme/host if required, we don't need that in this example, so keeping it simple.
+            //如果需要，您可以匹配方案/主机，在本例中我们不需要它，所以保持简单。
             var uri = new Uri(request.Url);
             var fileName = uri.AbsolutePath;
             var extension = Path.GetExtension(fileName);
@@ -74,8 +74,8 @@ namespace CefSharp.Example
             string resource;
             if (ResourceDictionary.TryGetValue(fileName, out resource) && !string.IsNullOrEmpty(resource))
             {
-                //For css/js/etc it's important to specify a mime/type, here we use the file extension to perform a lookup
-                //there are overloads where you can specify more options including Encoding, mimeType
+                //对于 css/js/etc 来说，指定 mime/type 很重要，这里我们使用文件扩展名来执行查找
+                //有重载，您可以指定更多选项，包括 Encoding、mimeType
                 return ResourceHandler.FromString(resource, mimeType: Cef.GetMimeType(extension));
             }
 
