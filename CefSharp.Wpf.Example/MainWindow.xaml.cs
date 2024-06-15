@@ -104,12 +104,21 @@ namespace CefSharp.Wpf.Example
         }
 
 
+
+
         // 当MainWindow加载完成时，这个方法会被自动调用。
         private void MainWindowLoaded(object sender, RoutedEventArgs e)
         {
             // 调用CreateNewTab方法来创建一个新的浏览器标签页。
             // 参数包括默认的URL（由CefExample.DefaultUrl提供）和一个布尔值true，表示侧边栏应该被显示。
-            CreateNewTab(CefExample.DefaultUrl, true);
+            //CreateNewTab(CefExample.DefaultUrl, true);//滴滴 默认打开了主页 不需要 - -
+            CreateNewTab("http://192.168.100.216:8081/U9C/mvc/main/index", false); //U9
+            CreateNewTab("http://192.168.10.173:8088/", false); // APS
+            CreateNewTab("http://192.168.10.209:8080/webroot/decision", false); // 报表主页
+            CreateNewTab("http://192.168.10.209:8080/webroot/decision/v10/entry/access/734b3268-55f8-4e48-9c03-0fa78a8fd17d?width=2160&amp;height=1078", false); // 报表 齐套分析1
+
+
+
         }
 
         // 此方法用于创建一个新的浏览器标签页，并将其添加到BrowserTabs集合中。
