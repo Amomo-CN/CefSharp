@@ -1,35 +1,38 @@
-using System; // 引入基础类库，提供基本的类型和命名空间支持
-using System.Collections.Specialized; // 引入特殊化的集合类，用于处理项更改通知
-using System.Windows; // 引入WPF核心类库，提供依赖属性、事件和UI元素
-using System.Windows.Automation.Peers; // 引入UI自动化支持，用于辅助技术
-using System.Windows.Controls; // 引入WPF控件类库，提供基本的UI控件
-using System.Windows.Controls.Primitives; // 引入WPF控件基础类库，提供控件的基本行为和模板支持
+using System;
+using System.Collections.Specialized;
+using System.Windows;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using TabControlAutomationPeer = CefSharp.Wpf.Experimental.Accessibility.TabControlAutomationPeer;
 
-using TabControlAutomationPeer = CefSharp.Wpf.Experimental.Accessibility.TabControlAutomationPeer; // 重命名Tab控件的自动化同行，以便在命名空间中避免冲突
-
-// 命名空间定义，组织相关控件和逻辑
 namespace CefSharp.Wpf.Example.Controls
 {
     /// <summary>
-    /// 扩展的TabControl，旨在保存显示的项，从而避免在切换标签页时因卸载和重新加载视觉树而带来的性能损失。
-    /// </summary>
-    /// <remarks>
-    /// 基于http://stackoverflow.com/a/9802346上的示例，该示例又基于
-    /// http://www.pluralsight-training.net/community/blogs/eburke/archive/2009/04/30/keeping-the-wpf-tab-control-from-destroying-its-children.aspx，
-    /// 并做了一些修改以便在执行拖放操作时重用TabItem的ContentPresenter。
+    ///扩展 TabControl，它保存显示的项目，这样您就不会受到性能影响
+    ///切换选项卡时卸载并重新加载 VisualTree
+    ///</摘要>
+    ///<备注>
+    ///基于 http://stackoverflow.com/a/9802346 的示例，该示例又基于
+    ///http://www.pluralsight-training.net/community/blogs/eburke/archive/2009/04/30/keeping-the-wpf-tab-control-from-destroying-its-children.aspx
+    ///进行一些修改，以便在执行拖放操作时重用 TabItem 的 ContentPresenter
     /// </remarks>
-    [TemplatePart(Name = "PART_ItemsHolder", Type = typeof(Panel))] // 指定控件模板中的必需部件
+    [TemplatePart(Name = "PART_ItemsHolder", Type = typeof(Panel))]
     public class NonReloadingTabControl : TabControl
     {
-        private Panel itemsHolderPanel; // 用于存储Tab项内容的面板
+        private Panel itemsHolderPanel;
 
-        // 构造函数，初始化控件并监听项容器生成器的状态变化以获取初始数据绑定的选定项
         public NonReloadingTabControl()
         {
+            // 这是必要的，以便我们获得初始数据绑定所选项目
             ItemContainerGenerator.StatusChanged += ItemContainerGeneratorStatusChanged;
         }
 
-        // 监听项容器生成器状态变化的回调，当容器生成完毕时，生成选定的项
+        /// <summary>
+        /// 如果容器完成，则生成所选项目
+        ///</摘要>
+        ///<param name="sender">发件人。</param>
+        ///<param name="e">包含事件数据的 <see cref="EventArgs"/> 实例.</param>
         private void ItemContainerGeneratorStatusChanged(object sender, EventArgs e)
         {
             if (ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
@@ -39,7 +42,9 @@ namespace CefSharp.Wpf.Example.Controls
             }
         }
 
-        // 应用模板后获取ItemsHolder并生成任何子项
+        /// <summary>
+        /// 获取 ItemsHolder 并生成任何子项
+        /// </summary>
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -47,63 +52,94 @@ namespace CefSharp.Wpf.Example.Controls
             UpdateSelectedItem();
         }
 
-        // 处理项目变更，根据变更类型移除或添加相应的子项
+        /// <summary>
+        /// 当项目发生变化时，我们会删除所有生成的面板子项，并根据需要添加任何新的子项
+        /// </summary>
+        /// <param name="e">包含事件数据的 <see cref="NotifyCollectionChangedEventArgs"/> 实例.</param>
         protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
         {
             base.OnItemsChanged(e);
+
             if (itemsHolderPanel == null)
+            {
                 return;
+            }
 
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Reset:
                     itemsHolderPanel.Children.Clear();
                     break;
+
                 case NotifyCollectionChangedAction.Add:
                 case NotifyCollectionChangedAction.Remove:
-                    RemoveOldItems(e);
+                    if (e.OldItems != null)
+                    {
+                        foreach (var item in e.OldItems)
+                        {
+                            var cp = FindChildContentPresenter(item);
+                            if (cp != null)
+                            {
+                                itemsHolderPanel.Children.Remove(cp);
+                            }
+                        }
+                    }
+
+                    // 不要对新项目做任何事情，因为我们不想这样做
+                    //创建未显示的视觉效果
                     UpdateSelectedItem();
                     break;
+
                 case NotifyCollectionChangedAction.Replace:
-                    throw new NotImplementedException("Replace 动作尚未实现");
+                    throw new NotImplementedException("替换尚未实施");
             }
         }
 
-        // 选择改变时更新显示的项
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)
         {
             base.OnSelectionChanged(e);
             UpdateSelectedItem();
         }
 
-        // 更新当前选中的项的显示
         private void UpdateSelectedItem()
         {
             if (itemsHolderPanel == null)
+            {
                 return;
+            }
 
+            // 如有必要，生成 ContentPresenter
             var item = GetSelectedTabItem();
             if (item != null)
+            {
                 CreateChildContentPresenter(item);
+            }
 
+            // 展示正确的孩子
             foreach (ContentPresenter child in itemsHolderPanel.Children)
-                child.Visibility = ((child.Tag as TabItem)?.IsSelected ?? false) ? Visibility.Visible : Visibility.Collapsed;
+            {
+                child.Visibility = ((child.Tag as TabItem).IsSelected) ? Visibility.Visible : Visibility.Collapsed;
+            }
         }
 
-        // 为指定项创建ContentPresenter，如果已存在则直接返回
         private ContentPresenter CreateChildContentPresenter(object item)
         {
             if (item == null)
+            {
                 return null;
+            }
 
             var cp = FindChildContentPresenter(item);
+
             if (cp != null)
+            {
                 return cp;
+            }
 
             var tabItem = item as TabItem;
             cp = new ContentPresenter
             {
-                Content = tabItem?.Content ?? item,
+                Content = (tabItem != null) ? tabItem.Content : item,
                 ContentTemplate = this.SelectedContentTemplate,
                 ContentTemplateSelector = this.SelectedContentTemplateSelector,
                 ContentStringFormat = this.SelectedContentStringFormat,
@@ -114,48 +150,50 @@ namespace CefSharp.Wpf.Example.Controls
             return cp;
         }
 
-        // 查找与特定数据关联的ContentPresenter
         private ContentPresenter FindChildContentPresenter(object data)
         {
             if (data is TabItem)
+            {
                 data = (data as TabItem).Content;
-            if (data == null || itemsHolderPanel == null)
+            }
+
+            if (data == null)
+            {
                 return null;
+            }
+
+            if (itemsHolderPanel == null)
+            {
+                return null;
+            }
 
             foreach (ContentPresenter cp in itemsHolderPanel.Children)
+            {
                 if (cp.Content == data)
+                {
                     return cp;
+                }
+            }
 
             return null;
         }
 
-        // 获取当前选中的TabItem
         protected TabItem GetSelectedTabItem()
         {
             var selectedItem = SelectedItem;
-            return selectedItem as TabItem ?? ItemContainerGenerator.ContainerFromIndex(SelectedIndex) as TabItem;
+            if (selectedItem == null)
+            {
+                return null;
+            }
+
+            var item = selectedItem as TabItem ?? ItemContainerGenerator.ContainerFromIndex(SelectedIndex) as TabItem;
+
+            return item;
         }
 
-        // 创建自定义的UI自动化同行，以支持辅助技术
         protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new TabControlAutomationPeer(this);
-        }
-
-        // 移除旧的项
-        private void RemoveOldItems(NotifyCollectionChangedEventArgs e)
-        {
-            if (e.OldItems != null)
-                foreach (var item in e.OldItems)
-                    RemoveChildContentPresenter(item);
-        }
-
-        // 移除与特定项关联的ContentPresenter
-        private void RemoveChildContentPresenter(object item)
-        {
-            var cp = FindChildContentPresenter(item);
-            if (cp != null)
-                itemsHolderPanel.Children.Remove(cp);
         }
     }
 }
