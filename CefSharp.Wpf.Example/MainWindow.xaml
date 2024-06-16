@@ -14,6 +14,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         Title="CefSharp.Wpf.Example"
         WindowState="Maximized" av:DesignHeight="800" av:DesignWidth="1600">
+    
     <Window.InputBindings>
         <KeyBinding Key="T" Modifiers="Control" Command="New"/>
         <KeyBinding Key="W" Modifiers="Control" Command="Close"/>
@@ -80,7 +81,7 @@
                                 FontSize="10"
                                 Padding="0"
                                 Margin="0,0,0,0"
-                                ToolTip="Close"/>
+                                ToolTip="关闭"/>
                     </StackPanel>
                 </DataTemplate>
             </controls:NonReloadingTabControl.ItemTemplate>
