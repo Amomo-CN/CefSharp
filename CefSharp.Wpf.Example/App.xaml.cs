@@ -1,7 +1,6 @@
 // 版权声明，指出代码由CefSharp Authors创作，保留所有权利。
 // 使用此源代码的许可遵循BSD风格的许可证，详细条款见LICENSE文件。
 
-using System;
 using System.Windows; // 引入WPF框架的基本类型
 
 using CefSharp.Example; // 引入CefSharp示例项目的相关类
@@ -45,23 +44,14 @@ namespace CefSharp.Wpf.Example // 定义命名空间CefSharp.Wpf.Example
             }
 
             // 创建Cef设置对象
-            var settings = new CefSettings(
-                );
+            var settings = new CefSettings();
             // 设置是否使用多线程消息循环
             settings.MultiThreadedMessageLoop = multiThreadedMessageLoop;
             // 设置外部消息泵的使用情况
             settings.ExternalMessagePump = !multiThreadedMessageLoop;
-
-
-
-            settings.Locale = "zh-CN"; // 设置默认语言为中文
-            settings.AcceptLanguageList = "zh-CN,zh;q=0.9,en;q=0.8"; // 设置接受的语言列表
-            settings.CefCommandLineArgs.Add("lang", "zh-CN"); // 设置浏览器语言为中文
-            settings.CefCommandLineArgs.Add("intl.accept_languages", "zh-CN"); // 设置接受的语言列表
-            Environment.SetEnvironmentVariable("LANGUAGE", "zh_CN"); // 设置环境变量强制开发者工具使用中文
-
             // 启用Chrome运行时
             settings.ChromeRuntime = true;
+
             // 初始化CefSharp，传入设置和浏览器进程处理器
             CefExample.Init(settings, browserProcessHandler: browserProcessHandler);
 
