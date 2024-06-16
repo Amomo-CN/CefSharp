@@ -16,6 +16,7 @@ namespace CefSharp.Wpf
         public CefSettings() : base()
         {
             WindowlessRenderingEnabled = true;
+            ChromeRuntime = true;
 
             //禁用 Web 内容的多线程、合成器滚动
             //通过 OSR 渲染，提高滚动性能是相当常见的

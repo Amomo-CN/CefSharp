@@ -163,7 +163,7 @@ namespace CefSharp.Example
 
             //实验设置见 https://github.com/chromiumembedded/cef/issues/2969
             //欲了解详情
-            //settings.ChromeRuntime = true;
+            //settings.ChromeRuntime = true; //默认改为使用 Chrome bootstrap
 
             if (DebuggingSubProcess)
             {
