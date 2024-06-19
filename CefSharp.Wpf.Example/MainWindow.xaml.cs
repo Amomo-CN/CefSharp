@@ -9,8 +9,10 @@ using System.IO; // 文件和流操作
 using System.Runtime.InteropServices; // 用于平台调用服务
 using System.Threading; // 线程管理
 using System.Threading.Tasks; // 异步编程模型
+
 using System.Windows; // WPF基本元素和特性
 using System.Windows.Input; // 输入相关类，如命令绑定
+using System.Windows.Threading;
 
 using CefSharp.Example; // CefSharp示例项目提供的类
 using CefSharp.Example.Handlers; // 示例中的处理器类
@@ -60,6 +62,8 @@ namespace CefSharp.Wpf.Example
             // 获取当前进程的体系结构（32位或64位），并将其添加到窗口标题中以标识。
             var bitness = RuntimeInformation.ProcessArchitecture.ToString().ToLowerInvariant();
             Title += " - " + bitness;
+
+
         }
 
         // 方法：关闭当前选中的标签页。
@@ -112,14 +116,42 @@ namespace CefSharp.Wpf.Example
             // 调用CreateNewTab方法来创建一个新的浏览器标签页。
             // 参数包括默认的URL（由CefExample.DefaultUrl提供）和一个布尔值true，表示侧边栏应该被显示。
             //CreateNewTab(CefExample.DefaultUrl, true);//滴滴 默认打开了主页 不需要 - -
-            CreateNewTab("http://192.168.100.216:8081/U9C/mvc/main/index", false); //U9
+
+            // 创建新的浏览器标签页
             CreateNewTab("http://192.168.10.173:8088/", false); // APS
-            CreateNewTab("http://192.168.10.209:8080/webroot/decision", false); // 报表主页
-            CreateNewTab("http://192.168.10.209:8080/webroot/decision/v10/entry/access/734b3268-55f8-4e48-9c03-0fa78a8fd17d?width=2160&amp;height=1078", false); // 报表 齐套分析1
+            CreateNewTab("http://192.168.10.209:8080/webroot/decision/v10/entry/access/734b3268-55f8-4e48-9c03-0fa78a8fd17d?width=2160&height=1078", false); // 报表 齐套分析1
+            CreateNewTab("http://192.168.100.216:8081/U9C/mvc/main/index", false); //U9
 
 
+            // 初始化已激活标签页的字典  不用了 因为下面已经实现了强制自动刷新
+            //var activatedTabs = new Dictionary<int, bool>();
 
+            //// 创建一个定时器
+            //var timer = new DispatcherTimer();
+            //timer.Interval = TimeSpan.FromMilliseconds(150); // 设置定时器间隔为100毫秒
+            //timer.Tick += (s, args) =>
+            //{
+            //    // 检查每个标签页
+            //    for (int i = 0; i < TabControl.Items.Count; i++)
+            //    {
+            //        // 如果这个标签页还没有被激活过
+            //        if (!activatedTabs.ContainsKey(i))
+            //        {
+
+            //            // 激活这个标签页
+            //            TabControl.SelectedIndex = i;
+
+            //            // 将这个标签页添加到已激活标签页的字典中
+            //            activatedTabs[i] = true;
+
+            //            // 退出循环，因为我们只需要在每个Tick中激活一个标签页
+            //            break;
+            //        }
+            //    }
+            //};
+            //timer.Start(); // 启动定时器
         }
+
 
         // 此方法用于创建一个新的浏览器标签页，并将其添加到BrowserTabs集合中。
         // 它接受三个参数，其中url是新标签页将要加载的网页地址，默认是DefaultUrlForAddedTabs，
@@ -131,9 +163,19 @@ namespace CefSharp.Wpf.Example
             // BrowserTabViewModel是代表一个浏览器标签页的视图模型类，包含标签页的所有逻辑和数据。
             var newTabViewModel = new BrowserTabViewModel(url) { ShowSidebar = showSideBar, LegacyBindingEnabled = legacyBindingEnabled };
 
+
+            // 将新创建的标签页设置为当前选中项。
+            TabControl.SelectedIndex = BrowserTabs.Count;
+            // 立即加载标签的内容
+            newTabViewModel.WebBrowser.Load(url);
+
+
             // 将新创建的BrowserTabViewModel对象添加到BrowserTabs集合中。
             // BrowserTabs是一个集合，用于存储所有已打开的浏览器标签页的视图模型。
             BrowserTabs.Add(newTabViewModel);
+
+
+            TabControl.UpdateLayout();// 强制更新布局，确保内容立即显示
         }
         // 当自定义命令绑定被触发时，此方法将被执行。
         private void CustomCommandBinding(object sender, ExecutedRoutedEventArgs e)

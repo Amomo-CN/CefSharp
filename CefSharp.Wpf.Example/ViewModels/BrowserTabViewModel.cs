@@ -4,6 +4,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -49,6 +50,10 @@ namespace CefSharp.Wpf.Example.ViewModels
             get { return statusMessage; }
             set { Set(ref statusMessage, value); }
         }
+
+
+
+
 
         // 页面标题
         private string title;
@@ -146,6 +151,8 @@ namespace CefSharp.Wpf.Example.ViewModels
             // 初始化地址和可编辑地址
             Address = address;
             AddressEditable = Address;
+
+            WebBrowser = new ChromiumWebBrowser();
 
             // 定义Go命令，当地址非空或空白时可执行页面跳转
             GoCommand = new RelayCommand(Go, () => !string.IsNullOrWhiteSpace(Address));
@@ -282,10 +289,15 @@ namespace CefSharp.Wpf.Example.ViewModels
         }
 
         // 设置属性值并触发通知的辅助方法
-        protected void Set<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        protected void Set<T>(ref T field, T value, [CallerMemberName] string propertyName = null, [CallerMemberName] string caller = null)
         {
             field = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+            // 输出到控制台，使用中文提示并添加关键词 "滴滴-"
+
+            Debug.WriteLine($"滴滴-{propertyName} 属性在 {DateTime.Now} 被 {caller} 函数修改。");
         }
+
     }
 }
