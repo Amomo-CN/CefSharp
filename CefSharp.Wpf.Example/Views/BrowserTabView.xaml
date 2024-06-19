@@ -12,476 +12,446 @@
              d:DesignHeight="670.5"
              FocusManager.FocusedElement="{Binding ElementName=browser}"
              d:DataContext="{d:DesignInstance local:BrowserTabViewModel}">
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <ObjectDataProvider x:Key="BitmapScalingModeEnum" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="BitmapScalingMode"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-    </UserControl.Resources>
-    <DockPanel LastChildFill="True">
-        <DockPanel DockPanel.Dock="Top" Margin="2">
-            <Button Command="{Binding HomeCommand}"
-                    Margin="16,0,0,0"
-                    ToolTip="Navigate Home"
-                    Style="{StaticResource MaterialDesignToolButton}"
-                    Content="{materialDesign:PackIcon Kind=Home, Size=24}"/>
-            <Button Command="{Binding WebBrowser.BackCommand}"
-                    Margin="24,0,0,0"
-                    ToolTip="Navigate Back"
-                    Content="{materialDesign:PackIcon Kind=NavigateBefore, Size=24}"
-                    Style="{StaticResource MaterialDesignToolButton}"/>
-            <Button Command="{Binding WebBrowser.ForwardCommand}"
-                    Margin="24,0,0,0"
-                    ToolTip="Navigate Forward"
-                    Content="{materialDesign:PackIcon Kind=NavigateNext, Size=24}"
-                    Style="{StaticResource MaterialDesignToolButton}"/>
-            <Button Command="{Binding WebBrowser.ReloadCommand}"
-                    ToolTip="Reload Browser"
-                    Margin="24,0,0,0"
-                    Content="{materialDesign:PackIcon Kind=Reload, Size=24}"
-                    Style="{StaticResource MaterialDesignToolButton}"/>
-            <Button Command="{Binding GoCommand}"
-                    ToolTip="Navigate To Url"
-                    Margin="16,0,0,0"
-                    Content="{materialDesign:PackIcon Kind=OpenInBrowser, Size=24}"
-                    Style="{StaticResource MaterialDesignToolButton}"
-                    DockPanel.Dock="Right"/>
-            <TextBox Text="{Binding AddressEditable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-         Style="{StaticResource MaterialDesignOutlinedTextBox}"
-         Margin="16,0,0,0"
-         GotKeyboardFocus="OnTextBoxGotKeyboardFocus"
-         GotMouseCapture="OnTextBoxGotMouseCapture"
-         VerticalContentAlignment="Center">
-                <!-- 设置TextBox的文本绑定，样式，外边距，键盘获取焦点与鼠标捕获事件处理，以及垂直内容对齐居中 -->
+        <UserControl.Resources>
+                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+                <ObjectDataProvider x:Key="BitmapScalingModeEnum"
+                                MethodName="GetValues"
+                                ObjectType="{x:Type system:Enum}">
+                        <ObjectDataProvider.MethodParameters>
+                                <x:Type TypeName="BitmapScalingMode"/>
+                        </ObjectDataProvider.MethodParameters>
+                </ObjectDataProvider>
+        </UserControl.Resources>
+        <DockPanel LastChildFill="True">
+                <DockPanel DockPanel.Dock="Top"
+                           Margin="2">
+                        <Button Command="{Binding HomeCommand}"
+                                Margin="16,0,0,0"
+                                ToolTip="Navigate Home"
+                                Style="{StaticResource MaterialDesignToolButton}"
+                                Content="{materialDesign:PackIcon Kind=Home, Size=24}"/>
+                        <Button Command="{Binding WebBrowser.BackCommand}"
+                                Margin="24,0,0,0"
+                                ToolTip="Navigate Back"
+                                Content="{materialDesign:PackIcon Kind=NavigateBefore, Size=24}"
+                                Style="{StaticResource MaterialDesignToolButton}"/>
+                        <Button Command="{Binding WebBrowser.ForwardCommand}"
+                                Margin="24,0,0,0"
+                                ToolTip="Navigate Forward"
+                                Content="{materialDesign:PackIcon Kind=NavigateNext, Size=24}"
+                                Style="{StaticResource MaterialDesignToolButton}"/>
+                        <Button Command="{Binding WebBrowser.ReloadCommand}"
+                                ToolTip="Reload Browser"
+                                Margin="24,0,0,0"
+                                Content="{materialDesign:PackIcon Kind=Reload, Size=24}"
+                                Style="{StaticResource MaterialDesignToolButton}"/>
+                        <Button Command="{Binding GoCommand}"
+                                ToolTip="Navigate To Url"
+                                Margin="16,0,0,0"
+                                Content="{materialDesign:PackIcon Kind=OpenInBrowser, Size=24}"
+                                Style="{StaticResource MaterialDesignToolButton}"
+                                DockPanel.Dock="Right"/>
+                        <TextBox Text="{Binding AddressEditable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="16,0,0,0"
+                                 GotKeyboardFocus="OnTextBoxGotKeyboardFocus"
+                                 GotMouseCapture="OnTextBoxGotMouseCapture"
+                                 VerticalContentAlignment="Center">
+                                <!-- 设置TextBox的文本绑定，样式，外边距，键盘获取焦点与鼠标捕获事件处理，以及垂直内容对齐居中 -->
 
-                <TextBox.Template>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <!-- 自定义TextBox的模板 -->
-                        <Border Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="1"
-                    CornerRadius="15">
-                            <!-- 绘制带有圆角的边框 -->
-                            <Grid Margin="15,0,15,0">
-                                <!-- 添加一个Grid并设置内外边距，使得文本内容在视觉上居中 -->
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <!-- 定义一列，占据剩余所有空间，用于放置文本内容 -->
-                                </Grid.ColumnDefinitions>
-                                <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
-                                <!-- ScrollViewer用于容纳文本内容，支持滚动 -->
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-                </TextBox.Template>
+                                <TextBox.Template>
+                                        <ControlTemplate TargetType="{x:Type TextBox}">
+                                                <!-- 自定义TextBox的模板 -->
+                                                <Border Background="{TemplateBinding Background}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="15">
+                                                        <!-- 绘制带有圆角的边框 -->
+                                                        <Grid Margin="15,0,15,0">
+                                                                <!-- 添加一个Grid并设置内外边距，使得文本内容在视觉上居中 -->
+                                                                <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <!-- 定义一列，占据剩余所有空间，用于放置文本内容 -->
+                                                                </Grid.ColumnDefinitions>
+                                                                <ScrollViewer Margin="0"
+                                                                              x:Name="PART_ContentHost"/>
+                                                                <!-- ScrollViewer用于容纳文本内容，支持滚动 -->
+                                                        </Grid>
+                                                </Border>
+                                        </ControlTemplate>
+                                </TextBox.Template>
 
-                <TextBox.InputBindings>
-                    <KeyBinding Key="Enter" Command="{Binding GoCommand}" />
-                    <!-- 绑定回车键执行GoCommand命令 -->
-                </TextBox.InputBindings>
-            </TextBox>
+                                <TextBox.InputBindings>
+                                        <KeyBinding Key="Enter"
+                                                    Command="{Binding GoCommand}"/>
+                                        <!-- 绑定回车键执行GoCommand命令 -->
+                                </TextBox.InputBindings>
+                        </TextBox>
 
 
 
-        </DockPanel>
-        <StackPanel DockPanel.Dock="Right"
+                </DockPanel>
+                <StackPanel DockPanel.Dock="Right"
+                            Margin="6,3"
+                            Width="300"
+                            Visibility="{Binding ShowSidebar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <GroupBox Header="调整 WPF 渲染">
+                                <Grid>
+                                        <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Row="0"
+                                               Grid.Column="0"
+                                               Content="角度:"/>
+                                        <Slider Grid.Row="0"
+                                                Grid.Column="1"
+                                                Name="angleSlider"
+                                                Minimum="-180"
+                                                Maximum="180"/>
+                                        <Label Grid.Row="1"
+                                               Grid.Column="0"
+                                               Content="水印不透明度:"/>
+                                        <Slider Grid.Row="1"
+                                                Grid.Column="1"
+                                                Name="opacitySlider"
+                                                Minimum="0"
+                                                Maximum="1"
+                                                TickFrequency="0.01"
+                                                Value="0.95"/>
+                                        <Label Grid.Row="2"
+                                               Grid.Column="0"
+                                               Content="位图缩放模式:"/>
+                                        <ComboBox Grid.Row="2"
+                                                  Grid.Column="1"
+                                                  Name="scalingModeComboBox"
+                                                  ItemsSource="{Binding Source={StaticResource BitmapScalingModeEnum}}"
+                                                  SelectedIndex="1"/>
+                                </Grid>
+                        </GroupBox>
+                        <GroupBox Header="执行 Javascript（异步）">
+                                <Grid>
+                                        <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBox x:Name="ExecuteJavascriptTextBox"
+                                                 Grid.Row="0"
+                                                 AcceptsReturn="True"
+                                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                                 Text="document.body.style.backgroundColor = 'red';">
+                                                <TextBox.InputBindings>
+                                                        <KeyBinding Key="Enter"
+                                                                    Modifiers="Control"
+                                                                    Command="{Binding ExecuteJavaScriptCommand}"
+                                                                    CommandParameter="{Binding Text, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
+                                                </TextBox.InputBindings>
+                                        </TextBox>
+                                        <Button Grid.Row="1"
+                                                HorizontalAlignment="Center"
+                                                Margin="0, 5, 0, 0"
+                                                Content="执行"
+                                                ToolTip="执行JavaScript"
+                                                Command="{Binding ExecuteJavaScriptCommand}"
+                                                CommandParameter="{Binding Text, ElementName=ExecuteJavascriptTextBox}"/>
+                                </Grid>
+                        </GroupBox>
+                        <GroupBox Header="评估 Javascript（异步）">
+                                <Grid>
+                                        <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBox x:Name="EvaluateJavascriptTextBox"
+                                                 Grid.Row="0"
+                                                 AcceptsReturn="True"
+                                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                                 Text="1 + 1">
+                                                <TextBox.InputBindings>
+                                                        <KeyBinding Key="Enter"
+                                                                    Modifiers="Control"
+                                                                    Command="{Binding EvaluateJavaScriptCommand}"
+                                                                    CommandParameter="{Binding Text, RelativeSource={RelativeSource AncestorType=TextBox}}"/>
+                                                </TextBox.InputBindings>
+                                        </TextBox>
+                                        <Button Grid.Row="1"
+                                                HorizontalAlignment="Center"
+                                                Margin="0, 5, 0, 0"
+                                                Content="估"
+                                                ToolTip="评估 JavaScript"
+                                                Command="{Binding EvaluateJavaScriptCommand}"
+                                                CommandParameter="{Binding Text, ElementName=EvaluateJavascriptTextBox}"/>
+                                        <TextBlock Grid.Row="2"
+                                                   Margin="6">结果:</TextBlock>
+                                        <TextBox Grid.Row="3"
+                                                 IsReadOnly="True"
+                                                 Margin="6,0,6,6"
+                                                 Text="{Binding EvaluateJavaScriptResult}"/>
+                                </Grid>
+                        </GroupBox>
+                        <GroupBox Header="测试">
+                                <Button HorizontalAlignment="Center"
+                                        Margin="6,0"
+                                        Padding="5,2"
+                                        Command="{Binding JavascriptBindingStressTest}"
+                                        Content="Javascript 绑定压力测试"/>
+                        </GroupBox>
+                </StackPanel>
+                <StackPanel
                         Margin="6,3"
-                        Width="300"
-                        Visibility="{Binding ShowSidebar, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <GroupBox Header="Tweak WPF Rendering">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0"
-                               Grid.Column="0"
-                               Content="Angle:" />
-                    <Slider Grid.Row="0"
-                                Grid.Column="1"
-                                Name="angleSlider"
-                                Minimum="-180"
-                                Maximum="180" />
-                    <Label Grid.Row="1"
-                               Grid.Column="0"
-                               Content="Watermark Opacity:" />
-                    <Slider Grid.Row="1"
-                                Grid.Column="1"
-                                Name="opacitySlider"
-                                Minimum="0"
-                                Maximum="1"
-                                TickFrequency="0.01"
-                                Value="0.95" />
-                    <Label Grid.Row="2"
-                               Grid.Column="0"
-                               Content="Bitmap Scaling Mode:" />
-                    <ComboBox Grid.Row="2"
-                                  Grid.Column="1"
-                                  Name="scalingModeComboBox"
-                                  ItemsSource="{Binding Source={StaticResource BitmapScalingModeEnum}}"
-                                  SelectedIndex="1"/>
-                </Grid>
-            </GroupBox>
-            <GroupBox Header="Execute Javascript (asynchronously)">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <TextBox x:Name="ExecuteJavascriptTextBox"
-                                 Grid.Row="0"
-                                 AcceptsReturn="True"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="document.body.style.backgroundColor = 'red';">
-                        <TextBox.InputBindings>
-                            <KeyBinding Key="Enter"
-                                            Modifiers="Control"
-                                            Command="{Binding ExecuteJavaScriptCommand}"
-                                            CommandParameter="{Binding Text, RelativeSource={RelativeSource AncestorType=TextBox}}" />
-                        </TextBox.InputBindings>
-                    </TextBox>
-                    <Button Grid.Row="1"
-                                HorizontalAlignment="Center"
-                                Margin="0, 5, 0, 0"
-                                Content="Execute"
-                                ToolTip="Execute JavaScript"
-                                Command="{Binding ExecuteJavaScriptCommand}"
-                                CommandParameter="{Binding Text, ElementName=ExecuteJavascriptTextBox}" />
-                </Grid>
-            </GroupBox>
-            <GroupBox Header="Evaluate Javascript (Async)">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <TextBox x:Name="EvaluateJavascriptTextBox"
-                                 Grid.Row="0"
-                                 AcceptsReturn="True"
-                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                 Text="1 + 1">
-                        <TextBox.InputBindings>
-                            <KeyBinding Key="Enter"
-                                            Modifiers="Control"
-                                            Command="{Binding EvaluateJavaScriptCommand}"
-                                            CommandParameter="{Binding Text, RelativeSource={RelativeSource AncestorType=TextBox}}" />
-                        </TextBox.InputBindings>
-                    </TextBox>
-                    <Button Grid.Row="1"
-                                HorizontalAlignment="Center"
-                                Margin="0, 5, 0, 0"
-                                Content="Evaluate"
-                                ToolTip="Evaluate JavaScript"
-                                Command="{Binding EvaluateJavaScriptCommand}"
-                                CommandParameter="{Binding Text, ElementName=EvaluateJavascriptTextBox}" />
-                    <TextBlock Grid.Row="2" Margin="6">Result:</TextBlock>
-                    <TextBox Grid.Row="3"
-                                 IsReadOnly="True"
-                                 Margin="6,0,6,6"
-                                 Text="{Binding EvaluateJavaScriptResult}" />
-                </Grid>
-            </GroupBox>
-            <GroupBox Header="Tests">
-                <Button HorizontalAlignment="Center"
-                            Margin="6,0"
-                            Padding="5,2"
-                            Command="{Binding JavascriptBindingStressTest}"
-                            Content="Javascript Binding Stress Test"/>
-            </GroupBox>
-        </StackPanel>
-        <StackPanel
-                Margin="6,3"
-                DockPanel.Dock="Right"
-                Visibility="{Binding ShowDownloadInfo, Converter={StaticResource BooleanToVisibilityConverter}}"
-                >
-            <GroupBox Header="Download info">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" MinWidth="50" />
-                    </Grid.ColumnDefinitions>
-                    <Label
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Content="Last action:"
-                            />
-                    <TextBox
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding LastDownloadAction}"
-                            />
-                    <Label
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Content="IsInProgress:"
-                            />
-                    <TextBox
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.IsInProgress}"
-                            />
-                    <Label
-                            Grid.Row="2"
-                            Grid.Column="0"
-                            Content="IsComplete:"
-                            />
-                    <TextBox
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.IsComplete}"
-                            />
-                    <Label
-                            Grid.Row="3"
-                            Grid.Column="0"
-                            Content="IsCancelled:"
-                            />
-                    <TextBox
-                            Grid.Row="3"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.IsCancelled}"
-                            />
-                    <Label
-                            Grid.Row="4"
-                            Grid.Column="0"
-                            Content="CurrentSpeed:"
-                            />
-                    <TextBox
-                            Grid.Row="4"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.CurrentSpeed}"
-                            />
-                    <Label
-                            Grid.Row="5"
-                            Grid.Column="0"
-                            Content="PercentComplete:"
-                            />
-                    <TextBox
-                            Grid.Row="5"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.PercentComplete}"
-                            />
-                    <Label
-                            Grid.Row="6"
-                            Grid.Column="0"
-                            Content="TotalBytes:"
-                            />
-                    <TextBox
-                            Grid.Row="6"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.TotalBytes}"
-                            />
-                    <Label
-                            Grid.Row="7"
-                            Grid.Column="0"
-                            Content="ReceivedBytes:"
-                            />
-                    <TextBox
-                            Grid.Row="7"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.ReceivedBytes}"
-                            />
-                    <Label
-                            Grid.Row="8"
-                            Grid.Column="0"
-                            Content="StartTime:"
-                            />
-                    <TextBox
-                            Grid.Row="8"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.StartTime}"
-                            />
-                    <Label
-                            Grid.Row="9"
-                            Grid.Column="0"
-                            Content="EndTime:"
-                            />
-                    <TextBox
-                            Grid.Row="9"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.EndTime}"
-                            />
-                    <Label
-                            Grid.Row="10"
-                            Grid.Column="0"
-                            Content="FullPath:"
-                            />
-                    <TextBox
-                            Grid.Row="10"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.FullPath}"
-                            />
-                    <Label
-                            Grid.Row="11"
-                            Grid.Column="0"
-                            Content="Id:"
-                            />
-                    <TextBox
-                            Grid.Row="11"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.Id}"
-                            />
-                    <Label
-                            Grid.Row="12"
-                            Grid.Column="0"
-                            Content="Url:"
-                            />
-                    <TextBox
-                            Grid.Row="12"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.Url}"
-                            />
-                    <Label
-                            Grid.Row="13"
-                            Grid.Column="0"
-                            Content="OriginalUrl:"
-                            />
-                    <TextBox
-                            Grid.Row="13"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.OriginalUrl}"
-                            />
-                    <Label
-                            Grid.Row="14"
-                            Grid.Column="0"
-                            Content="SuggestedFileName:"
-                            />
-                    <TextBox
-                            Grid.Row="14"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.SuggestedFileName}"
-                            />
-                    <Label
-                            Grid.Row="15"
-                            Grid.Column="0"
-                            Content="ContentDisposition:"
-                            />
-                    <TextBox
-                            Grid.Row="15"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.ContentDisposition}"
-                            />
-                    <Label
-                            Grid.Row="16"
-                            Grid.Column="0"
-                            Content="MimeType:"
-                            />
-                    <TextBox
-                            Grid.Row="16"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.MimeType}"
-                            />
-                    <Label
-                            Grid.Row="17"
-                            Grid.Column="0"
-                            Content="IsValid:"
-                            />
-                    <TextBox
-                            Grid.Row="17"
-                            Grid.Column="1"
-                            IsReadOnly="True"
-                            Text="{Binding DownloadItem.IsValid}"
-                            />
-                </Grid>
-            </GroupBox>
-        </StackPanel>
-        <StatusBar DockPanel.Dock="Bottom">
-            <ProgressBar HorizontalAlignment="Right"
-                             IsIndeterminate="{Binding WebBrowser.IsLoading}"
-                             Width="100"
-                             Height="16"
-                             Margin="3" />
-            <TextBlock Text="{Binding StatusMessage}" />
-            <Separator />
-            <TextBlock Text="{Binding OutputMessage}" />
-        </StatusBar>
-        <Grid Background="#FFF0F0F0">
-            <Rectangle>
-                <Rectangle.Fill>
-                    <VisualBrush TileMode="Tile"
-                                     Viewport="0,0,500,90"
-                                     ViewportUnits="Absolute"
-                                     Opacity="0.05">
-                        <VisualBrush.Visual>
-                            <StackPanel>
-                                <TextBlock Margin="6,12"
-                                               FontWeight="Bold">CefSharp Rocks!</TextBlock>
-                            </StackPanel>
-                        </VisualBrush.Visual>
-                        <VisualBrush.Transform>
-                            <RotateTransform Angle="-22.5" />
-                        </VisualBrush.Transform>
-                    </VisualBrush>
-                </Rectangle.Fill>
-            </Rectangle>
+                        DockPanel.Dock="Right"
+                        Visibility="{Binding ShowDownloadInfo, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <GroupBox Header="下载信息">
+                                <Grid>
+                                        <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"
+                                                                  MinWidth="50"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Content="最后行动:"/>
+                                        <TextBox
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding LastDownloadAction}"/>
+                                        <Label
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Content="正在处理:"/>
+                                        <TextBox
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.IsInProgress}"/>
+                                        <Label
+                                                Grid.Row="2"
+                                                Grid.Column="0"
+                                                Content="做完了:"/>
+                                        <TextBox
+                                                Grid.Row="2"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.IsComplete}"/>
+                                        <Label
+                                                Grid.Row="3"
+                                                Grid.Column="0"
+                                                Content="取消:"/>
+                                        <TextBox
+                                                Grid.Row="3"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.IsCancelled}"/>
+                                        <Label
+                                                Grid.Row="4"
+                                                Grid.Column="0"
+                                                Content="现在的速度:"/>
+                                        <TextBox
+                                                Grid.Row="4"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.CurrentSpeed}"/>
+                                        <Label
+                                                Grid.Row="5"
+                                                Grid.Column="0"
+                                                Content="完成百分比:"/>
+                                        <TextBox
+                                                Grid.Row="5"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.PercentComplete}"/>
+                                        <Label
+                                                Grid.Row="6"
+                                                Grid.Column="0"
+                                                Content="总字节数:"/>
+                                        <TextBox
+                                                Grid.Row="6"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.TotalBytes}"/>
+                                        <Label
+                                                Grid.Row="7"
+                                                Grid.Column="0"
+                                                Content="接收字节数:"/>
+                                        <TextBox
+                                                Grid.Row="7"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.ReceivedBytes}"/>
+                                        <Label
+                                                Grid.Row="8"
+                                                Grid.Column="0"
+                                                Content="开始时间:"/>
+                                        <TextBox
+                                                Grid.Row="8"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.StartTime}"/>
+                                        <Label
+                                                Grid.Row="9"
+                                                Grid.Column="0"
+                                                Content="时间结束:"/>
+                                        <TextBox
+                                                Grid.Row="9"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.EndTime}"/>
+                                        <Label
+                                                Grid.Row="10"
+                                                Grid.Column="0"
+                                                Content="完整路径:"/>
+                                        <TextBox
+                                                Grid.Row="10"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.FullPath}"/>
+                                        <Label
+                                                Grid.Row="11"
+                                                Grid.Column="0"
+                                                Content="Id:"/>
+                                        <TextBox
+                                                Grid.Row="11"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.Id}"/>
+                                        <Label
+                                                Grid.Row="12"
+                                                Grid.Column="0"
+                                                Content="Url:"/>
+                                        <TextBox
+                                                Grid.Row="12"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.Url}"/>
+                                        <Label
+                                                Grid.Row="13"
+                                                Grid.Column="0"
+                                                Content="原始网址:"/>
+                                        <TextBox
+                                                Grid.Row="13"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.OriginalUrl}"/>
+                                        <Label
+                                                Grid.Row="14"
+                                                Grid.Column="0"
+                                                Content="建议的文件名:"/>
+                                        <TextBox
+                                                Grid.Row="14"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.SuggestedFileName}"/>
+                                        <Label
+                                                Grid.Row="15"
+                                                Grid.Column="0"
+                                                Content="内容配置:"/>
+                                        <TextBox
+                                                Grid.Row="15"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.ContentDisposition}"/>
+                                        <Label
+                                                Grid.Row="16"
+                                                Grid.Column="0"
+                                                Content="Mime类型:"/>
+                                        <TextBox
+                                                Grid.Row="16"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.MimeType}"/>
+                                        <Label
+                                                Grid.Row="17"
+                                                Grid.Column="0"
+                                                Content="已验证:"/>
+                                        <TextBox
+                                                Grid.Row="17"
+                                                Grid.Column="1"
+                                                IsReadOnly="True"
+                                                Text="{Binding DownloadItem.IsValid}"/>
+                                </Grid>
+                        </GroupBox>
+                </StackPanel>
+                <StatusBar DockPanel.Dock="Bottom">
+                        <ProgressBar HorizontalAlignment="Right"
+                                     IsIndeterminate="{Binding WebBrowser.IsLoading}"
+                                     Width="100"
+                                     Height="16"
+                                     Margin="3"/>
+                        <TextBlock Text="{Binding StatusMessage}"/>
+                        <Separator/>
+                        <TextBlock Text="{Binding OutputMessage}"/>
+                </StatusBar>
+                <Grid Background="#FFF0F0F0">
+                        <Rectangle>
+                                <Rectangle.Fill>
+                                        <VisualBrush TileMode="Tile"
+                                                     Viewport="0,0,500,90"
+                                                     ViewportUnits="Absolute"
+                                                     Opacity="0.05">
+                                                <VisualBrush.Visual>
+                                                        <StackPanel>
+                                                                <TextBlock Margin="6,12"
+                                                                           FontWeight="Bold">CefSharp Rocks!</TextBlock>
+                                                        </StackPanel>
+                                                </VisualBrush.Visual>
+                                                <VisualBrush.Transform>
+                                                        <RotateTransform Angle="-22.5"/>
+                                                </VisualBrush.Transform>
+                                        </VisualBrush>
+                                </Rectangle.Fill>
+                        </Rectangle>
 
-            <cefSharp:ChromiumWebBrowser x:Name="browser"
-                                  Opacity="{Binding ElementName=opacitySlider, Path=Value}"
-                                  Address="{Binding Address, Mode=TwoWay}"
-                                  Title="{Binding Title, Mode=OneWayToSource}"
-                                  AllowDrop="True"
-                                  WebBrowser="{Binding WebBrowser, Mode=OneWayToSource}"
-                                  DataContext="{Binding}"
-                                  RenderOptions.BitmapScalingMode="{Binding ElementName=scalingModeComboBox, Path=SelectedItem}">
-                <!-- Just an example of how you may override the BrowserSettings. Disabled by default since it looks so
+                        <cefSharp:ChromiumWebBrowser x:Name="browser"
+                                                     Opacity="{Binding ElementName=opacitySlider, Path=Value}"
+                                                     Address="{Binding Address, Mode=TwoWay}"
+                                                     Title="{Binding Title, Mode=OneWayToSource}"
+                                                     AllowDrop="True"
+                                                     WebBrowser="{Binding WebBrowser, Mode=OneWayToSource}"
+                                                     DataContext="{Binding}"
+                                                     RenderOptions.BitmapScalingMode="{Binding ElementName=scalingModeComboBox, Path=SelectedItem}">
+                                <!-- Just an example of how you may override the BrowserSettings. Disabled by default since it looks so
                          incredibly ugly... -->
-                <!--<cefSharp:ChromiumWebBrowser.BrowserSettings>
+                                <!--<cefSharp:ChromiumWebBrowser.BrowserSettings>
                         <CefSharp:BrowserSettings MinimumFontSize="36" />
                     </cefSharp:ChromiumWebBrowser.BrowserSettings>-->
-                <FrameworkElement.LayoutTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="{Binding Value, ElementName=angleSlider}" />
-                    </TransformGroup>
-                </FrameworkElement.LayoutTransform>
-                <!--<cefSharp:ChromiumWebBrowser.Resources>
+                                <FrameworkElement.LayoutTransform>
+                                        <TransformGroup>
+                                                <RotateTransform Angle="{Binding Value, ElementName=angleSlider}"/>
+                                        </TransformGroup>
+                                </FrameworkElement.LayoutTransform>
+                                <!--<cefSharp:ChromiumWebBrowser.Resources>
                         -->
-                <!-- Apply custom style to wrap ToolTip Issue https://github.com/cefsharp/CefSharp/issues/2488 -->
-                <!--
+                                <!-- Apply custom style to wrap ToolTip Issue https://github.com/cefsharp/CefSharp/issues/2488 -->
+                                <!--
                         <Style TargetType="ToolTip">
                             <Style.Resources>
                                 <Style TargetType="ContentPresenter">
@@ -495,7 +465,7 @@
                             <Setter Property="MaxWidth" Value="500" />
                         </Style>
                     </cefSharp:ChromiumWebBrowser.Resources>-->
-            </cefSharp:ChromiumWebBrowser>
-        </Grid>
-    </DockPanel>
+                        </cefSharp:ChromiumWebBrowser>
+                </Grid>
+        </DockPanel>
 </UserControl>
