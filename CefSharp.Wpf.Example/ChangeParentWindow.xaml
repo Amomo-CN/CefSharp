@@ -15,8 +15,8 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-            <Button Content="Open browser in new Window" Click="OnAddBrowser" />
-            <Button Content="Re-Parent Browser and Close Window" Click="OnRemoveBrowser" />
+            <Button Content="在新窗口中打开浏览器" Click="OnAddBrowser" />
+            <Button Content="重新设置浏览器的父级并关闭窗口" Click="OnRemoveBrowser" />
         </StackPanel>
         <Border Grid.Row="1" Grid.Column="0" x:Name="StaticBrowser" />
         <Border Grid.Row="1" x:Name="BrowserSite" Grid.Column="1" />

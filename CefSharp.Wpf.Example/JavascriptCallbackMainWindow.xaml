@@ -17,8 +17,8 @@
                           x:Name="BrowserTwo"
                           Address="test://cefsharp/JavascriptCallbackTest.html" BorderBrush="Red" BorderThickness="1"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Execute Callback Immediately" Click="ExecuteCallbackImmediatelyClick" Margin="0, 0, 10, 0"/>
-            <Button Content="Execute Callback In 3 Seconds" Click="ExecuteCallbackInThreeSeconds"/>
+            <Button Content="立即执行回调" Click="ExecuteCallbackImmediatelyClick" Margin="0, 0, 10, 0"/>
+            <Button Content="在3秒内执行回调" Click="ExecuteCallbackInThreeSeconds"/>
         </StackPanel>
         <StatusBar Grid.Row="3">
             <ProgressBar HorizontalAlignment="Right"
