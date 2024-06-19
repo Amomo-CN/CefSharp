@@ -248,11 +248,11 @@ namespace CefSharp.Wpf.Example.Views
             // browser.ResourceHandlerFactory = new InMemorySchemeAndResourceHandlerFactory();
 
             // 可以指定自定义的RequestContext来共享设置在一组ChromiumWebBrowsers中
-            browser.RequestContext = new RequestContext(new RequestContextHandler());
+            // browser.RequestContext = new RequestContext(new RequestContextHandler());
 
             // 注意 - 这对于这个示例非常重要，因为默认页面将不会加载否则
-            browser.RequestContext.RegisterSchemeHandlerFactory(CefSharpSchemeHandlerFactory.SchemeName, null, new CefSharpSchemeHandlerFactory());
-            browser.RequestContext.RegisterSchemeHandlerFactory("https", "cefsharp.example", new CefSharpSchemeHandlerFactory());
+            //browser.RequestContext.RegisterSchemeHandlerFactory(CefSharpSchemeHandlerFactory.SchemeName, null, new CefSharpSchemeHandlerFactory());
+            //browser.RequestContext.RegisterSchemeHandlerFactory("https", "cefsharp.example", new CefSharpSchemeHandlerFactory());
 
             // 可以在RequestContext上设置首选项，仍然需要在CEF UI线程上调用。
             Cef.UIThreadTaskFactory.StartNew(delegate
@@ -264,7 +264,7 @@ namespace CefSharp.Wpf.Example.Views
                 //var success = browser.RequestContext.SetPreference("webkit.webprefs.minimum_font_size", 24, out errorMessage);
 
                 // 设置网页偏好语言为中文
-                var successLang = browser.RequestContext.SetPreference("intl.accept_languages", "zh-CN", out errorMessage);
+                //var successLang = browser.RequestContext.SetPreference("intl.accept_languages", "zh-CN", out errorMessage);
             });
 
             // 设置渲染进程消息处理器
