@@ -72,7 +72,7 @@
             <controls:NonReloadingTabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Title}"/>
+                        <TextBlock Text="{Binding Title}" MaxWidth="120"/>
                         <Button Height="20"
                                 Width="20"
                                 Style="{StaticResource MaterialDesignToolButton}"
