@@ -42,24 +42,24 @@ namespace CefSharp.Wpf.Internals
                 {
                     case Key.LeftAlt:
                     case Key.RightAlt:
-                        {
-                            virtualKey = (int)VirtualKeys.Menu;
-                            break;
-                        }
+                    {
+                        virtualKey = (int)VirtualKeys.Menu;
+                        break;
+                    }
 
                     case Key.LeftCtrl:
                     case Key.RightCtrl:
-                        {
-                            virtualKey = (int)VirtualKeys.Control;
-                            break;
-                        }
+                    {
+                        virtualKey = (int)VirtualKeys.Control;
+                        break;
+                    }
 
                     case Key.LeftShift:
                     case Key.RightShift:
-                        {
-                            virtualKey = (int)VirtualKeys.Shift;
-                            break;
-                        }
+                    {
+                        virtualKey = (int)VirtualKeys.Shift;
+                        break;
+                    }
 
                     default:
                         virtualKey = KeyInterop.VirtualKeyFromKey(key);

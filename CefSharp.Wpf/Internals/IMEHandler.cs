@@ -5,7 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 using CefSharp.Structs;
+
 using Range = CefSharp.Structs.Range;
 
 namespace CefSharp.Wpf.Internals

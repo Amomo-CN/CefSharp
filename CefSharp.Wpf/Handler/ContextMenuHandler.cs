@@ -3,9 +3,9 @@
 //此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System.Collections.Generic;
-using System.Windows.Controls.Primitives;
-using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace CefSharp.Wpf.Handler
 {
@@ -190,102 +190,102 @@ namespace CefSharp.Wpf.Handler
             {
                 // 导航。
                 case CefMenuCommand.Back:
-                    {
-                        browser.GoBack();
-                        break;
-                    }
+                {
+                    browser.GoBack();
+                    break;
+                }
                 case CefMenuCommand.Forward:
-                    {
-                        browser.GoForward();
-                        break;
-                    }
+                {
+                    browser.GoForward();
+                    break;
+                }
                 case CefMenuCommand.Reload:
-                    {
-                        browser.Reload();
-                        break;
-                    }
+                {
+                    browser.Reload();
+                    break;
+                }
                 case CefMenuCommand.ReloadNoCache:
-                    {
-                        browser.Reload(ignoreCache: true);
-                        break;
-                    }
+                {
+                    browser.Reload(ignoreCache: true);
+                    break;
+                }
                 case CefMenuCommand.StopLoad:
-                    {
-                        browser.StopLoad();
-                        break;
-                    }
+                {
+                    browser.StopLoad();
+                    break;
+                }
 
                 //编辑
                 case CefMenuCommand.Undo:
-                    {
-                        browser.FocusedFrame.Undo();
-                        break;
-                    }
+                {
+                    browser.FocusedFrame.Undo();
+                    break;
+                }
                 case CefMenuCommand.Redo:
-                    {
-                        browser.FocusedFrame.Redo();
-                        break;
-                    }
+                {
+                    browser.FocusedFrame.Redo();
+                    break;
+                }
                 case CefMenuCommand.Cut:
-                    {
-                        browser.FocusedFrame.Cut();
-                        break;
-                    }
+                {
+                    browser.FocusedFrame.Cut();
+                    break;
+                }
                 case CefMenuCommand.Copy:
-                    {
-                        browser.FocusedFrame.Copy();
-                        break;
-                    }
+                {
+                    browser.FocusedFrame.Copy();
+                    break;
+                }
                 case CefMenuCommand.Paste:
-                    {
-                        browser.FocusedFrame.Paste();
-                        break;
-                    }
+                {
+                    browser.FocusedFrame.Paste();
+                    break;
+                }
                 case CefMenuCommand.Delete:
-                    {
-                        browser.FocusedFrame.Delete();
-                        break;
-                    }
+                {
+                    browser.FocusedFrame.Delete();
+                    break;
+                }
                 case CefMenuCommand.SelectAll:
-                    {
-                        browser.FocusedFrame.SelectAll();
-                        break;
-                    }
+                {
+                    browser.FocusedFrame.SelectAll();
+                    break;
+                }
 
                 // 各种各样的。
                 case CefMenuCommand.Print:
-                    {
-                        browser.GetHost().Print();
-                        break;
-                    }
+                {
+                    browser.GetHost().Print();
+                    break;
+                }
                 case CefMenuCommand.ViewSource:
-                    {
-                        browser.FocusedFrame.ViewSource();
-                        break;
-                    }
+                {
+                    browser.FocusedFrame.ViewSource();
+                    break;
+                }
                 case CefMenuCommand.Find:
-                    {
-                        browser.GetHost().Find(model.SelectionText, true, false, false);
-                        break;
-                    }
+                {
+                    browser.GetHost().Find(model.SelectionText, true, false, false);
+                    break;
+                }
 
                 // 拼写检查。
                 case CefMenuCommand.AddToDictionary:
-                    {
-                        browser.GetHost().AddWordToDictionary(model.MisspelledWord);
-                        break;
-                    }
+                {
+                    browser.GetHost().AddWordToDictionary(model.MisspelledWord);
+                    break;
+                }
 
                 case (CefMenuCommand)CefMenuCommandShowDevToolsId:
-                    {
-                        browser.GetHost().ShowDevTools(inspectElementAtX: model.XCoord, inspectElementAtY: model.YCoord);
-                        break;
-                    }
+                {
+                    browser.GetHost().ShowDevTools(inspectElementAtX: model.XCoord, inspectElementAtY: model.YCoord);
+                    break;
+                }
                 case (CefMenuCommand)CefMenuCommandCloseDevToolsId:
-                    {
-                        browser.GetHost().CloseDevTools();
-                        break;
-                    }
+                {
+                    browser.GetHost().CloseDevTools();
+                    break;
+                }
             }
         }
 

@@ -5,6 +5,7 @@
 using System;
 using System.Windows.Input;
 using System.Windows.Interop;
+
 using CefSharp.Internals;
 
 namespace CefSharp.Wpf.Internals
@@ -76,29 +77,29 @@ namespace CefSharp.Wpf.Internals
                 case WM.KEYUP:
                 case WM.CHAR:
                 case WM.IME_CHAR:
+                {
+                    if (!owner.IsKeyboardFocused)
                     {
-                        if (!owner.IsKeyboardFocused)
-                        {
-                            break;
-                        }
-
-                        if (message == (int)WM.SYSKEYDOWN &&
-                            wParam.ToInt32() == KeyInterop.VirtualKeyFromKey(Key.F4))
-                        {
-                            // 我们不希望 CEF 接收此事件（并将其标记为已处理），因为这使得不可能		
-                            //按 Alt-F4 关闭基于 CefSharp 的应用程序，这有点不好。
-                            return IntPtr.Zero;
-                        }
-
-                        var browser = owner.BrowserCore;
-                        if (browser != null)
-                        {
-                            browser.GetHost().SendKeyEvent(message, wParam.CastToInt32(), lParam.CastToInt32());
-                            handled = true;
-                        }
-
                         break;
                     }
+
+                    if (message == (int)WM.SYSKEYDOWN &&
+                        wParam.ToInt32() == KeyInterop.VirtualKeyFromKey(Key.F4))
+                    {
+                        // 我们不希望 CEF 接收此事件（并将其标记为已处理），因为这使得不可能		
+                        //按 Alt-F4 关闭基于 CefSharp 的应用程序，这有点不好。
+                        return IntPtr.Zero;
+                    }
+
+                    var browser = owner.BrowserCore;
+                    if (browser != null)
+                    {
+                        browser.GetHost().SendKeyEvent(message, wParam.CastToInt32(), lParam.CastToInt32());
+                        handled = true;
+                    }
+
+                    break;
+                }
             }
 
             return IntPtr.Zero;

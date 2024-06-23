@@ -13,6 +13,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Threading;
+
 using CefSharp.Enums;
 using CefSharp.Internals;
 using CefSharp.Structs;
@@ -20,7 +21,9 @@ using CefSharp.Wpf.Experimental;
 using CefSharp.Wpf.Handler;
 using CefSharp.Wpf.Internals;
 using CefSharp.Wpf.Rendering;
+
 using Microsoft.Win32.SafeHandles;
+
 using CursorType = CefSharp.Enums.CursorType;
 using Point = System.Windows.Point;
 using Range = CefSharp.Structs.Range;
@@ -1811,18 +1814,18 @@ namespace CefSharp.Wpf
             {
                 case WindowState.Normal:
                 case WindowState.Maximized:
+                {
+                    if (previousWindowState == WindowState.Minimized && IsVisible)
                     {
-                        if (previousWindowState == WindowState.Minimized && IsVisible)
-                        {
-                            OnBrowserWasHidden(false);
-                        }
-                        break;
+                        OnBrowserWasHidden(false);
                     }
+                    break;
+                }
                 case WindowState.Minimized:
-                    {
-                        OnBrowserWasHidden(true);
-                        break;
-                    }
+                {
+                    OnBrowserWasHidden(true);
+                    break;
+                }
             }
 
             previousWindowState = window.WindowState;
@@ -2527,25 +2530,25 @@ namespace CefSharp.Wpf
                 switch (touchPoint.Action)
                 {
                     case TouchAction.Down:
-                        {
-                            touchEventType = TouchEventType.Pressed;
-                            break;
-                        }
+                    {
+                        touchEventType = TouchEventType.Pressed;
+                        break;
+                    }
                     case TouchAction.Move:
-                        {
-                            touchEventType = TouchEventType.Moved;
-                            break;
-                        }
+                    {
+                        touchEventType = TouchEventType.Moved;
+                        break;
+                    }
                     case TouchAction.Up:
-                        {
-                            touchEventType = TouchEventType.Released;
-                            break;
-                        }
+                    {
+                        touchEventType = TouchEventType.Released;
+                        break;
+                    }
                     default:
-                        {
-                            touchEventType = TouchEventType.Cancelled;
-                            break;
-                        }
+                    {
+                        touchEventType = TouchEventType.Cancelled;
+                        break;
+                    }
                 }
 
                 var touchEvent = new TouchEvent()

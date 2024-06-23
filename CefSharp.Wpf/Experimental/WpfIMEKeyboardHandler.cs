@@ -7,10 +7,12 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
+
 using CefSharp.Internals;
 using CefSharp.Structs;
 using CefSharp.Wpf.Internals;
-using System.Windows.Media;
+
 using Point = System.Windows.Point;
 using Range = CefSharp.Structs.Range;
 using Rect = CefSharp.Structs.Rect;
@@ -213,31 +215,31 @@ namespace CefSharp.Wpf.Experimental
             switch ((WM)msg)
             {
                 case WM.IME_SETCONTEXT:
-                    {
-                        OnImeSetContext(hwnd, (uint)msg, wParam, lParam);
-                        handled = true;
-                        break;
-                    }
+                {
+                    OnImeSetContext(hwnd, (uint)msg, wParam, lParam);
+                    handled = true;
+                    break;
+                }
                 case WM.IME_STARTCOMPOSITION:
-                    {
-                        OnIMEStartComposition(hwnd);
-                        hasImeComposition = true;
-                        handled = true;
-                        break;
-                    }
+                {
+                    OnIMEStartComposition(hwnd);
+                    hasImeComposition = true;
+                    handled = true;
+                    break;
+                }
                 case WM.IME_COMPOSITION:
-                    {
-                        OnImeComposition(browserHost, hwnd, lParam.ToInt32());
-                        handled = true;
-                        break;
-                    }
+                {
+                    OnImeComposition(browserHost, hwnd, lParam.ToInt32());
+                    handled = true;
+                    break;
+                }
                 case WM.IME_ENDCOMPOSITION:
-                    {
-                        OnImeEndComposition(browserHost, hwnd);
-                        hasImeComposition = false;
-                        handled = true;
-                        break;
-                    }
+                {
+                    OnImeEndComposition(browserHost, hwnd);
+                    hasImeComposition = false;
+                    handled = true;
+                    break;
+                }
             }
 
             return handled ? IntPtr.Zero : new IntPtr(1);

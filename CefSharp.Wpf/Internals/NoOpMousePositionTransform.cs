@@ -15,7 +15,7 @@ namespace CefSharp.Wpf.Internals
 
         void IMousePositionTransform.TransformMousePoint(ref System.Windows.Point point)
         {
-            
+
         }
     }
 }
