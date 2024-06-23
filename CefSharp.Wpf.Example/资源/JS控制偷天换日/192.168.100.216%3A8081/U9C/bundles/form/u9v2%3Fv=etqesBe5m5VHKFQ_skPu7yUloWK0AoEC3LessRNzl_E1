@@ -77267,7 +77267,7 @@ UF.UI.Number.prototype = {
         var minValue = this._element.cusAttr('MinV');
         if (minValue == null) minValue = this.get_MinValue(); //优化后可能不输出'MinV'
 
-        return handleMaxMinValue(9999, minValue, inputValue);
+        return handleMaxMinValue(9999, minValue, inputValue);//滴滴 给老子变大 叫你限制我
     },
     //Add 4 zjx
     setAttribute: function (exAttName, exAttValue) {

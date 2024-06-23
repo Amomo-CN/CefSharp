@@ -414,13 +414,13 @@
                         <Rectangle>
                                 <Rectangle.Fill>
                                         <VisualBrush TileMode="Tile"
-                                                     Viewport="0,0,500,90"
+                                                     Viewport="0,0,100,40"
                                                      ViewportUnits="Absolute"
                                                      Opacity="0.05">
                                                 <VisualBrush.Visual>
                                                         <StackPanel>
-                                                                <TextBlock Margin="6,12"
-                                                                           FontWeight="Bold">CefSharp Rocks!</TextBlock>
+                                <TextBlock Margin="6,12"
+                                                                           FontWeight="Bold">阿陌陌</TextBlock>
                                                         </StackPanel>
                                                 </VisualBrush.Visual>
                                                 <VisualBrush.Transform>

@@ -4,7 +4,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -296,7 +295,7 @@ namespace CefSharp.Wpf.Example.ViewModels
 
             // 输出到控制台，使用中文提示并添加关键词 "滴滴-"
 
-            Debug.WriteLine($"滴滴-{propertyName} 属性在 {DateTime.Now} 被 {caller} 函数修改。");
+            //Debug.WriteLine($"滴滴-{propertyName} 属性在 {DateTime.Now} 被 {caller} 函数修改。");
         }
 
     }
