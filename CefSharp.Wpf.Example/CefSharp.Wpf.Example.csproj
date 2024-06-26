@@ -19,6 +19,15 @@
         <None Update="crash_reporter.cfg">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="资源\JS脚本文件\APS自动登录.js">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="资源\JS脚本文件\U9自动登录.js">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="资源\JS脚本文件\报表自动登录.js">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\CefSharp.Core.Runtime\CefSharp.Core.Runtime.vcxproj" />
@@ -32,7 +41,11 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="chromiumembeddedframework.runtime" Version="126.1.14" />
+        <PackageReference Include="EPPlus" Version="7.2.0" />
         <PackageReference Include="MaterialDesignThemes" Version="4.8.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Selenium.Support" Version="4.22.0" />
+        <PackageReference Include="Selenium.WebDriver" Version="4.22.0" />
     </ItemGroup>
     <ItemGroup>
         <Compile Remove="bin.netcore\**" />
@@ -43,6 +56,9 @@
         <None Remove="obj.netcore\**" />
         <Page Remove="bin.netcore\**" />
         <Page Remove="obj.netcore\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="CefSharp.Wpf.Example.netcore.csproj" />
     </ItemGroup>
     <Import Project="$(MSBuildThisFileDirectory)..\CefSharp.Native.props" />
 </Project>

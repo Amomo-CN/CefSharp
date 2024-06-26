@@ -16,6 +16,7 @@
         <RootNamespace>CefSharp.Wpf.Example</RootNamespace>
         <AssemblyName>CefSharp.Wpf.Example</AssemblyName>
         <UseWPF>true</UseWPF>
+        <LangVersion>9.0</LangVersion>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
