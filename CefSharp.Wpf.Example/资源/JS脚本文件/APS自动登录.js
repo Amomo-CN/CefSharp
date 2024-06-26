@@ -1,32 +1,37 @@
-﻿function login() {
+function login() {
     var username = 'US01';
     var password = 'jsbbdzh';
     var buttonId = 'button-1009';
 
-    var usernameInput = document.getElementById('UserName');
-    if (usernameInput) {
-        usernameInput.value = username;
+    // 函数封装需要延迟执行的代码
+    function performLogin() {
+        var usernameInput = document.getElementById('UserName');
+        if (usernameInput) {
+            usernameInput.value = username;
+        }
+
+        var passwordInput = document.getElementById('UserPwd');
+        if (passwordInput) {
+            passwordInput.value = password;
+        }
+
+        var loginButton = document.getElementById(buttonId);
+        if (loginButton) {
+            var event = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window
+            });
+            loginButton.dispatchEvent(event);
+        }
     }
 
-    var passwordInput = document.getElementById('UserPwd');
-    if (passwordInput) {
-        passwordInput.value = password;
-    }
-
-    var loginButton = document.getElementById(buttonId);
-    if (loginButton) {
-        var event = new MouseEvent('click', {
-            bubbles: true,
-            cancelable: true,
-            view: window
-        });
-        loginButton.dispatchEvent(event);
-    }
-
+    // 使用setTimeout设置延迟执行
+    setTimeout(performLogin, 300); // 延迟300毫秒后执行performLogin函数
     'use strict';
     //——————————————————————————————————————————————————
     const 下拉小三角选择器 = '#panel-1029-splitter #panel-1029-splitter-collapseEl';
-    const 初始检查频率 = 500; // 毫秒
+    const 初始检查频率 = 100; // 毫秒
 
     // 点击元素函数
     const 点击元素 = 元素 => 元素.click();
