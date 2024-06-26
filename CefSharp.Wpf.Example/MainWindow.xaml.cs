@@ -20,6 +20,11 @@ using CefSharp.Wpf.Example.Controls; // 示例中自定义的WPF控件
 using CefSharp.Wpf.Example.ViewModels; // 示例中浏览器标签页的视图模型
 
 using Microsoft.Win32; // 提供访问Windows注册表的类
+using Amomo;
+using OfficeOpenXml;
+using System.Diagnostics;
+using System.Linq;
+using static Amomo.SQL主键自增;
 
 // 定义命名空间，包含WPF示例应用的主要逻辑。
 namespace CefSharp.Wpf.Example
@@ -35,8 +40,13 @@ namespace CefSharp.Wpf.Example
         public ObservableCollection<BrowserTabViewModel> BrowserTabs { get; set; }
 
         // 构造函数，初始化MainWindow。
+
         public MainWindow()
         {
+            //OfficeOpenXml必须使用下面这个免费许可证进行授权，否则会报错
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            SQL主键自增异步并行开始();
+
             // 调用基类的初始化方法，加载XAML定义的界面元素。
             InitializeComponent();
             // 设置窗口的数据上下文为自身，便于数据绑定。
@@ -65,6 +75,7 @@ namespace CefSharp.Wpf.Example
 
 
         }
+
 
         // 方法：关闭当前选中的标签页。
         private void CloseTab(object sender, ExecutedRoutedEventArgs e)
@@ -98,10 +109,10 @@ namespace CefSharp.Wpf.Example
         }
 
         // 此方法响应“新建”命令，用于打开一个新的浏览器标签页。
-        private void OpenNewTab(object sender, ExecutedRoutedEventArgs e)
+        private async void OpenNewTab(object sender, ExecutedRoutedEventArgs e)
         {
             // 调用CreateNewTab方法创建新标签页，使用默认URL。
-            CreateNewTab();
+            await CreateNewTab();
 
             // 设置新创建的标签页为当前选中项。
             TabControl.SelectedIndex = TabControl.Items.Count - 1;
@@ -111,53 +122,99 @@ namespace CefSharp.Wpf.Example
 
 
         // 当MainWindow加载完成时，这个方法会被自动调用。
-        private void MainWindowLoaded(object sender, RoutedEventArgs e)
+        private async void MainWindowLoaded(object sender, RoutedEventArgs e)
         {
             // 调用CreateNewTab方法来创建一个新的浏览器标签页。
             // 参数包括默认的URL（由CefExample.DefaultUrl提供）和一个布尔值true，表示侧边栏应该被显示。
             //CreateNewTab(CefExample.DefaultUrl, true);//滴滴 默认打开了主页 不需要 - -
 
-            // 创建新的浏览器标签页
-            CreateNewTab("http://192.168.10.173:8088/", false); // APS
-            CreateNewTab("http://192.168.10.209:8080/webroot/decision/v10/entry/access/734b3268-55f8-4e48-9c03-0fa78a8fd17d?width=2160&height=1078", false); // 报表 齐套分析1
-            CreateNewTab("http://192.168.100.216:8081/U9C/mvc/main/index", false); //U9
+
+            await CreateNewTab("http://192.168.10.173:8088/", false); // APS
+            //await Task.Delay(200);
+
+            await CreateNewTab("http://192.168.10.209:8080/webroot/decision/v10/entry/access/734b3268-55f8-4e48-9c03-0fa78a8fd17d?width=2160&height=1078", false); // 报表 齐套分析1
 
 
-            // 初始化已激活标签页的字典  不用了 因为下面已经实现了强制自动刷新
-            //var activatedTabs = new Dictionary<int, bool>();
+            // await Task.Delay(200);
+            await CreateNewTab("http://192.168.100.216:8081/U9C/mvc/main/index", false); //U9
 
-            //// 创建一个定时器
-            //var timer = new DispatcherTimer();
-            //timer.Interval = TimeSpan.FromMilliseconds(150); // 设置定时器间隔为100毫秒
-            //timer.Tick += (s, args) =>
-            //{
-            //    // 检查每个标签页
-            //    for (int i = 0; i < TabControl.Items.Count; i++)
-            //    {
-            //        // 如果这个标签页还没有被激活过
-            //        if (!activatedTabs.ContainsKey(i))
-            //        {
 
-            //            // 激活这个标签页
-            //            TabControl.SelectedIndex = i;
 
-            //            // 将这个标签页添加到已激活标签页的字典中
-            //            activatedTabs[i] = true;
 
-            //            // 退出循环，因为我们只需要在每个Tick中激活一个标签页
-            //            break;
-            //        }
-            //    }
-            //};
-            //timer.Start(); // 启动定时器
         }
+        private async void SQL主键自增异步并行开始()
+        {
+            Amomo.高精度计时器.获取并重置();
+            配置管理器.确保配置文件存在(@"D:\SQL数据库建立\SQL配置文件.json");
+            try
+            {
+                var tasks = new List<Task<(bool 成功, Dictionary<string, 文件时间信息> 处理后的配置)>>() // 创建一个任务列表
+                {
 
+                Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\BOM产品结构.xlsx")),
+                Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\标准采购订单.xlsx")),
+                Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\标准采购收货.xlsx")),
+                Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\委外采购订单.xlsx")),
+                Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\委外采购收货.xlsx")),
+                Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\调入在途.xlsx")),
+                Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\请购列表.xlsx")),
+                Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\生产工单在制.xlsx")),
+                Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\供需平衡报表.xlsx")),
+
+                 };
+                // 等待所有任务完成并收集结果
+                var 所有处理结果 = await Task.WhenAll(tasks);
+
+                // 合并所有任务返回的配置数据，确保键唯一性，避免覆盖
+                var 最终配置数据 = new Dictionary<string, 文件时间信息>();
+                foreach (var (成功, 单个任务配置) in 所有处理结果)
+                {
+                    if (成功)
+                    {
+                        foreach (var kv in 单个任务配置)
+                        {
+                            // 如果键已存在，根据实际情况决定是否覆盖或采取其他策略
+                            if (!最终配置数据.ContainsKey(kv.Key))
+                            {
+                                最终配置数据.Add(kv.Key, kv.Value);
+                            }
+                            else
+                            {
+                                // 这里可以选择覆盖、合并值、跳过等策略
+                                // 示例：覆盖原有值
+                                // 最终配置数据[kv.Key] = kv.Value;
+                                Debug.WriteLine($"警告：键 '{kv.Key}' 已存在，当前值未被合并。");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"某个任务处理失败，未将其配置数据合并入最终结果。");
+                    }
+                }
+
+                // 确保最终配置数据不为空再写入文件
+                if (最终配置数据.Any())
+                {
+                    配置管理器.将配置保存到文件(@"D:\SQL数据库建立\SQL配置文件.json", 最终配置数据);
+                    Debug.WriteLine($"所有SQL主键自增操作已完成，配置信息已合并并保存。耗时: {Amomo.高精度计时器.获取并重置()}");
+                }
+                else
+                {
+                    Debug.WriteLine("警告：最终配置数据为空，未写入文件。");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"执行SQL主键自增时出错: {ex.Message}");
+            }
+        }
 
         // 此方法用于创建一个新的浏览器标签页，并将其添加到BrowserTabs集合中。
         // 它接受三个参数，其中url是新标签页将要加载的网页地址，默认是DefaultUrlForAddedTabs，
         // showSideBar是一个布尔值，指示是否在新标签页中显示侧边栏，默认不显示，
         // legacyBindingEnabled也是一个布尔值，指明是否启用旧式的数据绑定模式，默认不启用。
-        private void CreateNewTab(string url = DefaultUrlForAddedTabs, bool showSideBar = false, bool legacyBindingEnabled = false)
+        private async Task CreateNewTab(string url = DefaultUrlForAddedTabs, bool showSideBar = false, bool legacyBindingEnabled = false)
         {
             // 实例化一个新的BrowserTabViewModel对象，传入指定的URL，并设置ShowSidebar和LegacyBindingEnabled属性。
             // BrowserTabViewModel是代表一个浏览器标签页的视图模型类，包含标签页的所有逻辑和数据。
@@ -176,7 +233,110 @@ namespace CefSharp.Wpf.Example
 
 
             TabControl.UpdateLayout();// 强制更新布局，确保内容立即显示
+
+            await InjectScripts(url); // 自动注入加载脚本
         }
+
+
+
+        public async Task InjectScripts(string 传入URL)
+        {
+            //  await Task.Delay(300);
+            System.Diagnostics.Debug.WriteLine("开始注入脚本...");
+
+            // 初始化重试参数
+            int maxAttempts = 20;
+            int retryDelayMs = 50;
+
+            // 封装需要重试的操作
+            async Task<(bool Success, string ErrorMessage)> AttemptInjection()
+            {
+                // 获取当前选中的标签页
+                var currentTab = BrowserTabs[TabControl.SelectedIndex];
+
+                // 检查CefWebBrowser是否有效
+                if (currentTab == null || currentTab.WebBrowser == null)
+                {
+                    return (false, "CefWebBrowser 为空，无法注入脚本");
+                }
+                if (!currentTab.WebBrowser.CanExecuteJavascriptInMainFrame)
+                {
+                    return (false, "当前不能在主框架中执行JavaScript");
+                }
+
+                // 初始化脚本内容和路径
+                string scriptContent = string.Empty;
+                string scriptPath = string.Empty;
+
+                // 根据不同的URL加载不同的JavaScript脚本文件
+                if (传入URL.StartsWith("http://192.168.10.173:8088"))
+                {
+                    scriptPath = "资源/JS脚本文件/APS自动登录.js";
+                }
+                else if (传入URL.StartsWith("http://192.168.100.216:8081"))
+                {
+                    scriptPath = "资源/JS脚本文件/U9自动登录.js";
+                }
+                else if (传入URL.StartsWith("http://192.168.10.209:8080"))
+                {
+                    scriptPath = "资源/JS脚本文件/报表自动登录.js";
+                }
+                else
+                {
+                    return (false, $"没有匹配到合适的脚本路径 (URL: {传入URL})");
+                }
+
+                scriptContent = await ReadScriptFileAsync(scriptPath);
+
+                // 执行JavaScript脚本
+                if (!string.IsNullOrEmpty(scriptContent))
+                {
+                    System.Diagnostics.Debug.WriteLine($"脚本内容已加载，准备执行... (URL: {传入URL}, 脚本路径: {scriptPath})");
+                    await currentTab.WebBrowser.EvaluateScriptAsync(scriptContent);
+                    return (true, null);
+                }
+                else
+                {
+                    return (false, $"脚本内容为空，未执行任何操作 (URL: {传入URL}, 脚本路径: {scriptPath})");
+                }
+            }
+
+            // 重试执行脚本注入操作
+            for (int attempt = 0; attempt < maxAttempts; attempt++)
+            {
+                var (success, errorMessage) = await AttemptInjection();
+                if (success)
+                {
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"脚本注入尝试失败，第 {attempt + 1} 次重试，原因: {errorMessage}");
+                await Task.Delay(retryDelayMs);
+            }
+
+            throw new InvalidOperationException($"脚本注入操作在重试 {maxAttempts} 次后仍然失败。");
+        }
+
+        // 读取脚本文件并返回文件内容
+        private async Task<string> ReadScriptFileAsync(string filePath)
+        {
+            try
+            {
+                using (var streamReader = new StreamReader(filePath))
+                {
+                    return await streamReader.ReadToEndAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"读取脚本文件时发生异常: {ex} (脚本路径: {filePath})");
+                return string.Empty;
+            }
+        }
+
+
+
+
         // 当自定义命令绑定被触发时，此方法将被执行。
         private void CustomCommandBinding(object sender, ExecutedRoutedEventArgs e)
         {
