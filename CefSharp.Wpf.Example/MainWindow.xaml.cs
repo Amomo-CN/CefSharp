@@ -144,6 +144,10 @@ namespace CefSharp.Wpf.Example
         }
         private async void SQL主键自增异步并行开始()
         {
+            Stopwatch 计时器 = new Stopwatch();
+
+            计时器.Start(); // 开始计时器
+
             Amomo.高精度计时器.获取并重置();
             配置管理器.确保配置文件存在(@"D:\SQL数据库建立\SQL配置文件.json");
             try
@@ -197,7 +201,14 @@ namespace CefSharp.Wpf.Example
                 if (最终配置数据.Any())
                 {
                     配置管理器.将配置保存到文件(@"D:\SQL数据库建立\SQL配置文件.json", 最终配置数据);
-                    Debug.WriteLine($"所有SQL主键自增操作已完成，配置信息已合并并保存。耗时: {Amomo.高精度计时器.获取并重置()}");
+
+                    计时器.Stop(); // 停止计时
+
+                    TimeSpan 经过的时间 = 计时器.Elapsed; // 获取经过的时间
+
+                   // Debug.WriteLine($"运行时间: {经过的时间.TotalMilliseconds} 毫秒");
+                   //Debug.WriteLine($"运行时间: {经过的时间.TotalSeconds.ToString("0.000")} 秒");
+                    Debug.WriteLine($"所有SQL主键自增操作已完成，配置信息已合并并保存。耗时: {经过的时间.TotalSeconds.ToString("0.000")} 秒");
                 }
                 else
                 {
@@ -310,11 +321,11 @@ namespace CefSharp.Wpf.Example
                     return;
                 }
 
-                System.Diagnostics.Debug.WriteLine($"脚本注入尝试失败，第 {attempt + 1} 次重试，原因: {errorMessage}");
+                Debug.WriteLine($"脚本注入尝试失败，第 {attempt + 1} 次重试，原因: {errorMessage}");
                 await Task.Delay(retryDelayMs);
             }
-
-            throw new InvalidOperationException($"脚本注入操作在重试 {maxAttempts} 次后仍然失败。");
+            Debug.WriteLine($"脚本注入操作在重试 {maxAttempts} 次后仍然失败。");
+            //throw new InvalidOperationException($"脚本注入操作在重试 {maxAttempts} 次后仍然失败。");
         }
 
         // 读取脚本文件并返回文件内容
