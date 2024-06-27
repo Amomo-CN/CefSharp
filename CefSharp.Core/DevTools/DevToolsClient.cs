@@ -338,6 +338,7 @@ namespace CefSharp.DevTools
         ///<param name="eventName">事件名称</param>
         ///<param name="stream">JSON 流</param>
         ///<returns>类型为<typeparamref name="T"/>的对象</returns>
+
         private static T DeserializeJsonEvent<T>(string eventName, Stream stream) where T : EventArgs
         {
             if (typeof(T) == typeof(EventArgs))
@@ -369,6 +370,20 @@ namespace CefSharp.DevTools
             return (T)DeserializeJson(typeof(T), stream);
         }
 
+#if NETCOREAPP
+        private static readonly System.Text.Json.JsonSerializerOptions DefaultJsonSerializerOptions = new System.Text.Json.JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            IgnoreNullValues = true,
+            Converters = { new CefSharp.Internals.Json.JsonEnumConverterFactory() },
+        };
+#else
+        private static readonly System.Runtime.Serialization.Json.DataContractJsonSerializerSettings DefaultJsonSerializerSettings = new System.Runtime.Serialization.Json.DataContractJsonSerializerSettings
+        {
+            UseSimpleDictionaryFormat = true,
+        };
+#endif
+
         /// <summary>
         ///将 JSON 流反序列化为 .Net 对象。
         ///对于.Net Core/.Net 5.0 使用System.Text.Json
@@ -389,15 +404,13 @@ namespace CefSharp.DevTools
             options.Converters.Add(new CefSharp.Internals.Json.JsonEnumConverterFactory());
 
             // TODO: 当 System.Text.Json 更新时使用 synchronus Deserialize<T>(Stream)
+
             var memoryStream = new MemoryStream((int)stream.Length);
             stream.CopyTo(memoryStream);
 
-            return System.Text.Json.JsonSerializer.Deserialize(memoryStream.ToArray(), type, options);
+            return System.Text.Json.JsonSerializer.Deserialize(memoryStream.ToArray(), type, DefaultJsonSerializerOptions);
 #else
-            var settings = new System.Runtime.Serialization.Json.DataContractJsonSerializerSettings();
-            settings.UseSimpleDictionaryFormat = true;
-
-            var dcs = new System.Runtime.Serialization.Json.DataContractJsonSerializer(type, settings);
+            var dcs = new System.Runtime.Serialization.Json.DataContractJsonSerializer(type, DefaultJsonSerializerSettings);
             return dcs.ReadObject(stream);
 #endif
         }

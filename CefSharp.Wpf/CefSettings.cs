@@ -21,7 +21,14 @@ namespace CefSharp.Wpf
             //禁用 Web 内容的多线程、合成器滚动
             //通过 OSR 渲染，提高滚动性能是相当常见的
             //https://peter.sh/experiments/chromium-command-line-switches/#disable-threaded-scrolling
+
             //CefCommandLineArgs.Add("禁用线程滚动");
+
+            // CEF 不会调用 GetAuthCredentials，除非
+            // Chrome 登录提示被禁用
+            // https://github.com/chromiumembedded/cef/issues/3603 
+            CefCommandLineArgs.Add("disable-chrome-login-prompt");
+
         }
     }
 }

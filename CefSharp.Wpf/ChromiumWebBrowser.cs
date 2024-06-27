@@ -3,6 +3,7 @@
 //此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -136,7 +137,7 @@ namespace CefSharp.Wpf
         /// <summary>
         /// 保留当前的拖放效果以在拖动时返回适当的效果。
         /// </summary>
-        private DragDropEffects currentDragDropEffects;
+        private DragDropEffects? currentDragDropEffects;
         /// <summary>
         /// 指示设计器是否处于活动状态的标志
         ///注意：OnApplicationExit 需要是静态的
@@ -922,20 +923,38 @@ namespace CefSharp.Wpf
             {
                 if (browser != null)
                 {
-                    //DoDragDrop will fire DragEnter event
+                    // DoDragDrop will fire DragEnter event
                     var result = DragDrop.DoDragDrop(this, dataObject, allowedOps.GetDragEffects());
+                    var dragOperationMask = GetDragOperationsMask(result, currentDragDropEffects);
 
-                    //DragData was stored so when DoDragDrop fires DragEnter we reuse a clone of the IDragData provided here
+                    // DragData was stored so when DoDragDrop fires DragEnter we reuse a clone of the IDragData provided here
                     currentDragData = null;
+                    currentDragDropEffects = null;
 
-                    //If result == DragDropEffects.None then we'll send DragOperationsMask.None
-                    //effectively cancelling the drag operation
-                    browser.GetHost().DragSourceEndedAt(x, y, result.GetDragOperationsMask());
+                    // If result or the last recorded drag drop effect were DragDropEffects.None
+                    // then we'll send DragOperationsMask.None, effectively cancelling the drag operation
+                    browser.GetHost().DragSourceEndedAt(x, y, dragOperationMask);
                     browser.GetHost().DragSourceSystemDragEnded();
                 }
             });
 
             return true;
+        }
+
+        protected virtual DragOperationsMask GetDragOperationsMask(DragDropEffects result, DragDropEffects? dragEffects)
+        {
+            // Ensure the drag and drop operation wasn't cancelled
+            var finalEffectMask = (dragEffects ?? DragDropEffects.None).GetDragOperationsMask() & result.GetDragOperationsMask();
+
+            // We shouldn't have an instance where finalEffectMask signfies multiple effects, as the operation
+            // set by UpdateDragCursor should only ever be none, move, copy, or link. However, if it does, we'll
+            // just default to copy, as that reflects the defaulting behavior of GetDragEffects.
+            if (finalEffectMask.HasFlag(DragOperationsMask.Every))
+            {
+                return DragOperationsMask.Copy;
+            }
+
+            return finalEffectMask;
         }
 
         /// <inheritdoc />
@@ -1686,7 +1705,6 @@ namespace CefSharp.Wpf
             {
                 var mouseEvent = GetMouseEvent(e);
                 var effect = e.AllowedEffects.GetDragOperationsMask();
-
                 browser.GetHost().DragTargetDragOver(mouseEvent, effect);
                 browser.GetHost().DragTargetDragDrop(mouseEvent);
             }
@@ -1716,7 +1734,7 @@ namespace CefSharp.Wpf
             {
                 browser.GetHost().DragTargetDragOver(GetMouseEvent(e), e.AllowedEffects.GetDragOperationsMask());
             }
-            e.Effects = currentDragDropEffects;
+            e.Effects = currentDragDropEffects ?? DragDropEffects.None;
             e.Handled = true;
         }
 
@@ -1734,6 +1752,7 @@ namespace CefSharp.Wpf
 
                 //DoDragDrop will fire this handler for internally sourced Drag/Drop operations
                 //we use the existing IDragData (cloned copy)
+
                 var dragData = currentDragData ?? e.GetDragData();
 
                 browser.GetHost().DragTargetDragEnter(dragData, mouseEvent, effect);
