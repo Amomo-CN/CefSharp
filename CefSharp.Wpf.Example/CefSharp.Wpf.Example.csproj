@@ -40,12 +40,15 @@
         <Folder Include="Assets\Images\" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="chromiumembeddedframework.runtime" Version="126.2.7" />
+        <PackageReference Include="chromiumembeddedframework.runtime" Version="126.1.14" />
         <PackageReference Include="EPPlus" Version="7.2.0" />
+        <PackageReference Include="chromiumembeddedframework.runtime" Version="126.2.7" />
         <PackageReference Include="MaterialDesignThemes" Version="4.8.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Selenium.Support" Version="4.22.0" />
         <PackageReference Include="Selenium.WebDriver" Version="4.22.0" />
+        <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="126.0.6478.12600" />
+        <PackageReference Include="System.Net.Http" Version="4.3.4" />
     </ItemGroup>
     <ItemGroup>
         <Compile Remove="bin.netcore\**" />

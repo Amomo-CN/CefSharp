@@ -25,6 +25,9 @@ using OfficeOpenXml;
 using System.Diagnostics;
 using System.Linq;
 using static Amomo.SQL主键自增;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium;
+using System.Net.Http;
 
 // 定义命名空间，包含WPF示例应用的主要逻辑。
 namespace CefSharp.Wpf.Example
@@ -76,7 +79,7 @@ namespace CefSharp.Wpf.Example
 
         }
 
-
+        #region 方法：关闭当前选中的标签页。
         // 方法：关闭当前选中的标签页。
         private void CloseTab(object sender, ExecutedRoutedEventArgs e)
         {
@@ -107,7 +110,9 @@ namespace CefSharp.Wpf.Example
                 browserViewModel.WebBrowser.Dispose();
             }
         }
+        #endregion
 
+        #region  此方法响应“新建”命令，用于打开一个新的浏览器标签页。
         // 此方法响应“新建”命令，用于打开一个新的浏览器标签页。
         private async void OpenNewTab(object sender, ExecutedRoutedEventArgs e)
         {
@@ -117,7 +122,7 @@ namespace CefSharp.Wpf.Example
             // 设置新创建的标签页为当前选中项。
             TabControl.SelectedIndex = TabControl.Items.Count - 1;
         }
-
+#endregion
 
 
 
@@ -142,6 +147,8 @@ namespace CefSharp.Wpf.Example
 
 
         }
+
+        #region SQL主键自增异步并行开始
         private async void SQL主键自增异步并行开始()
         {
             Stopwatch 计时器 = new Stopwatch();
@@ -221,6 +228,8 @@ namespace CefSharp.Wpf.Example
             }
         }
 
+        #endregion
+
         // 此方法用于创建一个新的浏览器标签页，并将其添加到BrowserTabs集合中。
         // 它接受三个参数，其中url是新标签页将要加载的网页地址，默认是DefaultUrlForAddedTabs，
         // showSideBar是一个布尔值，指示是否在新标签页中显示侧边栏，默认不显示，
@@ -248,8 +257,8 @@ namespace CefSharp.Wpf.Example
             await InjectScripts(url); // 自动注入加载脚本
         }
 
-
-
+        #region 注入JS自动化脚本
+        // 注入JS自动化脚本
         public async Task InjectScripts(string 传入URL)
         {
             //  await Task.Delay(300);
@@ -345,9 +354,9 @@ namespace CefSharp.Wpf.Example
             }
         }
 
+        #endregion
 
-
-
+        #region 当自定义命令绑定被触发时，此方法将被执行。
         // 当自定义命令绑定被触发时，此方法将被执行。
         private void CustomCommandBinding(object sender, ExecutedRoutedEventArgs e)
         {
@@ -521,6 +530,11 @@ namespace CefSharp.Wpf.Example
                 // }
             }
         }
+
+
+        #endregion
+
+        #region 方法：打印到PDF命令绑定
         // 方法：打印到PDF命令绑定
         private async void PrintToPdfCommandBinding(object sender, ExecutedRoutedEventArgs e)
         {
@@ -583,7 +597,9 @@ namespace CefSharp.Wpf.Example
                 }
             }
         }
+        #endregion
 
+        #region 方法：打开新标签页命令绑定
         // 方法：打开新标签页命令绑定
         private void OpenTabCommandBinding(object sender, ExecutedRoutedEventArgs e)
         {
@@ -603,6 +619,9 @@ namespace CefSharp.Wpf.Example
             // 将焦点切换到新创建的标签页
             TabControl.SelectedIndex = TabControl.Items.Count - 1;
         }
+        #endregion
+
+        #region 方法：退出程序
 
         // 方法：退出程序
         private void Exit(object sender, ExecutedRoutedEventArgs e)
@@ -611,6 +630,9 @@ namespace CefSharp.Wpf.Example
             Close();
         }
 
+        #endregion
+
+        #region 方法：关闭程序命令绑定
         // 方法：关闭指定的浏览器标签页
         private void CloseTab(BrowserTabViewModel browserViewModel)
         {
@@ -620,7 +642,78 @@ namespace CefSharp.Wpf.Example
                 browserViewModel.WebBrowser?.Dispose();
             }
         }
+        #endregion
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        Debug.WriteLine("在主线程上开始操作");
+
+                        // 创建ChromeOptions实例，用于设置ChromeDriver的选项
+                        var options = new ChromeOptions();
+                        options.DebuggerAddress = "localhost:8088"; // 设置调试地址和端口，与CefSharp绑定的端口一致
+
+
+                        // 启动一个新线程来执行导航操作
+                        Task.Run(() =>
+                        {
+
+                            var driver = new ChromeDriver(options);
+                            Debug.WriteLine("调试器已连接到ChromeDriver");
+                            try
+                            {
+                                Debug.WriteLine("导航操作开始");
+                                driver.Navigate().GoToUrl("https://cn.bing.com/");
+                                Debug.WriteLine("导航到 https://cn.bing.com/ 成功");
+
+                                // 找到ID为"sb_form_q"的元素（搜索框），并输入文本"helloworld"
+                                driver.FindElement(By.Id("sb_form_q")).SendKeys("helloworld");
+                                Debug.WriteLine("输入 'helloworld' 成功");
+
+                                // 设置隐式等待时间，用于等待页面元素加载
+                                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+                                Debug.WriteLine("隐式等待 3 秒成功");
+
+                                // 找到ID为"search_icon"的元素（搜索图标），并点击它
+                                driver.FindElement(By.Id("search_icon")).Click();
+                                Debug.WriteLine("点击搜索图标成功");
+
+                                // 进一步等待页面加载完成
+                                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                                Debug.WriteLine("隐式等待 5 秒成功");
+
+                                // driver.Navigate().GoToUrl("https://www.baidu.com");
+                                //  Debug.WriteLine("导航到 https://www.baidu.com 成功");
+                            }
+                            catch (WebDriverException ex)
+                            {
+                                Debug.WriteLine($"Web驱动程序异常: {ex.Message}");
+                            }
+                            catch (HttpRequestException ex)
+                            {
+                                Debug.WriteLine($"Http请求异常: {ex.Message}");
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine($"出现错误: {ex.Message}");
+                            }
+                        });
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"出现错误: {ex.Message}");
+                }
+            });
+        }
+
+
+ #region 模拟导致崩溃的窗口大小调整
         // 方法：模拟导致崩溃的窗口大小调整
         private void ReproduceWasResizedCrashAsync()
         {
@@ -694,5 +787,7 @@ namespace CefSharp.Wpf.Example
                 catch (TaskCanceledException) { } // 防止在VS调试时中断
             });
         }
+#endregion
+
     }
 }
