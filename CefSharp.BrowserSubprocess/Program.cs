@@ -8,11 +8,11 @@ using CefSharp.RenderProcess;
 namespace CefSharp.BrowserSubprocess
 {
     /// <summary>
-    /// When implementing your own BrowserSubprocess
-    /// - For Full .Net use <see cref="WcfBrowserSubprocessExecutable"/>
-    /// - For .Net Core use <see cref="BrowserSubprocessExecutable"/> (No WCF Support)
-    /// - Include an app.manifest with the dpi/compatability sections, this is required (this project contains the relevant).
-    /// - If you are targeting x86/Win32 then you should set /LargeAddressAware (https://docs.microsoft.com/en-us/cpp/build/reference/largeaddressaware?view=vs-2017)
+    ///实现自己的BrowserSubprocess时
+    ///-对于完整的 .Net 使用 <see cref="WcfBrowserSubprocessExecutable"/>
+    ///-对于.Net Core 使用 <see cref="BrowserSubprocessExecutable"/> （无 WCF 支持）
+    ///-包含带有 dpi/compatibility 部分的 app.manifest，这是必需的（该项目包含相关内容）。
+    ///-如果您的目标是 x86/Win32 那么您应该设置 /LargeAddressAware (https://docs.microsoft.com/en-us/cpp/build/reference/largeaddressaware?view=vs-2017)
     /// </summary>
     public class Program
     {
@@ -23,10 +23,10 @@ namespace CefSharp.BrowserSubprocess
             //Add your own custom implementation of IRenderProcessHandler here
             IRenderProcessHandler handler = null;
 
-            //The WcfBrowserSubprocessExecutable provides BrowserSubProcess functionality
-            //specific to CefSharp, WCF support (required for Sync JSB) will optionally be
-            //enabled if the CefSharpArguments.WcfEnabledArgument command line arg is present
-            //For .Net Core use BrowserSubprocessExecutable as there is no WCF support
+            //WcfBrowserSubprocessExecutable提供BrowserSubProcess功能
+            //特定于CefSharp，WCF支持（Sync JSB所需）将可选
+            //如果存在 CefSharpArguments.WcfEnabledArgument 命令行参数则启用
+            //对于.Net Core，使用BrowserSubprocessExecutable，因为没有WCF支持
             var browserProcessExe = new WcfBrowserSubprocessExecutable();
             var result = browserProcessExe.Main(args, handler);
 
