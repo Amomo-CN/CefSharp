@@ -49,7 +49,7 @@ namespace Amomo
 
 
 
-                Amomo.高精度计时器.获取并重置();
+               Amomo.高精度计时器.获取并重置();
 
                 if (配置数据.Count > 0 && 配置数据.TryGetValue(Path.GetFileNameWithoutExtension(SQL_Excel文件路径), out 文件时间信息 当前文件配置))
                 {
@@ -307,7 +307,7 @@ namespace Amomo
                 return new Dictionary<string, 文件时间信息>();
             }
 
-            private static 文件时间信息 获取或添加文件记录(Dictionary<string, 文件时间信息> 配置数据, string SQL_Excel文件路径)
+            public static 文件时间信息 获取或添加文件记录(Dictionary<string, 文件时间信息> 配置数据, string SQL_Excel文件路径)
             {
                 string 文件名无扩展 = Path.GetFileNameWithoutExtension(SQL_Excel文件路径);
                 if (!配置数据.TryGetValue(文件名无扩展, out 文件时间信息 文件记录))

@@ -52,7 +52,7 @@ namespace CefSharp.Wpf.Example // 定义命名空间CefSharp.Wpf.Example
             // 设置外部消息泵的使用情况
             settings.ExternalMessagePump = !multiThreadedMessageLoop;
 
-
+            settings.WindowlessRenderingEnabled = true;
 
             settings.Locale = "zh-CN"; // 设置默认语言为中文
             settings.AcceptLanguageList = "zh-CN,zh;q=0.9,en;q=0.8"; // 设置接受的语言列表

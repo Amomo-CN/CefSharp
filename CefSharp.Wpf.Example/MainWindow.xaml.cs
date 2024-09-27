@@ -2,17 +2,21 @@
 // 使用此源代码需遵守该协议。
 
 // 引入必要的命名空间，包括系统基础类库、CefSharp示例相关的类库、WPF相关控制及视图模型类库等。
+using Amomo; //阿陌陌的工具库
 using System; // 基础类型和公共语言运行库的类
 using System.Collections.Generic; // 泛型集合
 using System.Collections.ObjectModel; // 可观察的集合类型，常用于UI数据绑定
+using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.IO; // 文件和流操作
 using System.Runtime.InteropServices; // 用于平台调用服务
 using System.Threading; // 线程管理
 using System.Threading.Tasks; // 异步编程模型
-
+using System.Linq;
 using System.Windows; // WPF基本元素和特性
 using System.Windows.Input; // 输入相关类，如命令绑定
 using System.Windows.Threading;
+using System.Net.Http;
 
 using CefSharp.Example; // CefSharp示例项目提供的类
 using CefSharp.Example.Handlers; // 示例中的处理器类
@@ -20,14 +24,13 @@ using CefSharp.Wpf.Example.Controls; // 示例中自定义的WPF控件
 using CefSharp.Wpf.Example.ViewModels; // 示例中浏览器标签页的视图模型
 
 using Microsoft.Win32; // 提供访问Windows注册表的类
-using Amomo;
+
 using OfficeOpenXml;
-using System.Diagnostics;
-using System.Linq;
-using static Amomo.SQL主键自增;
+
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
-using System.Net.Http;
+using Newtonsoft.Json;
+
 
 // 定义命名空间，包含WPF示例应用的主要逻辑。
 namespace CefSharp.Wpf.Example
@@ -42,6 +45,7 @@ namespace CefSharp.Wpf.Example
         // 定义一个公开的可观察集合，用于存储浏览器标签页的视图模型。
         public ObservableCollection<BrowserTabViewModel> BrowserTabs { get; set; }
 
+        private static ConcurrentDictionary<int, ChromeDriver> BrowserInstances = new ConcurrentDictionary<int, ChromeDriver>();
         // 构造函数，初始化MainWindow。
 
         public MainWindow()
@@ -122,9 +126,7 @@ namespace CefSharp.Wpf.Example
             // 设置新创建的标签页为当前选中项。
             TabControl.SelectedIndex = TabControl.Items.Count - 1;
         }
-#endregion
-
-
+        #endregion
 
         // 当MainWindow加载完成时，这个方法会被自动调用。
         private async void MainWindowLoaded(object sender, RoutedEventArgs e)
@@ -132,34 +134,23 @@ namespace CefSharp.Wpf.Example
             // 调用CreateNewTab方法来创建一个新的浏览器标签页。
             // 参数包括默认的URL（由CefExample.DefaultUrl提供）和一个布尔值true，表示侧边栏应该被显示。
             //CreateNewTab(CefExample.DefaultUrl, true);//滴滴 默认打开了主页 不需要 - -
-
-
             await CreateNewTab("http://192.168.10.173:8088/", false); // APS
             //await Task.Delay(200);
-
             await CreateNewTab("http://192.168.10.209:8080/webroot/decision/v10/entry/access/734b3268-55f8-4e48-9c03-0fa78a8fd17d?width=2160&height=1078", false); // 报表 齐套分析1
-
-
             // await Task.Delay(200);
             await CreateNewTab("http://192.168.100.216:8081/U9C/mvc/main/index", false); //U9
-
-
-
-
         }
 
         #region SQL主键自增异步并行开始
         private async void SQL主键自增异步并行开始()
         {
             Stopwatch 计时器 = new Stopwatch();
-
             计时器.Start(); // 开始计时器
-
             Amomo.高精度计时器.获取并重置();
-            配置管理器.确保配置文件存在(@"D:\SQL数据库建立\SQL配置文件.json");
+            SQL主键自增.配置管理器.确保配置文件存在(@"D:\SQL数据库建立\SQL配置文件.json");
             try
             {
-                var tasks = new List<Task<(bool 成功, Dictionary<string, 文件时间信息> 处理后的配置)>>() // 创建一个任务列表
+                var tasks = new List<Task<(bool 成功, Dictionary<string, SQL主键自增.文件时间信息> 处理后的配置)>>() // 创建一个任务列表
                 {
 
                 Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\BOM产品结构.xlsx")),
@@ -167,6 +158,7 @@ namespace CefSharp.Wpf.Example
                 Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\标准采购收货.xlsx")),
                 Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\委外采购订单.xlsx")),
                 Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\委外采购收货.xlsx")),
+                Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\料品列表.xlsx")),
                 Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\调入在途.xlsx")),
                 Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\请购列表.xlsx")),
                 Task.Run(() => Amomo.SQL主键自增.主键自增(@"D:\SQL数据库建立\生产工单在制.xlsx")),
@@ -177,7 +169,7 @@ namespace CefSharp.Wpf.Example
                 var 所有处理结果 = await Task.WhenAll(tasks);
 
                 // 合并所有任务返回的配置数据，确保键唯一性，避免覆盖
-                var 最终配置数据 = new Dictionary<string, 文件时间信息>();
+                var 最终配置数据 = new Dictionary<string, SQL主键自增.文件时间信息>();
                 foreach (var (成功, 单个任务配置) in 所有处理结果)
                 {
                     if (成功)
@@ -207,14 +199,14 @@ namespace CefSharp.Wpf.Example
                 // 确保最终配置数据不为空再写入文件
                 if (最终配置数据.Any())
                 {
-                    配置管理器.将配置保存到文件(@"D:\SQL数据库建立\SQL配置文件.json", 最终配置数据);
+                    Amomo.SQL主键自增.配置管理器.将配置保存到文件(@"D:\SQL数据库建立\SQL配置文件.json", 最终配置数据);
 
                     计时器.Stop(); // 停止计时
 
                     TimeSpan 经过的时间 = 计时器.Elapsed; // 获取经过的时间
 
-                   // Debug.WriteLine($"运行时间: {经过的时间.TotalMilliseconds} 毫秒");
-                   //Debug.WriteLine($"运行时间: {经过的时间.TotalSeconds.ToString("0.000")} 秒");
+                    // Debug.WriteLine($"运行时间: {经过的时间.TotalMilliseconds} 毫秒");
+                    //Debug.WriteLine($"运行时间: {经过的时间.TotalSeconds.ToString("0.000")} 秒");
                     Debug.WriteLine($"所有SQL主键自增操作已完成，配置信息已合并并保存。耗时: {经过的时间.TotalSeconds.ToString("0.000")} 秒");
                 }
                 else
@@ -254,107 +246,14 @@ namespace CefSharp.Wpf.Example
 
             TabControl.UpdateLayout();// 强制更新布局，确保内容立即显示
 
-            await InjectScripts(url); // 自动注入加载脚本
+            // 等待新标签页加载完成
+            JS自动登录 JS自动登录 = new JS自动登录(BrowserTabs, TabControl);//创建一个JS自动登录实例对象
+            await JS自动登录.JS登录脚本开始(url); // 自动注入加载脚本
+
+
         }
 
-        #region 注入JS自动化脚本
-        // 注入JS自动化脚本
-        public async Task InjectScripts(string 传入URL)
-        {
-            //  await Task.Delay(300);
-            System.Diagnostics.Debug.WriteLine("开始注入脚本...");
 
-            // 初始化重试参数
-            int maxAttempts = 20;
-            int retryDelayMs = 50;
-
-            // 封装需要重试的操作
-            async Task<(bool Success, string ErrorMessage)> AttemptInjection()
-            {
-                // 获取当前选中的标签页
-                var currentTab = BrowserTabs[TabControl.SelectedIndex];
-
-                // 检查CefWebBrowser是否有效
-                if (currentTab == null || currentTab.WebBrowser == null)
-                {
-                    return (false, "CefWebBrowser 为空，无法注入脚本");
-                }
-                if (!currentTab.WebBrowser.CanExecuteJavascriptInMainFrame)
-                {
-                    return (false, "当前不能在主框架中执行JavaScript");
-                }
-
-                // 初始化脚本内容和路径
-                string scriptContent = string.Empty;
-                string scriptPath = string.Empty;
-
-                // 根据不同的URL加载不同的JavaScript脚本文件
-                if (传入URL.StartsWith("http://192.168.10.173:8088"))
-                {
-                    scriptPath = "资源/JS脚本文件/APS自动登录.js";
-                }
-                else if (传入URL.StartsWith("http://192.168.100.216:8081"))
-                {
-                    scriptPath = "资源/JS脚本文件/U9自动登录.js";
-                }
-                else if (传入URL.StartsWith("http://192.168.10.209:8080"))
-                {
-                    scriptPath = "资源/JS脚本文件/报表自动登录.js";
-                }
-                else
-                {
-                    return (false, $"没有匹配到合适的脚本路径 (URL: {传入URL})");
-                }
-
-                scriptContent = await ReadScriptFileAsync(scriptPath);
-
-                // 执行JavaScript脚本
-                if (!string.IsNullOrEmpty(scriptContent))
-                {
-                    System.Diagnostics.Debug.WriteLine($"脚本内容已加载，准备执行... (URL: {传入URL}, 脚本路径: {scriptPath})");
-                    await currentTab.WebBrowser.EvaluateScriptAsync(scriptContent);
-                    return (true, null);
-                }
-                else
-                {
-                    return (false, $"脚本内容为空，未执行任何操作 (URL: {传入URL}, 脚本路径: {scriptPath})");
-                }
-            }
-
-            // 重试执行脚本注入操作
-            for (int attempt = 0; attempt < maxAttempts; attempt++)
-            {
-                var (success, errorMessage) = await AttemptInjection();
-                if (success)
-                {
-                    return;
-                }
-
-                Debug.WriteLine($"脚本注入尝试失败，第 {attempt + 1} 次重试，原因: {errorMessage}");
-                await Task.Delay(retryDelayMs);
-            }
-            Debug.WriteLine($"脚本注入操作在重试 {maxAttempts} 次后仍然失败。");
-            //throw new InvalidOperationException($"脚本注入操作在重试 {maxAttempts} 次后仍然失败。");
-        }
-
-        // 读取脚本文件并返回文件内容
-        private async Task<string> ReadScriptFileAsync(string filePath)
-        {
-            try
-            {
-                using (var streamReader = new StreamReader(filePath))
-                {
-                    return await streamReader.ReadToEndAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"读取脚本文件时发生异常: {ex} (脚本路径: {filePath})");
-                return string.Empty;
-            }
-        }
-
-        #endregion
 
         #region 当自定义命令绑定被触发时，此方法将被执行。
         // 当自定义命令绑定被触发时，此方法将被执行。
@@ -644,8 +543,65 @@ namespace CefSharp.Wpf.Example
         }
         #endregion
 
+        private int GetUniqueInstanceId()
+        {
+            // 简单示例：生成唯一ID（实际应用中可根据具体需求生成）
+            return DateTime.Now.Ticks.GetHashCode();
+        }
+
+        private void PerformActionOnSpecificInstance(int instanceId)
+        {
+            if (BrowserInstances.TryGetValue(instanceId, out var driver))
+            {
+                // 在特定实例上执行操作
+                driver.Navigate().GoToUrl("https://www.baidu.com/");
+                Debug.WriteLine($"实例ID: {instanceId} 导航到 https://www.baidu.com/ 成功");
+            }
+            else
+            {
+                Debug.WriteLine($"找不到实例ID: {instanceId}");
+            }
+        }
+
+        private List<实例信息> 旧实例列表 = new List<实例信息>();
+
+        async Task 处理实例创建或关闭()
+        {
+            await 获取并处理新实例或移除关闭的实例Async().ConfigureAwait(false);
+        }
+
+        async Task 获取并处理新实例或移除关闭的实例Async()
+        {
+            var http客户端 = new HttpClient();
+            var json响应 = await http客户端.GetStringAsync("http://localhost:8088/json");
+            var 当前实例列表 = JsonConvert.DeserializeObject<List<实例信息>>(json响应);
+            Debug.WriteLine($"当前实例列表: {当前实例列表}");
+            Debug.WriteLine($"json响应: {json响应}");
+
+            var 新增的实例 = 当前实例列表.Except(旧实例列表).FirstOrDefault();
+            if (新增的实例 != null)
+            {
+                var 调试信息响应 = await http客户端.GetStringAsync(新增的实例.调试Url);
+                // 处理获取到的调试信息
+            }
+
+            var 已关闭的实例 = 旧实例列表.Except(当前实例列表).FirstOrDefault();
+            if (已关闭的实例 != null)
+            {
+                旧实例列表.Remove(已关闭的实例);
+            }
+
+            旧实例列表 = 当前实例列表;
+            Debug.WriteLine($"旧实例列表: {旧实例列表}");
+        }
+
+
+        // 根据实际情况定义实例信息属性
+        public string 调试Url { get; set; }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
             Task.Run(() =>
             {
                 try
@@ -653,50 +609,30 @@ namespace CefSharp.Wpf.Example
                     Dispatcher.Invoke(() =>
                     {
                         Debug.WriteLine("在主线程上开始操作");
-
+                        获取并处理新实例或移除关闭的实例Async().ConfigureAwait(false);
                         // 创建ChromeOptions实例，用于设置ChromeDriver的选项
                         var options = new ChromeOptions();
-                        options.DebuggerAddress = "localhost:8088"; // 设置调试地址和端口，与CefSharp绑定的端口一致
-
 
                         // 启动一个新线程来执行导航操作
                         Task.Run(() =>
                         {
-
-                            var driver = new ChromeDriver(options);
-                            Debug.WriteLine("调试器已连接到ChromeDriver");
                             try
                             {
-                                Debug.WriteLine("导航操作开始");
-                                driver.Navigate().GoToUrl("https://cn.bing.com/");
-                                Debug.WriteLine("导航到 https://cn.bing.com/ 成功");
+                                options.AddArgument("--headless"); // 设置为无头模式
+                                options.AddArgument("--disable-gpu"); // 禁用GPU加速
+                                options.AddArgument("--no-sandbox"); // 不使用沙箱
+                                options.AddArgument("--disable-dev-shm-usage"); // 禁用/dev/shm使用
+                                options.DebuggerAddress = "localhost:8088"; // 设置调试地址和端口，与CefSharp绑定的端口一致
 
-                                // 找到ID为"sb_form_q"的元素（搜索框），并输入文本"helloworld"
-                                driver.FindElement(By.Id("sb_form_q")).SendKeys("helloworld");
-                                Debug.WriteLine("输入 'helloworld' 成功");
+                                using (var driver = new ChromeDriver(options))
+                                {
+                                    int instanceId = GetUniqueInstanceId(); // 获取唯一实例ID
+                                    BrowserInstances[instanceId] = driver; // 将实例添加到字典中
+                                    Debug.WriteLine($"调试器已连接到ChromeDriver实例ID: {instanceId}");
 
-                                // 设置隐式等待时间，用于等待页面元素加载
-                                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
-                                Debug.WriteLine("隐式等待 3 秒成功");
-
-                                // 找到ID为"search_icon"的元素（搜索图标），并点击它
-                                driver.FindElement(By.Id("search_icon")).Click();
-                                Debug.WriteLine("点击搜索图标成功");
-
-                                // 进一步等待页面加载完成
-                                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-                                Debug.WriteLine("隐式等待 5 秒成功");
-
-                                // driver.Navigate().GoToUrl("https://www.baidu.com");
-                                //  Debug.WriteLine("导航到 https://www.baidu.com 成功");
-                            }
-                            catch (WebDriverException ex)
-                            {
-                                Debug.WriteLine($"Web驱动程序异常: {ex.Message}");
-                            }
-                            catch (HttpRequestException ex)
-                            {
-                                Debug.WriteLine($"Http请求异常: {ex.Message}");
+                                    // 执行导航和其他操作
+                                    PerformBrowserOperations(driver);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -712,8 +648,50 @@ namespace CefSharp.Wpf.Example
             });
         }
 
+        private void PerformBrowserOperations(ChromeDriver driver)
+        {
+            try
+            {
+                Debug.WriteLine("导航操作开始");
+                driver.Navigate().GoToUrl("https://cn.bing.com/");
+                Debug.WriteLine("导航到 https://cn.bing.com/ 成功");
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+                // 找到ID为"sb_form_q"的元素（搜索框），并输入文本"helloworld"
+                driver.FindElement(By.Id("sb_form_q")).SendKeys("helloworld");
+                Debug.WriteLine("输入 'helloworld' 成功");
 
- #region 模拟导致崩溃的窗口大小调整
+                // 设置隐式等待时间，用于等待页面元素加载
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+                Debug.WriteLine("隐式等待 3 秒成功");
+
+                // 找到ID为"search_icon"的元素（搜索图标），并点击它
+                driver.FindElement(By.Id("search_icon")).Click();
+                Debug.WriteLine("点击搜索图标成功");
+
+                // 进一步等待页面加载完成
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+                Debug.WriteLine("隐式等待 5 秒成功");
+
+                // driver.Navigate().GoToUrl("https://www.baidu.com");
+                //  Debug.WriteLine("导航到 https://www.baidu.com 成功");
+            }
+            catch (WebDriverException ex)
+            {
+                Debug.WriteLine($"Web驱动程序异常: {ex.Message}");
+            }
+            catch (HttpRequestException ex)
+            {
+                Debug.WriteLine($"Http请求异常: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"出现错误: {ex.Message}");
+            }
+        }
+
+
+
+        #region 模拟导致崩溃的窗口大小调整
         // 方法：模拟导致崩溃的窗口大小调整
         private void ReproduceWasResizedCrashAsync()
         {
@@ -787,7 +765,12 @@ namespace CefSharp.Wpf.Example
                 catch (TaskCanceledException) { } // 防止在VS调试时中断
             });
         }
-#endregion
+        #endregion
 
+    }
+    public class 实例信息
+    {
+        public string 调试Url { get; set; }
+        // 更多属性...
     }
 }
