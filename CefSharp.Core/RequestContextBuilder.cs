@@ -30,7 +30,7 @@ namespace CefSharp
         {
             if (settings != null)
             {
-                throw new Exception("A call to WithCachePath/PersistUserPreferences has already been made, it's not possible to share settings with another RequestContext.");
+                throw new Exception("A call to WithCachePath has already been made, it's not possible to share settings with another RequestContext.");
             }
         }
         ///<摘要>
@@ -103,35 +103,15 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// Invoke this method tp persist user preferences as a JSON file in the cache path directory.
-        /// Can be set globally using the CefSettings.PersistUserPreferences value.
-        /// This value will be ignored if CachePath is empty or if it matches the CefSettings.CachePath value.
-        /// </summary>
-        /// <returns>Returns RequestContextBuilder instance</returns>
-        public RequestContextBuilder PersistUserPreferences()
-        {
-            ThrowExceptionIfContextAlreadySet();
-
-            if (settings == null)
-            {
-                settings = new RequestContextSettings();
-            }
-
-            settings.PersistUserPreferences = true;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Set the value associated with preference name when the RequestContext
-        /// is initialzied. If value is null the preference will be restored to its
-        /// default value. If setting the preference fails no error is throw, you
-        /// must check the CEF Log file.
-        /// Preferences set via the command-line usually cannot be modified.
-        /// </summary>
-        /// <param name="name">preference key</param>
-        /// <param name="value">preference value</param>
-        /// <returns>Returns RequestContextBuilder instance</returns>
+        /// 设置 RequestContext 时与首选项名称关联的值
+        ///已初始化。如果值为空，则首选项将恢复为原来的状态
+        ///默认值。如果设置首选项失败，则不会抛出任何错误，您
+        ///必须检查 CEF 日志文件。
+        ///通过命令行设置的首选项通常无法修改。
+        ///</摘要>
+        ///<param name="name">偏好键</param>
+        ///<param name="value">偏好值</param>
+        ///<returns>返回RequestContextBuilder实例</returns>
         public RequestContextBuilder WithPreference(string name, object value)
         {
             if (handler == null)
@@ -145,14 +125,14 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// Set the Proxy server when the RequestContext is initialzied.
-        /// If value is null the preference will be restored to its
-        /// default value. If setting the preference fails no error is throw, you
-        /// must check the CEF Log file.
-        /// Proxy set via the command-line cannot be modified.
-        /// </summary>
-        /// <param name="host">proxy host</param>
-        /// <returns>Returns RequestContextBuilder instance</returns>
+        ///当RequestContext初始化时设置代理服务器。
+        ///如果值为 null，则首选项将恢复到原来的状态
+        ///默认值。如果设置首选项失败，则不会抛出任何错误，您
+        ///必须检查 CEF 日志文件。
+        ///通过命令行设置的代理无法修改。
+        ///</摘要>
+        ///<param name="host">代理主机</param>
+        ///<returns>返回RequestContextBuilder实例</returns>
         public RequestContextBuilder WithProxyServer(string host)
         {
             if (handler == null)
@@ -166,15 +146,15 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// Set the Proxy server when the RequestContext is initialzied.
-        /// If value is null the preference will be restored to its
-        /// default value. If setting the preference fails no error is throw, you
-        /// must check the CEF Log file.
-        /// Proxy set via the command-line cannot be modified.
-        /// </summary>
-        /// <param name="host">proxy host</param>
-        /// <param name="port">proxy port (optional)</param>
-        /// <returns>Returns RequestContextBuilder instance</returns>
+        /// 当RequestContext初始化时设置代理服务器。
+        ///如果值为 null，则首选项将恢复到原来的状态
+        ///默认值。如果设置首选项失败，则不会抛出任何错误，您
+        ///必须检查 CEF 日志文件。
+        ///通过命令行设置的代理无法修改。
+        ///</摘要>
+        ///<param name="host">代理主机</param>
+        ///<param name="port">代理端口（可选）</param>
+        ///<returns>返回RequestContextBuilder实例</returns>
         public RequestContextBuilder WithProxyServer(string host, int? port)
         {
             if (handler == null)
@@ -188,16 +168,16 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// Set the Proxy server when the RequestContext is initialzied.
-        /// If value is null the preference will be restored to its
-        /// default value. If setting the preference fails no error is throw, you
-        /// must check the CEF Log file.
-        /// Proxy set via the command-line cannot be modified.
-        /// </summary>
-        /// <param name="scheme">proxy scheme</param>
-        /// <param name="host">proxy host</param>
-        /// <param name="port">proxy port (optional)</param>
-        /// <returns>Returns RequestContextBuilder instance</returns>
+        ///当RequestContext初始化时设置代理服务器。
+        ///如果值为 null，则首选项将恢复到原来的状态
+        ///默认值。如果设置首选项失败，则不会抛出任何错误，您
+        ///必须检查 CEF 日志文件。
+        ///通过命令行设置的代理无法修改。
+        ///</摘要>
+        ///<param name="scheme">代理方案</param>
+        ///<param name="host">代理主机</param>
+        ///<param name="port">代理端口（可选）</param>
+        ///<returns>返回RequestContextBuilder实例</returns>
         public RequestContextBuilder WithProxyServer(string scheme, string host, int? port)
         {
             if (handler == null)
@@ -211,10 +191,10 @@ namespace CefSharp
         }
 
         /// <summary>
-        /// Shares storage with other RequestContext
-        /// </summary>
-        /// <param name="other">shares storage with this RequestContext</param>
-        /// <returns>Returns RequestContextBuilder instance</returns>
+        /// 与其他RequestContext共享存储
+        ///</摘要>
+        ///<param name="other">与此RequestContext共享存储</param>
+        /// <returns>返回 RequestContextBuilder 实例</returns>
         public RequestContextBuilder WithSharedSettings(IRequestContext other)
         {
             if (other == null)

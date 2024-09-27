@@ -16,7 +16,6 @@ namespace CefSharp.Wpf
         public CefSettings() : base()
         {
             WindowlessRenderingEnabled = true;
-            ChromeRuntime = true;
 
             //禁用 Web 内容的多线程、合成器滚动
             //通过 OSR 渲染，提高滚动性能是相当常见的
@@ -29,6 +28,9 @@ namespace CefSharp.Wpf
             // https://github.com/chromiumembedded/cef/issues/3603 
             CefCommandLineArgs.Add("disable-chrome-login-prompt");
 
+            // 错误关闭后禁用“恢复页面”弹出窗口
+            // https://github.com/chromiumembedded/cef/issues/3767
+            CefCommandLineArgs.Add("hide-crash-restore-bubble");
         }
     }
 }

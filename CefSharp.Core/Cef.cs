@@ -51,10 +51,12 @@ namespace CefSharp
             Core.Cef.RemoveDisposable(item);
         }
 
-        /// <summary>获取表示CefSharp是否初始化的值。</summary>
-        /// <value>如果CefSharp已初始化则为true；否则为false。</value>
-
-        public static bool IsInitialized
+        /// <summary>获取一个值，该值指示是否初始化 CefSharp。</summary>
+        /// <value>
+        /// 如果 CefSharp 已初始化，则为 true;如果初始化失败，则返回 false。
+        /// 如果尚未调用 Initialize，则为 null。
+        /// </value>
+        public static bool? IsInitialized
         {
             get { return Core.Cef.IsInitialized; }
         }

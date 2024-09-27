@@ -1,79 +1,159 @@
 <Window
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:controls="clr-namespace:CefSharp.Wpf.Example.Controls"
-        xmlns:ex="clr-namespace:CefSharp.Example;assembly=CefSharp.Example"
-        xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="CefSharp.Wpf.Example.MainWindow"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto"        
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="CefSharp.Wpf.Example"
-        WindowState="Maximized" av:DesignHeight="800" av:DesignWidth="1600">
-    
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:controls="clr-namespace:CefSharp.Wpf.Example.Controls"
+    xmlns:ex="clr-namespace:CefSharp.Example;assembly=CefSharp.Example"
+    xmlns:av="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="av"
+        x:Class="CefSharp.Wpf.Example.MainWindow"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextElement.FontWeight="Regular"
+    TextElement.FontSize="13"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    Title="CefSharp.Wpf.Example"
+    WindowState="Maximized"
+        av:DesignHeight="800"
+        av:DesignWidth="1600">
+
     <Window.InputBindings>
-        <KeyBinding Key="T" Modifiers="Control" Command="New"/>
-        <KeyBinding Key="W" Modifiers="Control" Command="Close"/>
+        <KeyBinding Key="T"
+                Modifiers="Control"
+                Command="New"/>
+        <KeyBinding Key="W"
+                Modifiers="Control"
+                Command="Close"/>
     </Window.InputBindings>
     <DockPanel>
-        <Menu DockPanel.Dock="Top" materialDesign:MenuAssist.TopLevelMenuItemHeight="20">
+        <Menu DockPanel.Dock="Top"
+                materialDesign:MenuAssist.TopLevelMenuItemHeight="20">
             <MenuItem Header="文件">
-                <MenuItem Header="新选项卡" Command="New"/>
-                <MenuItem Header="关闭选项卡" Command="Close"/>
-                <MenuItem Header="打开开发工具" Command="controls:CefSharpCommands.CustomCommand" CommandParameter="OpenDevTools"/>
-                <MenuItem Header="放大" Command="controls:CefSharpCommands.CustomCommand" CommandParameter="ZoomIn"/>
-                <MenuItem Header="缩小" Command="controls:CefSharpCommands.CustomCommand" CommandParameter="ZoomOut"/>
-                <MenuItem Header="视图重置" Command="controls:CefSharpCommands.CustomCommand" CommandParameter="ZoomReset"/>
-                <MenuItem Header="切换静音" Command="controls:CefSharpCommands.CustomCommand" CommandParameter="ToggleAudioMute"/>
-                <MenuItem Header="清除Http身份验证凭据" Command="controls:CefSharpCommands.CustomCommand" CommandParameter="ClearHttpAuthCredentials"/>
-                <MenuItem Header="退出" Command="controls:CefSharpCommands.Exit"/>
+                <MenuItem Header="新选项卡"
+                        Command="New"/>
+                <MenuItem Header="关闭选项卡"
+                        Command="Close"/>
+                <MenuItem Header="打开开发工具"
+                        Command="controls:CefSharpCommands.CustomCommand"
+                        CommandParameter="OpenDevTools"/>
+                <MenuItem Header="放大"
+                        Command="controls:CefSharpCommands.CustomCommand"
+                        CommandParameter="ZoomIn"/>
+                <MenuItem Header="缩小"
+                        Command="controls:CefSharpCommands.CustomCommand"
+                        CommandParameter="ZoomOut"/>
+                <MenuItem Header="视图重置"
+                        Command="controls:CefSharpCommands.CustomCommand"
+                        CommandParameter="ZoomReset"/>
+                <MenuItem Header="切换静音"
+                        Command="controls:CefSharpCommands.CustomCommand"
+                        CommandParameter="ToggleAudioMute"/>
+                <MenuItem Header="清除Http身份验证凭据"
+                        Command="controls:CefSharpCommands.CustomCommand"
+                        CommandParameter="ClearHttpAuthCredentials"/>
+                <MenuItem Header="退出"
+                        Command="controls:CefSharpCommands.Exit"/>
             </MenuItem>
             <MenuItem Header="视图">
-                <MenuItem Header="切换侧边栏" Command="controls:CefSharpCommands.CustomCommand" CommandParameter="ToggleSidebar"/>
-                <MenuItem Header="切换下载信息" Command="controls:CefSharpCommands.CustomCommand" CommandParameter="ToggleDownloadInfo"/>
+                <MenuItem Header="切换侧边栏"
+                        Command="controls:CefSharpCommands.CustomCommand"
+                        CommandParameter="ToggleSidebar"/>
+                <MenuItem Header="切换下载信息"
+                        Command="controls:CefSharpCommands.CustomCommand"
+                        CommandParameter="ToggleDownloadInfo"/>
             </MenuItem>
             <MenuItem Header="测试">
-                <MenuItem Header="结合测试" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.BindingTestUrl}}"/>
-                <MenuItem Header="绑定测试单项" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.BindingTestSingleUrl}}"/>
-                <MenuItem Header="传统绑定测试" Command="controls:CefSharpCommands.CustomCommand" CommandParameter="LegacyBindingTest"/>
-                <MenuItem Header="发布消息测试" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.PostMessageTestUrl}}"/>
-                <MenuItem Header="工具提示测试" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.TooltipTestUrl}}"/>
-                <MenuItem Header="D_rag&amp;Drop Cursors Test" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.DragDropCursorsTestUrl}}"/>
-                <MenuItem Header="_Popup Test" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.PopupParentUrl}}"/>
-                <MenuItem Header="弹出测试自定义方案" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.PopupTestUrl}}"/>
-                <MenuItem Header="基本方案测试" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.BasicSchemeTestUrl}}"/>
-                <MenuItem Header="响应过滤器测试" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.ResponseFilterTestUrl}}"/>
-                <MenuItem Header="可拖动区域试验" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.DraggableRegionTestUrl}}"/>
-                <MenuItem Header="Fish Gl" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="http://www.fishgl.com/"/>
-                <MenuItem Header="微软测试驱动" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="http://dev.modern.ie/testdrive/"/>
-                <MenuItem Header="拖动演示" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="http://html5demos.com/drag"/>
-                <MenuItem Header="将当前标签保存为PDF" Command="controls:CefSharpCommands.PrintTabToPdfCommand" />
-                <MenuItem Header="加载自定义请求" Command="controls:CefSharpCommands.CustomCommand" CommandParameter="CustomRequest" />
-                <MenuItem Header="CDM/DRM支持测试" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.CdmSupportTestUrl}}"/>
-                <MenuItem Header="异步JSB任务测试" Command="controls:CefSharpCommands.CustomCommand" CommandParameter="AsyncJsbTaskTests" />
-                <MenuItem Header="调整黑客测试的大小" Command="controls:CefSharpCommands.CustomCommand" CommandParameter="ResizeHackTests" />
-                <MenuItem Header="Google服务人员演示" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="https://googlechrome.github.io/samples/service-worker/basic/"/>
-                <MenuItem Header="加载示例扩展" Command="controls:CefSharpCommands.CustomCommand" CommandParameter="LoadExtension"/>
+                <MenuItem Header="结合测试"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.BindingTestUrl}}"/>
+                <MenuItem Header="绑定测试单项"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.BindingTestSingleUrl}}"/>
+                <MenuItem Header="传统绑定测试"
+                        Command="controls:CefSharpCommands.CustomCommand"
+                        CommandParameter="LegacyBindingTest"/>
+                <MenuItem Header="发布消息测试"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.PostMessageTestUrl}}"/>
+                <MenuItem Header="工具提示测试"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.TooltipTestUrl}}"/>
+                <MenuItem Header="拖放光标测试"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.DragDropCursorsTestUrl}}"/>
+                <MenuItem Header="弹出测试"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.PopupParentUrl}}"/>
+                <MenuItem Header="Popup测试自定义方案"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.PopupTestUrl}}"/>
+                <MenuItem Header="基本方案测试"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.BasicSchemeTestUrl}}"/>
+                <MenuItem Header="响应过滤测试"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.ResponseFilterTestUrl}}"/>
+                <MenuItem Header="可拖动区域测试"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.DraggableRegionTestUrl}}"/>
+                <MenuItem Header="Fish Gl"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="http://www.fishgl.com/"/>
+                <MenuItem Header="微软测试驱动"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="http://dev.modern.ie/testdrive/"/>
+                <MenuItem Header="拖动演示"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="http://html5demos.com/drag"/>
+                <MenuItem Header="将当前选项卡打印为 PDF"
+                        Command="controls:CefSharpCommands.PrintTabToPdfCommand"/>
+                <MenuItem Header="加载自定义请求"
+                        Command="controls:CefSharpCommands.CustomCommand"
+                        CommandParameter="CustomRequest"/>
+                <MenuItem Header="CDM/DRM 支持测试"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.CdmSupportTestUrl}}"/>
+                <MenuItem Header="异步 JSB 任务测试"
+                        Command="controls:CefSharpCommands.CustomCommand"
+                        CommandParameter="AsyncJsbTaskTests"/>
+                <MenuItem Header="调整黑客测试的大小"
+                        Command="controls:CefSharpCommands.CustomCommand"
+                        CommandParameter="ResizeHackTests"/>
+                <MenuItem Header="Google 服务人员演示"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="https://googlechrome.github.io/samples/service-worker/basic/"/>
+                <MenuItem Header="加载示例扩展"
+                        Command="controls:CefSharpCommands.CustomCommand"
+                        CommandParameter="LoadExtension"/>
             </MenuItem>
             <MenuItem Header="Chrome网址">
-                <MenuItem Header="列出内部URL" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.ChromeInternalUrls}}"/>
-                <MenuItem Header="网络内部URL" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.ChromeNetInternalUrls}}"/>
-                <MenuItem Header="处理内部URL" Command="controls:CefSharpCommands.OpenTabCommand" CommandParameter="{Binding Source={x:Static ex:CefExample.ChromeProcessInternalUrls}}"/>
+                <MenuItem Header="列出内部URL"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.ChromeInternalUrls}}"/>
+                <MenuItem Header="网络内部URL"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.ChromeNetInternalUrls}}"/>
+                <MenuItem Header="处理内部URL"
+                        Command="controls:CefSharpCommands.OpenTabCommand"
+                        CommandParameter="{Binding Source={x:Static ex:CefExample.ChromeProcessInternalUrls}}"/>
             </MenuItem>
-            <Button Content="Button" Height="22" Width="86" Click="Button_Click"/>
+            <Button Content="Button"
+                    Height="22"
+                    Width="86"
+                    Click="Button_Click"/>
         </Menu>
         <controls:NonReloadingTabControl x:Name="TabControl"
-                               Margin="0,1,0,0"
-                               ItemsSource="{Binding BrowserTabs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                               SelectedIndex="0">
+                                         Margin="0,1,0,0"
+                                         ItemsSource="{Binding BrowserTabs, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                         SelectedIndex="0">
             <controls:NonReloadingTabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Title}" MaxWidth="120"/>
+                        <TextBlock Text="{Binding Title}"
+                                MaxWidth="120"/>
                         <Button Height="20"
                                 Width="20"
                                 Style="{StaticResource MaterialDesignToolButton}"
@@ -88,7 +168,7 @@
             </controls:NonReloadingTabControl.ItemTemplate>
             <controls:NonReloadingTabControl.ContentTemplate>
                 <DataTemplate>
-                    <ContentControl Content="{Binding}" />
+                    <ContentControl Content="{Binding}"/>
                 </DataTemplate>
             </controls:NonReloadingTabControl.ContentTemplate>
         </controls:NonReloadingTabControl>

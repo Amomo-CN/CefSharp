@@ -46,7 +46,7 @@ namespace CefSharp
         private:
             static Object^ _sync;
 
-            static bool _initialized = false;
+            static Nullable<bool> _initialized;
             static bool _hasShutdown = false;
             static HashSet<IDisposable^>^ _disposables;
             static int _initializedThreadId;
@@ -86,9 +86,9 @@ namespace CefSharp
 
             /// <summary>Gets a value that indicates whether CefSharp is initialized.</summary>
             /// <value>true if CefSharp is initialized; otherwise, false.</value>
-            static property bool IsInitialized
+            static property Nullable<bool> IsInitialized
             {
-                bool get()
+                Nullable<bool> get()
                 {
                     return _initialized;
                 }
@@ -255,7 +255,7 @@ namespace CefSharp
             /// <returns>true if successful; otherwise, false.</returns>
             static bool Initialize(CefSettingsBase^ cefSettings, bool performDependencyCheck, IApp^ cefApp)
             {
-                if (_initialized)
+                if (_initialized.HasValue)
                 {
                     // NOTE: Can only initialize Cef once, to make this explicitly clear throw exception on subsiquent attempts
                     throw gcnew Exception("Cef.Initialize can only be called once per process. This is a limitation of the underlying " +
@@ -286,10 +286,9 @@ namespace CefSharp
                 PathCheck::AssertAbsolute(cefSettings->LocalesDirPath, "CefSettings.LocalesDirPath");
                 PathCheck::AssertAbsolute(cefSettings->BrowserSubprocessPath, "CefSettings.BrowserSubprocessPath");
 
-
                 if (performDependencyCheck)
                 {
-                    DependencyChecker::AssertAllDependenciesPresent(cefSettings->Locale, cefSettings->LocalesDirPath, cefSettings->ResourcesDirPath, cefSettings->PackLoadingDisabled, cefSettings->BrowserSubprocessPath);
+                    DependencyChecker::AssertAllDependenciesPresent(cefSettings->Locale, cefSettings->LocalesDirPath, cefSettings->ResourcesDirPath, false, cefSettings->BrowserSubprocessPath);
                 }
                 else if (!File::Exists(cefSettings->BrowserSubprocessPath))
                 {
@@ -555,11 +554,11 @@ namespace CefSharp
             /// </summary>
             static void Shutdown()
             {
-                if (_initialized)
+                if (_initialized.GetValueOrDefault())
                 {
                     msclr::lock l(_sync);
 
-                    if (_initialized)
+                    if (_initialized.GetValueOrDefault())
                     {
                         if (_initializedThreadId != Thread::CurrentThread->ManagedThreadId)
                         {
@@ -615,11 +614,11 @@ namespace CefSharp
             /// </summary>
             static void ShutdownWithoutChecks()
             {
-                if (_initialized)
+                if (_initialized.GetValueOrDefault())
                 {
                     msclr::lock l(_sync);
 
-                    if (_initialized)
+                    if (_initialized.GetValueOrDefault())
                     {
                         CefShutdown();
                         _initialized = false;
@@ -821,7 +820,7 @@ namespace CefSharp
                     return;
                 }
 
-                if (_initialized)
+                if (_initialized.HasValue)
                 {
                     throw gcnew Exception("Must be enabled before Cef.Initialize is called. ");
                 }

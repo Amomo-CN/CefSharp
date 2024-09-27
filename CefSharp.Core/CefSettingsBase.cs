@@ -70,20 +70,9 @@ namespace CefSharp
         }
 
         /// <summary>
-        ///设置为 true 可在 CEF 中使用 Chrome 运行时。这会
-        ///在版本 127 中被删除（因为 Chrome Bootstrap 将在所有情况下使用）。
-        ///查看问题 https://github.com/chromiumembedded/cef/issues/3685
+        /// 设置为 true 可禁用使用标准 CEF 和 Chromium 命令行参数的浏览器进程功能配置。
+        /// 仍可使用 CEF 数据结构或通过添加到 CefCommandLineArgs 来指定配置。
         /// </summary>
-        public bool ChromeRuntime
-        {
-            get { return settings.ChromeRuntime; }
-            set { settings.ChromeRuntime = value; }
-        }
-
-        /// <summary>
-        ///设置为 true 可禁用使用标准 CEF 和 Chromium 命令行参数配置浏览器进程功能。
-        ///配置仍然可以使用 CEF 数据结构或通过添加到 CefCommandLineArgs 来指定。
-        ///</摘要>
         public bool CommandLineArgsDisabled
         {
             get { return settings.CommandLineArgsDisabled; }
@@ -245,20 +234,8 @@ namespace CefSharp
         }
 
         /// <summary>
-        ///设置为 true 以禁用资源和语言环境的包文件加载。必须提供资源包处理程序
-        ///如果禁用加载包文件，则通过 CefApp.GetResourceBundleHandler() 进行浏览器和渲染进程。也可配置
-        ///使用“disable-pack-loading”命令行开关。
-        /// </summary>
-        public bool PackLoadingDisabled
-        {
-            get { return settings.PackLoadingDisabled; }
-            set { settings.PackLoadingDisabled = value; }
-        }
-
-        /// <summary>
-        ///将作为默认用户代理字符串的产品部分插入的值。如果 Chromium 产品版本为空
-        ///将会被使用。如果指定了 UserAgent，则该值将被忽略。也可以使用“user-agent-product”命令进行配置 -
-        ///线路开关。
+        /// 值，该值将作为默认 User-Agent 字符串的 product 部分插入。如果 Chromium 产品版本为空
+        ///将被使用。如果指定了 UserAgent，则将忽略此值。也可使用 “user-agent-product” 命令进行配置 -线路开关。
         /// </summary>
         public string UserAgentProduct
         {
@@ -322,20 +299,9 @@ namespace CefSharp
         }
 
         /// <summary>
-        ///要将用户首选项作为 JSON 文件保存在缓存路径目录中，请将此值设置为 true。 CachePath 值还必须是
-        ///指定启用此功能。还可以使用“persist-user-preferences”命令行开关进行配置。可
-        ///通过 RequestContextSettings.PersistUserPreferences 值覆盖各个 RequestContext 实例。
-        /// </summary>
-        public bool PersistUserPreferences
-        {
-            get { return settings.PersistUserPreferences; }
-            set { settings.PersistUserPreferences = value; }
-        }
-
-        /// <summary>
-        ///逗号分隔的有序语言代码列表，没有任何空格，将在“Accept-Language”HTTP 标头中使用。
-        ///可以使用 CefSettings.AcceptLanguageList 值进行全局设置。如果两个值都为空，则将使用“en-US,en”。
-        ///
+        /// 逗号分隔的有序语言代码列表，没有任何空格，将在“Accept-Language”HTTP 标头中使用。
+        /// 可以使用 CefSettings.AcceptLanguageList 值进行全局设置。如果两个值都为空，则将使用“en-US,en”。
+        /// 
         /// </summary>
         public string AcceptLanguageList
         {

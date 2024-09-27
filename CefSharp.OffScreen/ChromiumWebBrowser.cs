@@ -224,15 +224,7 @@ namespace CefSharp.OffScreen
             IRequestContext requestContext = null, bool automaticallyCreateBrowser = true,
             Action<IBrowser> onAfterBrowserCreated = null, bool useLegacyRenderHandler = true)
         {
-            if (!Cef.IsInitialized)
-            {
-                var settings = new CefSettings();
-
-                if (!Cef.Initialize(settings))
-                {
-                    throw new InvalidOperationException(CefInitializeFailedErrorMessage);
-                }
-            }
+            InitializeCefInternal();
 
             RequestContext = requestContext;
 
@@ -769,6 +761,10 @@ namespace CefSharp.OffScreen
                     // NOTE: When the Elapsed (or Timeout) and Paint are fire at almost exactly
                     // the same time, the timer maybe Disposed on a different thread.
                     // https://github.com/cefsharp/CefSharp/issues/4597
+                }
+                catch(Exception ex)
+                {
+                    renderIdleTcs.TrySetException(ex);
                 }
             };
 

@@ -43,6 +43,7 @@
         <PackageReference Include="chromiumembeddedframework.runtime" Version="126.1.14" />
         <PackageReference Include="EPPlus" Version="7.2.0" />
         <PackageReference Include="chromiumembeddedframework.runtime" Version="126.2.7" />
+        <PackageReference Include="chromiumembeddedframework.runtime" Version="128.4.9" />
         <PackageReference Include="MaterialDesignThemes" Version="4.8.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="Selenium.Support" Version="4.22.0" />

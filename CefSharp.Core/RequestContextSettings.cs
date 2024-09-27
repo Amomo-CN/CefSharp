@@ -30,18 +30,6 @@ namespace CefSharp
         }
 
         /// <summary>
-        ///将用户首选项作为 JSON 文件保存在缓存路径目录集中
-        ///该值为 true。可以使用全局设置
-        ///CefSettings.PersistUserPreferences 值。如果出现以下情况，该值将被忽略
-        ///CachePath 为空或者是否与 CefSettings.CachePath 值匹配。
-        /// </summary>
-        public bool PersistUserPreferences
-        {
-            get { return settings.PersistUserPreferences; }
-            set { settings.PersistUserPreferences = value; }
-        }
-
-        /// <summary>
         ///此请求上下文的缓存数据将存储的位置
         ///磁盘。如果该值非空，则它必须是绝对路径
         ///等于 CefSettings.RootCachePath 或其子目录。

@@ -2,10 +2,8 @@
 //
 //此源代码的使用受 BSD 风格许可证的约束，该许可证可在 LICENSE 文件中找到。
 //
-
-//**此代码由工具生成，请勿直接更改**
-// CHROMIUM VERSION 126.0.6478.115
-
+// **此代码由工具生成，请勿直接更改**
+// CHROMIUM VERSION 128.0.6613.120
 using System.Text.Json.Serialization;
 
 namespace CefSharp.DevTools.Accessibility
@@ -605,7 +603,12 @@ namespace CefSharp.DevTools.Accessibility
         /// owns
         /// </summary>
         [JsonPropertyName("owns")]
-        Owns
+        Owns,
+        /// <summary>
+        /// url
+        /// </summary>
+        [JsonPropertyName("url")]
+        Url
     }
 
     /// <summary>
@@ -1816,6 +1819,16 @@ namespace CefSharp.DevTools.Audits
         [JsonPropertyName("CorpNotSameOriginAfterDefaultedToSameOriginByCoep")]
         CorpNotSameOriginAfterDefaultedToSameOriginByCoep,
         /// <summary>
+        /// CorpNotSameOriginAfterDefaultedToSameOriginByDip
+        /// </summary>
+        [JsonPropertyName("CorpNotSameOriginAfterDefaultedToSameOriginByDip")]
+        CorpNotSameOriginAfterDefaultedToSameOriginByDip,
+        /// <summary>
+        /// CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip
+        /// </summary>
+        [JsonPropertyName("CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip")]
+        CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip,
+        /// <summary>
         /// CorpNotSameSite
         /// </summary>
         [JsonPropertyName("CorpNotSameSite")]
@@ -2718,11 +2731,6 @@ namespace CefSharp.DevTools.Audits
     public enum GenericIssueErrorType
     {
         /// <summary>
-        /// CrossOriginPortalPostMessageError
-        /// </summary>
-        [JsonPropertyName("CrossOriginPortalPostMessageError")]
-        CrossOriginPortalPostMessageError,
-        /// <summary>
         /// FormLabelForNameError
         /// </summary>
         [JsonPropertyName("FormLabelForNameError")]
@@ -3073,10 +3081,20 @@ namespace CefSharp.DevTools.Audits
         [JsonPropertyName("ClientMetadataInvalidContentType")]
         ClientMetadataInvalidContentType,
         /// <summary>
+        /// IdpNotPotentiallyTrustworthy
+        /// </summary>
+        [JsonPropertyName("IdpNotPotentiallyTrustworthy")]
+        IdpNotPotentiallyTrustworthy,
+        /// <summary>
         /// DisabledInSettings
         /// </summary>
         [JsonPropertyName("DisabledInSettings")]
         DisabledInSettings,
+        /// <summary>
+        /// DisabledInFlags
+        /// </summary>
+        [JsonPropertyName("DisabledInFlags")]
+        DisabledInFlags,
         /// <summary>
         /// ErrorFetchingSignin
         /// </summary>
@@ -3186,7 +3204,22 @@ namespace CefSharp.DevTools.Audits
         /// ReplacedByButtonMode
         /// </summary>
         [JsonPropertyName("ReplacedByButtonMode")]
-        ReplacedByButtonMode
+        ReplacedByButtonMode,
+        /// <summary>
+        /// InvalidFieldsSpecified
+        /// </summary>
+        [JsonPropertyName("InvalidFieldsSpecified")]
+        InvalidFieldsSpecified,
+        /// <summary>
+        /// RelyingPartyOriginIsOpaque
+        /// </summary>
+        [JsonPropertyName("RelyingPartyOriginIsOpaque")]
+        RelyingPartyOriginIsOpaque,
+        /// <summary>
+        /// TypeNotMatching
+        /// </summary>
+        [JsonPropertyName("TypeNotMatching")]
+        TypeNotMatching
     }
 
     /// <summary>
@@ -4634,6 +4667,16 @@ namespace CefSharp.DevTools.Browser
         /// </summary>
         [JsonPropertyName("allowWithoutSanitization")]
         public bool? AllowWithoutSanitization
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// For &quot;fullscreen&quot; permission, must specify allowWithoutGesture:true.
+        /// </summary>
+        [JsonPropertyName("allowWithoutGesture")]
+        public bool? AllowWithoutGesture
         {
             get;
             set;
@@ -6549,6 +6592,16 @@ namespace CefSharp.DevTools.CSS
             get;
             set;
         }
+
+        /// <summary>
+        /// Active
+        /// </summary>
+        [JsonPropertyName("active")]
+        public bool Active
+        {
+            get;
+            set;
+        }
     }
 
     /// <summary>
@@ -7317,10 +7370,10 @@ namespace CefSharp.DevTools.DOM
         [JsonPropertyName("scroll-marker")]
         ScrollMarker,
         /// <summary>
-        /// scroll-markers
+        /// scroll-marker-group
         /// </summary>
-        [JsonPropertyName("scroll-markers")]
-        ScrollMarkers,
+        [JsonPropertyName("scroll-marker-group")]
+        ScrollMarkerGroup,
         /// <summary>
         /// scrollbar
         /// </summary>
@@ -10464,6 +10517,61 @@ namespace CefSharp.DevTools.Emulation
     }
 
     /// <summary>
+    /// PressureSource
+    /// </summary>
+    public enum PressureSource
+    {
+        /// <summary>
+        /// cpu
+        /// </summary>
+        [JsonPropertyName("cpu")]
+        Cpu
+    }
+
+    /// <summary>
+    /// PressureState
+    /// </summary>
+    public enum PressureState
+    {
+        /// <summary>
+        /// nominal
+        /// </summary>
+        [JsonPropertyName("nominal")]
+        Nominal,
+        /// <summary>
+        /// fair
+        /// </summary>
+        [JsonPropertyName("fair")]
+        Fair,
+        /// <summary>
+        /// serious
+        /// </summary>
+        [JsonPropertyName("serious")]
+        Serious,
+        /// <summary>
+        /// critical
+        /// </summary>
+        [JsonPropertyName("critical")]
+        Critical
+    }
+
+    /// <summary>
+    /// PressureMetadata
+    /// </summary>
+    public partial class PressureMetadata : CefSharp.DevTools.DevToolsDomainEntityBase
+    {
+        /// <summary>
+        /// Available
+        /// </summary>
+        [JsonPropertyName("available")]
+        public bool? Available
+        {
+            get;
+            set;
+        }
+    }
+
+    /// <summary>
     /// Enum of image types that can be disabled.
     /// </summary>
     public enum DisabledImageType
@@ -10535,6 +10643,134 @@ namespace CefSharp.DevTools.HeadlessExperimental
         /// </summary>
         [JsonPropertyName("optimizeForSpeed")]
         public bool? OptimizeForSpeed
+        {
+            get;
+            set;
+        }
+    }
+}
+
+namespace CefSharp.DevTools.FileSystem
+{
+    /// <summary>
+    /// File
+    /// </summary>
+    public partial class File : CefSharp.DevTools.DevToolsDomainEntityBase
+    {
+        /// <summary>
+        /// Name
+        /// </summary>
+        [JsonPropertyName("name")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Timestamp
+        /// </summary>
+        [JsonPropertyName("lastModified")]
+        public double LastModified
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Size in bytes
+        /// </summary>
+        [JsonPropertyName("size")]
+        public double Size
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Type
+        /// </summary>
+        [JsonPropertyName("type")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public string Type
+        {
+            get;
+            set;
+        }
+    }
+
+    /// <summary>
+    /// Directory
+    /// </summary>
+    public partial class Directory : CefSharp.DevTools.DevToolsDomainEntityBase
+    {
+        /// <summary>
+        /// Name
+        /// </summary>
+        [JsonPropertyName("name")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public string Name
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// NestedDirectories
+        /// </summary>
+        [JsonPropertyName("nestedDirectories")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public string[] NestedDirectories
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Files that are directly nested under this directory.
+        /// </summary>
+        [JsonPropertyName("nestedFiles")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public System.Collections.Generic.IList<CefSharp.DevTools.FileSystem.File> NestedFiles
+        {
+            get;
+            set;
+        }
+    }
+
+    /// <summary>
+    /// BucketFileSystemLocator
+    /// </summary>
+    public partial class BucketFileSystemLocator : CefSharp.DevTools.DevToolsDomainEntityBase
+    {
+        /// <summary>
+        /// Storage key
+        /// </summary>
+        [JsonPropertyName("storageKey")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public string StorageKey
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Bucket name. Not passing a `bucketName` will retrieve the default Bucket. (https://developer.mozilla.org/en-US/docs/Web/API/Storage_API#storage_buckets)
+        /// </summary>
+        [JsonPropertyName("bucketName")]
+        public string BucketName
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Path to the directory using each path component as an array item.
+        /// </summary>
+        [JsonPropertyName("pathComponents")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public string[] PathComponents
         {
             get;
             set;
@@ -12452,6 +12688,26 @@ namespace CefSharp.DevTools.Network
         }
 
         /// <summary>
+        /// Started ServiceWorker static routing source evaluation.
+        /// </summary>
+        [JsonPropertyName("workerRouterEvaluationStart")]
+        public double? WorkerRouterEvaluationStart
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Started cache lookup when the source was evaluated to `cache`.
+        /// </summary>
+        [JsonPropertyName("workerCacheLookupStart")]
+        public double? WorkerCacheLookupStart
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Started sending request.
         /// </summary>
         [JsonPropertyName("sendStart")]
@@ -13091,6 +13347,16 @@ namespace CefSharp.DevTools.Network
         [JsonPropertyName("corp-not-same-origin-after-defaulted-to-same-origin-by-coep")]
         CorpNotSameOriginAfterDefaultedToSameOriginByCoep,
         /// <summary>
+        /// corp-not-same-origin-after-defaulted-to-same-origin-by-dip
+        /// </summary>
+        [JsonPropertyName("corp-not-same-origin-after-defaulted-to-same-origin-by-dip")]
+        CorpNotSameOriginAfterDefaultedToSameOriginByDip,
+        /// <summary>
+        /// corp-not-same-origin-after-defaulted-to-same-origin-by-coep-and-dip
+        /// </summary>
+        [JsonPropertyName("corp-not-same-origin-after-defaulted-to-same-origin-by-coep-and-dip")]
+        CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip,
+        /// <summary>
         /// corp-not-same-site
         /// </summary>
         [JsonPropertyName("corp-not-same-site")]
@@ -13504,6 +13770,16 @@ namespace CefSharp.DevTools.Network
         /// </summary>
         [JsonPropertyName("matchedSourceType")]
         public CefSharp.DevTools.Network.ServiceWorkerRouterSource? MatchedSourceType
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The actual router source used.
+        /// </summary>
+        [JsonPropertyName("actualSourceType")]
+        public CefSharp.DevTools.Network.ServiceWorkerRouterSource? ActualSourceType
         {
             get;
             set;
@@ -14071,6 +14347,35 @@ namespace CefSharp.DevTools.Network
     }
 
     /// <summary>
+    /// cookiePartitionKey object
+    /// The representation of the components of the key that are created by the cookiePartitionKey class contained in net/cookies/cookie_partition_key.h.
+    /// </summary>
+    public partial class CookiePartitionKey : CefSharp.DevTools.DevToolsDomainEntityBase
+    {
+        /// <summary>
+        /// The site of the top-level URL the browser was visiting at the start
+        /// of the request to the endpoint that set the cookie.
+        /// </summary>
+        [JsonPropertyName("topLevelSite")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public string TopLevelSite
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Indicates if the cookie has any ancestors that are cross-site to the topLevelSite.
+        /// </summary>
+        [JsonPropertyName("hasCrossSiteAncestor")]
+        public bool HasCrossSiteAncestor
+        {
+            get;
+            set;
+        }
+    }
+
+    /// <summary>
     /// Cookie object
     /// </summary>
     public partial class Cookie : CefSharp.DevTools.DevToolsDomainEntityBase
@@ -14222,11 +14527,10 @@ namespace CefSharp.DevTools.Network
         }
 
         /// <summary>
-        /// Cookie partition key. The site of the top-level URL the browser was visiting at the start
-        /// of the request to the endpoint that set the cookie.
+        /// Cookie partition key.
         /// </summary>
         [JsonPropertyName("partitionKey")]
-        public string PartitionKey
+        public CefSharp.DevTools.Network.CookiePartitionKey PartitionKey
         {
             get;
             set;
@@ -14496,7 +14800,12 @@ namespace CefSharp.DevTools.Network
         /// CorsOptIn
         /// </summary>
         [JsonPropertyName("CorsOptIn")]
-        CorsOptIn
+        CorsOptIn,
+        /// <summary>
+        /// Scheme
+        /// </summary>
+        [JsonPropertyName("Scheme")]
+        Scheme
     }
 
     /// <summary>
@@ -14758,12 +15067,10 @@ namespace CefSharp.DevTools.Network
         }
 
         /// <summary>
-        /// Cookie partition key. The site of the top-level URL the browser was visiting at the start
-        /// of the request to the endpoint that set the cookie.
-        /// If not set, the cookie will be set as not partitioned.
+        /// Cookie partition key. If not set, the cookie will be set as not partitioned.
         /// </summary>
         [JsonPropertyName("partitionKey")]
-        public string PartitionKey
+        public CefSharp.DevTools.Network.CookiePartitionKey PartitionKey
         {
             get;
             set;
@@ -15412,7 +15719,12 @@ namespace CefSharp.DevTools.Network
         /// RestrictPropertiesPlusCoep
         /// </summary>
         [JsonPropertyName("RestrictPropertiesPlusCoep")]
-        RestrictPropertiesPlusCoep
+        RestrictPropertiesPlusCoep,
+        /// <summary>
+        /// NoopenerAllowPopups
+        /// </summary>
+        [JsonPropertyName("NoopenerAllowPopups")]
+        NoopenerAllowPopups
     }
 
     /// <summary>
@@ -17155,7 +17467,7 @@ namespace CefSharp.DevTools.Network
         /// </summary>
         [JsonInclude]
         [JsonPropertyName("cookiePartitionKey")]
-        public string CookiePartitionKey
+        public CefSharp.DevTools.Network.CookiePartitionKey CookiePartitionKey
         {
             get;
             private set;
@@ -17256,10 +17568,10 @@ namespace CefSharp.DevTools.Network
         [JsonPropertyName("AlreadyExists")]
         AlreadyExists,
         /// <summary>
-        /// Unavailable
+        /// ResourceLimited
         /// </summary>
-        [JsonPropertyName("Unavailable")]
-        Unavailable,
+        [JsonPropertyName("ResourceLimited")]
+        ResourceLimited,
         /// <summary>
         /// Unauthorized
         /// </summary>
@@ -19029,6 +19341,16 @@ namespace CefSharp.DevTools.Page
         /// </summary>
         [JsonPropertyName("cross-origin-isolated")]
         CrossOriginIsolated,
+        /// <summary>
+        /// deferred-fetch
+        /// </summary>
+        [JsonPropertyName("deferred-fetch")]
+        DeferredFetch,
+        /// <summary>
+        /// digital-credentials-get
+        /// </summary>
+        [JsonPropertyName("digital-credentials-get")]
+        DigitalCredentialsGet,
         /// <summary>
         /// direct-sockets
         /// </summary>
@@ -21684,6 +22006,31 @@ namespace CefSharp.DevTools.Page
         [JsonPropertyName("BroadcastChannelOnMessage")]
         BroadcastChannelOnMessage,
         /// <summary>
+        /// WebViewSettingsChanged
+        /// </summary>
+        [JsonPropertyName("WebViewSettingsChanged")]
+        WebViewSettingsChanged,
+        /// <summary>
+        /// WebViewJavaScriptObjectChanged
+        /// </summary>
+        [JsonPropertyName("WebViewJavaScriptObjectChanged")]
+        WebViewJavaScriptObjectChanged,
+        /// <summary>
+        /// WebViewMessageListenerInjected
+        /// </summary>
+        [JsonPropertyName("WebViewMessageListenerInjected")]
+        WebViewMessageListenerInjected,
+        /// <summary>
+        /// WebViewSafeBrowsingAllowlistChanged
+        /// </summary>
+        [JsonPropertyName("WebViewSafeBrowsingAllowlistChanged")]
+        WebViewSafeBrowsingAllowlistChanged,
+        /// <summary>
+        /// WebViewDocumentStartJavascriptChanged
+        /// </summary>
+        [JsonPropertyName("WebViewDocumentStartJavascriptChanged")]
+        WebViewDocumentStartJavascriptChanged,
+        /// <summary>
         /// WebSocket
         /// </summary>
         [JsonPropertyName("WebSocket")]
@@ -21828,11 +22175,6 @@ namespace CefSharp.DevTools.Page
         /// </summary>
         [JsonPropertyName("PictureInPicture")]
         PictureInPicture,
-        /// <summary>
-        /// Portal
-        /// </summary>
-        [JsonPropertyName("Portal")]
-        Portal,
         /// <summary>
         /// SpeechRecognizer
         /// </summary>
@@ -25310,6 +25652,94 @@ namespace CefSharp.DevTools.Storage
     }
 
     /// <summary>
+    /// AttributionReportingAggregatableDebugReportingData
+    /// </summary>
+    public partial class AttributionReportingAggregatableDebugReportingData : CefSharp.DevTools.DevToolsDomainEntityBase
+    {
+        /// <summary>
+        /// KeyPiece
+        /// </summary>
+        [JsonPropertyName("keyPiece")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public string KeyPiece
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// number instead of integer because not all uint32 can be represented by
+        /// int
+        /// </summary>
+        [JsonPropertyName("value")]
+        public double Value
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Types
+        /// </summary>
+        [JsonPropertyName("types")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public string[] Types
+        {
+            get;
+            set;
+        }
+    }
+
+    /// <summary>
+    /// AttributionReportingAggregatableDebugReportingConfig
+    /// </summary>
+    public partial class AttributionReportingAggregatableDebugReportingConfig : CefSharp.DevTools.DevToolsDomainEntityBase
+    {
+        /// <summary>
+        /// number instead of integer because not all uint32 can be represented by
+        /// int, only present for source registrations
+        /// </summary>
+        [JsonPropertyName("budget")]
+        public double? Budget
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// KeyPiece
+        /// </summary>
+        [JsonPropertyName("keyPiece")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public string KeyPiece
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// DebugData
+        /// </summary>
+        [JsonPropertyName("debugData")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public System.Collections.Generic.IList<CefSharp.DevTools.Storage.AttributionReportingAggregatableDebugReportingData> DebugData
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// AggregationCoordinatorOrigin
+        /// </summary>
+        [JsonPropertyName("aggregationCoordinatorOrigin")]
+        public string AggregationCoordinatorOrigin
+        {
+            get;
+            set;
+        }
+    }
+
+    /// <summary>
     /// AttributionReportingSourceRegistration
     /// </summary>
     public partial class AttributionReportingSourceRegistration : CefSharp.DevTools.DevToolsDomainEntityBase
@@ -25461,6 +25891,28 @@ namespace CefSharp.DevTools.Storage
             get;
             set;
         }
+
+        /// <summary>
+        /// DestinationLimitPriority
+        /// </summary>
+        [JsonPropertyName("destinationLimitPriority")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public string DestinationLimitPriority
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// AggregatableDebugReportingConfig
+        /// </summary>
+        [JsonPropertyName("aggregatableDebugReportingConfig")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public CefSharp.DevTools.Storage.AttributionReportingAggregatableDebugReportingConfig AggregatableDebugReportingConfig
+        {
+            get;
+            set;
+        }
     }
 
     /// <summary>
@@ -25532,7 +25984,12 @@ namespace CefSharp.DevTools.Storage
         /// exceedsMaxTriggerStateCardinality
         /// </summary>
         [JsonPropertyName("exceedsMaxTriggerStateCardinality")]
-        ExceedsMaxTriggerStateCardinality
+        ExceedsMaxTriggerStateCardinality,
+        /// <summary>
+        /// destinationPerDayReportingLimitReached
+        /// </summary>
+        [JsonPropertyName("destinationPerDayReportingLimitReached")]
+        DestinationPerDayReportingLimitReached
     }
 
     /// <summary>
@@ -25574,6 +26031,17 @@ namespace CefSharp.DevTools.Storage
         /// </summary>
         [JsonPropertyName("value")]
         public double Value
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// FilteringId
+        /// </summary>
+        [JsonPropertyName("filteringId")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public string FilteringId
         {
             get;
             set;
@@ -25794,6 +26262,16 @@ namespace CefSharp.DevTools.Storage
         }
 
         /// <summary>
+        /// AggregatableFilteringIdMaxBytes
+        /// </summary>
+        [JsonPropertyName("aggregatableFilteringIdMaxBytes")]
+        public int AggregatableFilteringIdMaxBytes
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// DebugReporting
         /// </summary>
         [JsonPropertyName("debugReporting")]
@@ -25828,6 +26306,17 @@ namespace CefSharp.DevTools.Storage
         /// </summary>
         [JsonPropertyName("triggerContextId")]
         public string TriggerContextId
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// AggregatableDebugReportingConfig
+        /// </summary>
+        [JsonPropertyName("aggregatableDebugReportingConfig")]
+        [System.Diagnostics.CodeAnalysis.DisallowNull]
+        public CefSharp.DevTools.Storage.AttributionReportingAggregatableDebugReportingConfig AggregatableDebugReportingConfig
         {
             get;
             set;
@@ -27160,7 +27649,7 @@ namespace CefSharp.DevTools.Target
 
         /// <summary>
         /// Provides additional details for specific target types. For example, for
-        /// the type of &quot;page&quot;, this may be set to &quot;portal&quot; or &quot;prerender&quot;.
+        /// the type of &quot;page&quot;, this may be set to &quot;prerender&quot;.
         /// </summary>
         [JsonPropertyName("subtype")]
         public string Subtype
@@ -30488,7 +30977,12 @@ namespace CefSharp.DevTools.Preload
         /// AllPrerenderingCanceled
         /// </summary>
         [JsonPropertyName("AllPrerenderingCanceled")]
-        AllPrerenderingCanceled
+        AllPrerenderingCanceled,
+        /// <summary>
+        /// WindowClosed
+        /// </summary>
+        [JsonPropertyName("WindowClosed")]
+        WindowClosed
     }
 
     /// <summary>
@@ -31349,6 +31843,23 @@ namespace CefSharp.DevTools.PWA
             get;
             set;
         }
+    }
+
+    /// <summary>
+    /// If user prefers opening the app in browser or an app window.
+    /// </summary>
+    public enum DisplayMode
+    {
+        /// <summary>
+        /// standalone
+        /// </summary>
+        [JsonPropertyName("standalone")]
+        Standalone,
+        /// <summary>
+        /// browser
+        /// </summary>
+        [JsonPropertyName("browser")]
+        Browser
     }
 }
 
@@ -36933,6 +37444,17 @@ namespace CefSharp.DevTools.CSS
         }
 
         /// <summary>
+        /// activePositionFallbackIndex
+        /// </summary>
+        [JsonInclude]
+        [JsonPropertyName("activePositionFallbackIndex")]
+        public int? ActivePositionFallbackIndex
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// cssPropertyRules
         /// </summary>
         [JsonInclude]
@@ -38867,6 +39389,26 @@ namespace CefSharp.DevTools.DOM
 
 namespace CefSharp.DevTools.DOM
 {
+    /// <summary>
+    /// GetAnchorElementResponse
+    /// </summary>
+    public class GetAnchorElementResponse : DevToolsDomainResponseBase
+    {
+        /// <summary>
+        /// nodeId
+        /// </summary>
+        [JsonInclude]
+        [JsonPropertyName("nodeId")]
+        public int NodeId
+        {
+            get;
+            private set;
+        }
+    }
+}
+
+namespace CefSharp.DevTools.DOM
+{
     using System.Linq;
 
     /// <summary>
@@ -40107,6 +40649,27 @@ namespace CefSharp.DevTools.DOM
             var dict = new System.Collections.Generic.Dictionary<string, object>();
             dict.Add("nodeId", nodeId);
             return _client.ExecuteDevToolsMethodAsync<GetQueryingDescendantsForContainerResponse>("DOM.getQueryingDescendantsForContainer", dict);
+        }
+
+        partial void ValidateGetAnchorElement(int nodeId, string anchorSpecifier = null);
+        /// <summary>
+        /// Returns the target anchor element of the given anchor query according to
+        /// https://www.w3.org/TR/css-anchor-position-1/#target.
+        /// </summary>
+        /// <param name = "nodeId">Id of the positioned element from which to find the anchor.</param>
+        /// <param name = "anchorSpecifier">An optional anchor specifier, as defined inhttps://www.w3.org/TR/css-anchor-position-1/#anchor-specifier.If not provided, it will return the implicit anchor element forthe given positioned element.</param>
+        /// <returns>returns System.Threading.Tasks.Task&lt;GetAnchorElementResponse&gt;</returns>
+        public System.Threading.Tasks.Task<GetAnchorElementResponse> GetAnchorElementAsync(int nodeId, string anchorSpecifier = null)
+        {
+            ValidateGetAnchorElement(nodeId, anchorSpecifier);
+            var dict = new System.Collections.Generic.Dictionary<string, object>();
+            dict.Add("nodeId", nodeId);
+            if (!(string.IsNullOrEmpty(anchorSpecifier)))
+            {
+                dict.Add("anchorSpecifier", anchorSpecifier);
+            }
+
+            return _client.ExecuteDevToolsMethodAsync<GetAnchorElementResponse>("DOM.getAnchorElement", dict);
         }
     }
 }
@@ -41366,6 +41929,49 @@ namespace CefSharp.DevTools.Emulation
             return _client.ExecuteDevToolsMethodAsync<DevToolsMethodResponse>("Emulation.setSensorOverrideReadings", dict);
         }
 
+        partial void ValidateSetPressureSourceOverrideEnabled(bool enabled, CefSharp.DevTools.Emulation.PressureSource source, CefSharp.DevTools.Emulation.PressureMetadata metadata = null);
+        /// <summary>
+        /// Overrides a pressure source of a given type, as used by the Compute
+        /// Pressure API, so that updates to PressureObserver.observe() are provided
+        /// via setPressureStateOverride instead of being retrieved from
+        /// platform-provided telemetry data.
+        /// </summary>
+        /// <param name = "enabled">enabled</param>
+        /// <param name = "source">source</param>
+        /// <param name = "metadata">metadata</param>
+        /// <returns>returns System.Threading.Tasks.Task&lt;DevToolsMethodResponse&gt;</returns>
+        public System.Threading.Tasks.Task<DevToolsMethodResponse> SetPressureSourceOverrideEnabledAsync(bool enabled, CefSharp.DevTools.Emulation.PressureSource source, CefSharp.DevTools.Emulation.PressureMetadata metadata = null)
+        {
+            ValidateSetPressureSourceOverrideEnabled(enabled, source, metadata);
+            var dict = new System.Collections.Generic.Dictionary<string, object>();
+            dict.Add("enabled", enabled);
+            dict.Add("source", EnumToString(source));
+            if ((metadata) != (null))
+            {
+                dict.Add("metadata", metadata.ToDictionary());
+            }
+
+            return _client.ExecuteDevToolsMethodAsync<DevToolsMethodResponse>("Emulation.setPressureSourceOverrideEnabled", dict);
+        }
+
+        partial void ValidateSetPressureStateOverride(CefSharp.DevTools.Emulation.PressureSource source, CefSharp.DevTools.Emulation.PressureState state);
+        /// <summary>
+        /// Provides a given pressure state that will be processed and eventually be
+        /// delivered to PressureObserver users. |source| must have been previously
+        /// overridden by setPressureSourceOverrideEnabled.
+        /// </summary>
+        /// <param name = "source">source</param>
+        /// <param name = "state">state</param>
+        /// <returns>returns System.Threading.Tasks.Task&lt;DevToolsMethodResponse&gt;</returns>
+        public System.Threading.Tasks.Task<DevToolsMethodResponse> SetPressureStateOverrideAsync(CefSharp.DevTools.Emulation.PressureSource source, CefSharp.DevTools.Emulation.PressureState state)
+        {
+            ValidateSetPressureStateOverride(source, state);
+            var dict = new System.Collections.Generic.Dictionary<string, object>();
+            dict.Add("source", EnumToString(source));
+            dict.Add("state", EnumToString(state));
+            return _client.ExecuteDevToolsMethodAsync<DevToolsMethodResponse>("Emulation.setPressureStateOverride", dict);
+        }
+
         partial void ValidateSetIdleOverride(bool isUserActive, bool isScreenUnlocked);
         /// <summary>
         /// Overrides the Idle state.
@@ -41806,6 +42412,61 @@ namespace CefSharp.DevTools.IO
             var dict = new System.Collections.Generic.Dictionary<string, object>();
             dict.Add("objectId", objectId);
             return _client.ExecuteDevToolsMethodAsync<ResolveBlobResponse>("IO.resolveBlob", dict);
+        }
+    }
+}
+
+namespace CefSharp.DevTools.FileSystem
+{
+    /// <summary>
+    /// GetDirectoryResponse
+    /// </summary>
+    public class GetDirectoryResponse : DevToolsDomainResponseBase
+    {
+        /// <summary>
+        /// directory
+        /// </summary>
+        [JsonInclude]
+        [JsonPropertyName("directory")]
+        public CefSharp.DevTools.FileSystem.Directory Directory
+        {
+            get;
+            private set;
+        }
+    }
+}
+
+namespace CefSharp.DevTools.FileSystem
+{
+    using System.Linq;
+
+    /// <summary>
+    /// FileSystem
+    /// </summary>
+    public partial class FileSystemClient : DevToolsDomainBase
+    {
+        private CefSharp.DevTools.IDevToolsClient _client;
+        /// <summary>
+        /// FileSystem
+        /// </summary>
+        /// <param name = "client">DevToolsClient</param>
+        public FileSystemClient(CefSharp.DevTools.IDevToolsClient client)
+        {
+            _client = (client);
+        }
+
+        partial void ValidateGetDirectory(CefSharp.DevTools.FileSystem.BucketFileSystemLocator bucketFileSystemLocator);
+        /// <summary>
+        /// GetDirectory
+        /// </summary>
+        /// <param name = "bucketFileSystemLocator">bucketFileSystemLocator</param>
+        /// <returns>returns System.Threading.Tasks.Task&lt;GetDirectoryResponse&gt;</returns>
+        public System.Threading.Tasks.Task<GetDirectoryResponse> GetDirectoryAsync(CefSharp.DevTools.FileSystem.BucketFileSystemLocator bucketFileSystemLocator)
+        {
+            ValidateGetDirectory(bucketFileSystemLocator);
+            var dict = new System.Collections.Generic.Dictionary<string, object>();
+            dict.Add("bucketFileSystemLocator", bucketFileSystemLocator.ToDictionary());
+            return _client.ExecuteDevToolsMethodAsync<GetDirectoryResponse>("FileSystem.getDirectory", dict);
         }
     }
 }
@@ -44320,6 +44981,22 @@ namespace CefSharp.DevTools.Network
         }
 
         /// <summary>
+        /// Fired once security policy has been updated.
+        /// </summary>
+        public event System.EventHandler<System.EventArgs> PolicyUpdated
+        {
+            add
+            {
+                _client.AddEventHandler<System.EventArgs>("Network.policyUpdated", value);
+            }
+
+            remove
+            {
+                _client.RemoveEventHandler<System.EventArgs>("Network.policyUpdated", value);
+            }
+        }
+
+        /// <summary>
         /// Fired once when parsing the .wbn file has succeeded.
         /// The event contains the information about the web bundle contents.
         /// </summary>
@@ -44478,7 +45155,7 @@ namespace CefSharp.DevTools.Network
             return _client.ExecuteDevToolsMethodAsync<DevToolsMethodResponse>("Network.clearBrowserCookies", dict);
         }
 
-        partial void ValidateDeleteCookies(string name, string url = null, string domain = null, string path = null, string partitionKey = null);
+        partial void ValidateDeleteCookies(string name, string url = null, string domain = null, string path = null, CefSharp.DevTools.Network.CookiePartitionKey partitionKey = null);
         /// <summary>
         /// Deletes browser cookies with matching name and url or domain/path/partitionKey pair.
         /// </summary>
@@ -44486,9 +45163,9 @@ namespace CefSharp.DevTools.Network
         /// <param name = "url">If specified, deletes all the cookies with the given name where domain and path matchprovided URL.</param>
         /// <param name = "domain">If specified, deletes only cookies with the exact domain.</param>
         /// <param name = "path">If specified, deletes only cookies with the exact path.</param>
-        /// <param name = "partitionKey">If specified, deletes only cookies with the the given name and partitionKey where domainmatches provided URL.</param>
+        /// <param name = "partitionKey">If specified, deletes only cookies with the the given name and partitionKey whereall partition key attributes match the cookie partition key attribute.</param>
         /// <returns>returns System.Threading.Tasks.Task&lt;DevToolsMethodResponse&gt;</returns>
-        public System.Threading.Tasks.Task<DevToolsMethodResponse> DeleteCookiesAsync(string name, string url = null, string domain = null, string path = null, string partitionKey = null)
+        public System.Threading.Tasks.Task<DevToolsMethodResponse> DeleteCookiesAsync(string name, string url = null, string domain = null, string path = null, CefSharp.DevTools.Network.CookiePartitionKey partitionKey = null)
         {
             ValidateDeleteCookies(name, url, domain, path, partitionKey);
             var dict = new System.Collections.Generic.Dictionary<string, object>();
@@ -44508,9 +45185,9 @@ namespace CefSharp.DevTools.Network
                 dict.Add("path", path);
             }
 
-            if (!(string.IsNullOrEmpty(partitionKey)))
+            if ((partitionKey) != (null))
             {
-                dict.Add("partitionKey", partitionKey);
+                dict.Add("partitionKey", partitionKey.ToDictionary());
             }
 
             return _client.ExecuteDevToolsMethodAsync<DevToolsMethodResponse>("Network.deleteCookies", dict);
@@ -44778,7 +45455,7 @@ namespace CefSharp.DevTools.Network
             return _client.ExecuteDevToolsMethodAsync<DevToolsMethodResponse>("Network.setCacheDisabled", dict);
         }
 
-        partial void ValidateSetCookie(string name, string value, string url = null, string domain = null, string path = null, bool? secure = null, bool? httpOnly = null, CefSharp.DevTools.Network.CookieSameSite? sameSite = null, double? expires = null, CefSharp.DevTools.Network.CookiePriority? priority = null, bool? sameParty = null, CefSharp.DevTools.Network.CookieSourceScheme? sourceScheme = null, int? sourcePort = null, string partitionKey = null);
+        partial void ValidateSetCookie(string name, string value, string url = null, string domain = null, string path = null, bool? secure = null, bool? httpOnly = null, CefSharp.DevTools.Network.CookieSameSite? sameSite = null, double? expires = null, CefSharp.DevTools.Network.CookiePriority? priority = null, bool? sameParty = null, CefSharp.DevTools.Network.CookieSourceScheme? sourceScheme = null, int? sourcePort = null, CefSharp.DevTools.Network.CookiePartitionKey partitionKey = null);
         /// <summary>
         /// Sets a cookie with the given cookie data; may overwrite equivalent cookies if they exist.
         /// </summary>
@@ -44795,9 +45472,9 @@ namespace CefSharp.DevTools.Network
         /// <param name = "sameParty">True if cookie is SameParty.</param>
         /// <param name = "sourceScheme">Cookie source scheme type.</param>
         /// <param name = "sourcePort">Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.This is a temporary ability and it will be removed in the future.</param>
-        /// <param name = "partitionKey">Cookie partition key. The site of the top-level URL the browser was visiting at the startof the request to the endpoint that set the cookie.If not set, the cookie will be set as not partitioned.</param>
+        /// <param name = "partitionKey">Cookie partition key. If not set, the cookie will be set as not partitioned.</param>
         /// <returns>returns System.Threading.Tasks.Task&lt;SetCookieResponse&gt;</returns>
-        public System.Threading.Tasks.Task<SetCookieResponse> SetCookieAsync(string name, string value, string url = null, string domain = null, string path = null, bool? secure = null, bool? httpOnly = null, CefSharp.DevTools.Network.CookieSameSite? sameSite = null, double? expires = null, CefSharp.DevTools.Network.CookiePriority? priority = null, bool? sameParty = null, CefSharp.DevTools.Network.CookieSourceScheme? sourceScheme = null, int? sourcePort = null, string partitionKey = null)
+        public System.Threading.Tasks.Task<SetCookieResponse> SetCookieAsync(string name, string value, string url = null, string domain = null, string path = null, bool? secure = null, bool? httpOnly = null, CefSharp.DevTools.Network.CookieSameSite? sameSite = null, double? expires = null, CefSharp.DevTools.Network.CookiePriority? priority = null, bool? sameParty = null, CefSharp.DevTools.Network.CookieSourceScheme? sourceScheme = null, int? sourcePort = null, CefSharp.DevTools.Network.CookiePartitionKey partitionKey = null)
         {
             ValidateSetCookie(name, value, url, domain, path, secure, httpOnly, sameSite, expires, priority, sameParty, sourceScheme, sourcePort, partitionKey);
             var dict = new System.Collections.Generic.Dictionary<string, object>();
@@ -44858,9 +45535,9 @@ namespace CefSharp.DevTools.Network
                 dict.Add("sourcePort", sourcePort.Value);
             }
 
-            if (!(string.IsNullOrEmpty(partitionKey)))
+            if ((partitionKey) != (null))
             {
-                dict.Add("partitionKey", partitionKey);
+                dict.Add("partitionKey", partitionKey.ToDictionary());
             }
 
             return _client.ExecuteDevToolsMethodAsync<SetCookieResponse>("Network.setCookie", dict);
@@ -51699,6 +52376,26 @@ namespace CefSharp.DevTools.PWA
 
 namespace CefSharp.DevTools.PWA
 {
+    /// <summary>
+    /// LaunchFilesInAppResponse
+    /// </summary>
+    public class LaunchFilesInAppResponse : DevToolsDomainResponseBase
+    {
+        /// <summary>
+        /// targetIds
+        /// </summary>
+        [JsonInclude]
+        [JsonPropertyName("targetIds")]
+        public string[] TargetIds
+        {
+            get;
+            private set;
+        }
+    }
+}
+
+namespace CefSharp.DevTools.PWA
+{
     using System.Linq;
 
     /// <summary>
@@ -51761,7 +52458,7 @@ namespace CefSharp.DevTools.PWA
 
         partial void ValidateUninstall(string manifestId);
         /// <summary>
-        /// Uninstals the given manifest_id and closes any opened app windows.
+        /// Uninstalls the given manifest_id and closes any opened app windows.
         /// </summary>
         /// <param name = "manifestId">manifestId</param>
         /// <returns>returns System.Threading.Tasks.Task&lt;DevToolsMethodResponse&gt;</returns>
@@ -51776,9 +52473,8 @@ namespace CefSharp.DevTools.PWA
         partial void ValidateLaunch(string manifestId, string url = null);
         /// <summary>
         /// Launches the installed web app, or an url in the same web app instead of the
-        /// default start url if it is provided. Returns a tab / web contents based
-        /// Target.TargetID which can be used to attach to via Target.attachToTarget or
-        /// similar APIs.
+        /// default start url if it is provided. Returns a page Target.TargetID which
+        /// can be used to attach to via Target.attachToTarget or similar APIs.
         /// </summary>
         /// <param name = "manifestId">manifestId</param>
         /// <param name = "url">url</param>
@@ -51794,6 +52490,84 @@ namespace CefSharp.DevTools.PWA
             }
 
             return _client.ExecuteDevToolsMethodAsync<LaunchResponse>("PWA.launch", dict);
+        }
+
+        partial void ValidateLaunchFilesInApp(string manifestId, string[] files);
+        /// <summary>
+        /// Opens one or more local files from an installed web app identified by its
+        /// manifestId. The web app needs to have file handlers registered to process
+        /// the files. The API returns one or more page Target.TargetIDs which can be
+        /// used to attach to via Target.attachToTarget or similar APIs.
+        /// If some files in the parameters cannot be handled by the web app, they will
+        /// be ignored. If none of the files can be handled, this API returns an error.
+        /// If no files are provided as the parameter, this API also returns an error.
+        /// 
+        /// According to the definition of the file handlers in the manifest file, one
+        /// Target.TargetID may represent a page handling one or more files. The order
+        /// of the returned Target.TargetIDs is not guaranteed.
+        /// 
+        /// TODO(crbug.com/339454034): Check the existences of the input files.
+        /// </summary>
+        /// <param name = "manifestId">manifestId</param>
+        /// <param name = "files">files</param>
+        /// <returns>returns System.Threading.Tasks.Task&lt;LaunchFilesInAppResponse&gt;</returns>
+        public System.Threading.Tasks.Task<LaunchFilesInAppResponse> LaunchFilesInAppAsync(string manifestId, string[] files)
+        {
+            ValidateLaunchFilesInApp(manifestId, files);
+            var dict = new System.Collections.Generic.Dictionary<string, object>();
+            dict.Add("manifestId", manifestId);
+            dict.Add("files", files);
+            return _client.ExecuteDevToolsMethodAsync<LaunchFilesInAppResponse>("PWA.launchFilesInApp", dict);
+        }
+
+        partial void ValidateOpenCurrentPageInApp(string manifestId);
+        /// <summary>
+        /// Opens the current page in its web app identified by the manifest id, needs
+        /// to be called on a page target. This function returns immediately without
+        /// waiting for the app to finish loading.
+        /// </summary>
+        /// <param name = "manifestId">manifestId</param>
+        /// <returns>returns System.Threading.Tasks.Task&lt;DevToolsMethodResponse&gt;</returns>
+        public System.Threading.Tasks.Task<DevToolsMethodResponse> OpenCurrentPageInAppAsync(string manifestId)
+        {
+            ValidateOpenCurrentPageInApp(manifestId);
+            var dict = new System.Collections.Generic.Dictionary<string, object>();
+            dict.Add("manifestId", manifestId);
+            return _client.ExecuteDevToolsMethodAsync<DevToolsMethodResponse>("PWA.openCurrentPageInApp", dict);
+        }
+
+        partial void ValidateChangeAppUserSettings(string manifestId, bool? linkCapturing = null, CefSharp.DevTools.PWA.DisplayMode? displayMode = null);
+        /// <summary>
+        /// Changes user settings of the web app identified by its manifestId. If the
+        /// app was not installed, this command returns an error. Unset parameters will
+        /// be ignored; unrecognized values will cause an error.
+        /// 
+        /// Unlike the ones defined in the manifest files of the web apps, these
+        /// settings are provided by the browser and controlled by the users, they
+        /// impact the way the browser handling the web apps.
+        /// 
+        /// See the comment of each parameter.
+        /// </summary>
+        /// <param name = "manifestId">manifestId</param>
+        /// <param name = "linkCapturing">If user allows the links clicked on by the user in the app's scope, orextended scope if the manifest has scope extensions and the flags`DesktopPWAsLinkCapturingWithScopeExtensions` and`WebAppEnableScopeExtensions` are enabled.Note, the API does not support resetting the linkCapturing to theinitial value, uninstalling and installing the web app again will resetit.TODO(crbug.com/339453269): Setting this value on ChromeOS is notsupported yet.</param>
+        /// <param name = "displayMode">displayMode</param>
+        /// <returns>returns System.Threading.Tasks.Task&lt;DevToolsMethodResponse&gt;</returns>
+        public System.Threading.Tasks.Task<DevToolsMethodResponse> ChangeAppUserSettingsAsync(string manifestId, bool? linkCapturing = null, CefSharp.DevTools.PWA.DisplayMode? displayMode = null)
+        {
+            ValidateChangeAppUserSettings(manifestId, linkCapturing, displayMode);
+            var dict = new System.Collections.Generic.Dictionary<string, object>();
+            dict.Add("manifestId", manifestId);
+            if (linkCapturing.HasValue)
+            {
+                dict.Add("linkCapturing", linkCapturing.Value);
+            }
+
+            if (displayMode.HasValue)
+            {
+                dict.Add("displayMode", EnumToString(displayMode));
+            }
+
+            return _client.ExecuteDevToolsMethodAsync<DevToolsMethodResponse>("PWA.changeAppUserSettings", dict);
         }
     }
 }
@@ -55120,6 +55894,23 @@ namespace CefSharp.DevTools
                 }
 
                 return _IO;
+            }
+        }
+
+        private CefSharp.DevTools.FileSystem.FileSystemClient _FileSystem;
+        /// <summary>
+        /// FileSystem
+        /// </summary>
+        public CefSharp.DevTools.FileSystem.FileSystemClient FileSystem
+        {
+            get
+            {
+                if ((_FileSystem) == (null))
+                {
+                    _FileSystem = (new CefSharp.DevTools.FileSystem.FileSystemClient(this));
+                }
+
+                return _FileSystem;
             }
         }
 

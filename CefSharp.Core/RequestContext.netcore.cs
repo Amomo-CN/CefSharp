@@ -41,21 +41,6 @@ namespace CefSharp
         {
         }
 
-        public override void LoadExtension(string rootDirectory, string manifestJson, IExtensionHandler handler)
-        {
-            if (Cef.CurrentlyOnThread(CefThreadIds.TID_UI))
-            {
-                base.LoadExtension(rootDirectory, manifestJson, handler);
-            }
-            else
-            {
-                Cef.UIThreadTaskFactory.StartNew(() =>
-                {
-                    base.LoadExtension(rootDirectory, manifestJson, handler);
-                });
-            }
-        }
-
         /// <summary>
         ///创建一个新的RequestContextBuilder，可用于流畅地设置
         ///优先

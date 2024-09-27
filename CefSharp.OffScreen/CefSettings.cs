@@ -16,7 +16,6 @@ namespace CefSharp.OffScreen
         public CefSettings() : base()
         {
             WindowlessRenderingEnabled = true;
-            ChromeRuntime = true;
 
             //For OffScreen it doesn't make much sense to enable audio by default, so we disable it.
             //this can be removed in user code if required
@@ -26,6 +25,10 @@ namespace CefSharp.OffScreen
             // the Chrome login prompt is disabled
             // https://github.com/chromiumembedded/cef/issues/3603 
             CefCommandLineArgs.Add("disable-chrome-login-prompt");
+
+            // Disable "Restore pages" popup after incorrect shutdown
+            // https://github.com/chromiumembedded/cef/issues/3767
+            CefCommandLineArgs.Add("hide-crash-restore-bubble");
         }
 
         /// <summary>
